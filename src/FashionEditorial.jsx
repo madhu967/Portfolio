@@ -1,119 +1,64 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react';
+import React, { useLayoutEffect, useEffect, useRef, useState, useMemo } from 'react';
+import profilePic from './profilePic';
 
 /**
- * Ijji Madhu Venkat — Luxury Editorial Developer Portfolio Hero Section
+ * Ijji Madhu Venkat — Luxury Editorial Developer Portfolio
  * 
- * Features & Viewport Fixes:
- * - ZERO BLACK GAPS (TOP, BOTTOM, LEFT, RIGHT):
- *   The hero section fills 100% of the viewport width AND 100% of the viewport height (100vw x 100vh).
- *   Dynamic stage height (stageHeight = Math.max(560, Math.round(h / scale))) ensures the editorial panel
- *   spans edge-to-edge with zero letterboxing, zero pillarboxing, and zero black gap flicker.
- * - NO TOP/BOTTOM DUMMY TEXT: Canvas header and footer removed cleanly.
- * - SIGNATURE 12-SLAT VENETIAN BLIND TRANSITION: 100% preserved with perspective(2200px),
- *   cubic-bezier(0.42, 0, 0.7, 0.55), anti-flicker visibility gates, and sub-pixel overlap.
- * - ROTATED GIANT WORD STRADDLING BOUNDARY: 52px floating arrival motion intact.
- * - THREE TECHNICAL PILLARS: Stack (#9c968d) -> GenAI (#8b9b79) -> Logic (#cfd4d4) in a 14.4s seamless loop.
- * - Full support for prefers-reduced-motion.
+ * Features:
+ * - Playfair Typography (@import Google Font Playfair with variable optical size & weights).
+ * - Exact Dark Forest Green Capsule Pill Navbar from user reference (media_1790525601368.png):
+ *   - Deep hunter-green container (#283b30).
+ *   - Golden-amber monogram badge ("M") + crisp white "Madhu." with amber dot.
+ *   - Nav links in Playfair with golden-amber active "Home" + underline.
+ *   - Pure white pill "Contact Me" button with dark forest text.
+ * - 100% Fully Mobile Responsive:
+ *   - Desktop View (>= 860px): High-precision stage scaling without black reload gaps.
+ *   - Mobile View (< 860px): Fluid vertical layout, mobile dark capsule navbar with hamburger drawer,
+ *     touch-optimized white & orange buttons, centered portrait with floating badges touching the ticker.
+ * - Exact Jadoo Organic Peach Shape & Lilac Atmospheric Aura.
+ * - Flying passenger airplanes with curved trails.
+ * - Headline with curved orange brush stroke underline in 'Playfair', serif.
+ * - Slanted Infinite Marquee Ticker Ribbon in Orange & White UI theme.
+ * - Editorial Statement Section: Exactly 4 lines of text in h3 size Playfair font.
  */
 
-const SLAT_COUNT = 12;
-const MAIN_WIDTH = 955;
-const SLAT_WIDTH = MAIN_WIDTH / SLAT_COUNT; // 79.5833px
+const STAGE_WIDTH = 1200;
 
-// Portfolio Pillars for Ijji Madhu Venkat
-const STORIES = {
-  brown: {
-    id: 'brown',
-    index: '01',
-    name: 'Stack',
-    panelBg: '#9c968d',
-    mainWordColor: '#f2efe6',
-    sidebarWordColor: '#9a968f',
-    developerName: 'IJJI MADHU VENKAT',
-    kicker: 'FULL STACK DEVELOPER',
-    headline: 'FULL STACK & SOFTWARE ARCHITECTURE',
-    techRange: 'React · Node.js · Next.js · Cloud APIs',
-    lookKicker: 'PILLAR 01 · CORE',
-    lookTitle: 'FULL STACK DEV',
-    lookDesc: 'Scalable web systems, microservices & modern UI',
-    nextLabel: 'GEN AI',
-    nextIndex: '02',
-    products: [
-      { brand: 'FRONTEND', name: 'React & Next.js', highlight: 'SSR & Reactive UI', icon: 'code' },
-      { brand: 'BACKEND', name: 'Node & Express', highlight: 'REST & GraphQL', icon: 'server' },
-      { brand: 'ARCHITECTURE', name: 'SaaS Platform', highlight: 'Distributed Cloud', icon: 'cloud' },
-    ]
-  },
-  green: {
-    id: 'green',
-    index: '02',
-    name: 'GenAI',
-    panelBg: '#8b9b79',
-    mainWordColor: '#f1efe6',
-    sidebarWordColor: '#41533d',
-    developerName: 'IJJI MADHU VENKAT',
-    kicker: 'GENERATIVE AI SPECIALIST',
-    headline: 'GENERATIVE AI & INTELLIGENT AGENTS',
-    techRange: 'LLMs · RAG · LangChain · Vector Search',
-    lookKicker: 'PILLAR 02 · INTELLIGENCE',
-    lookTitle: 'GENERATIVE AI',
-    lookDesc: 'Autonomous agents, neural pipelines & embeddings',
-    nextLabel: 'LOGIC',
-    nextIndex: '03',
-    products: [
-      { brand: 'ORCHESTRATION', name: 'LangChain & RAG', highlight: 'Contextual AI', icon: 'neural' },
-      { brand: 'EMBEDDINGS', name: 'Vector Database', highlight: 'Semantic Search', icon: 'vector' },
-      { brand: 'INFERENCE', name: 'LLM Agent Flow', highlight: 'Zero-Shot Tuning', icon: 'brain' },
-    ]
-  },
-  beige: {
-    id: 'beige',
-    index: '03',
-    name: 'Logic',
-    panelBg: '#cfd4d4',
-    mainWordColor: '#f1f2ef',
-    sidebarWordColor: '#c7cccb',
-    developerName: 'IJJI MADHU VENKAT',
-    kicker: 'DSA & DATABASE ARCHITECT',
-    headline: 'DATA STRUCTURES & ADVANCED SQL',
-    techRange: 'Algorithms · PostgreSQL · Optimization',
-    lookKicker: 'PILLAR 03 · SYSTEMS',
-    lookTitle: 'DSA & SQL',
-    lookDesc: 'O(log n) efficiency, ACID databases & relational tuning',
-    nextLabel: 'STACK',
-    nextIndex: '01',
-    products: [
-      { brand: 'ALGORITHMS', name: 'DSA Mastery', highlight: 'Trees, Graphs & DP', icon: 'tree' },
-      { brand: 'DATABASE', name: 'Relational SQL', highlight: 'PostgreSQL / ACID', icon: 'database' },
-      { brand: 'PERFORMANCE', name: 'Query Optimization', highlight: 'Indexed B-Trees', icon: 'speed' },
-    ]
+// Dimensions calculation for instant mount with zero black reload gap
+const getInitialDimensions = () => {
+  if (typeof window !== 'undefined') {
+    const w = window.innerWidth || (document.documentElement ? document.documentElement.clientWidth : 1200);
+    const h = window.innerHeight || (document.documentElement ? document.documentElement.clientHeight : 700);
+    const s = w / STAGE_WIDTH;
+    return {
+      windowWidth: w,
+      scale: s,
+      stageHeight: Math.max(560, Math.round(h / s)),
+    };
   }
+  return { windowWidth: 1200, scale: 1, stageHeight: 700 };
 };
 
 export default function FashionEditorial() {
   const containerRef = useRef(null);
-  const [{ scale, stageHeight }, setDimensions] = useState({ scale: 1, stageHeight: 560 });
+  const [{ windowWidth, scale, stageHeight }, setDimensions] = useState(getInitialDimensions);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // ResizeObserver: fills 100% viewport width AND 100% viewport height with ZERO black gaps
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-
+  // Synchronous layout effect for instant resize and mount
+  useLayoutEffect(() => {
     const handleResize = () => {
-      const w = el.clientWidth || window.innerWidth;
-      const h = el.clientHeight || window.innerHeight;
+      const w = window.innerWidth || (containerRef.current ? containerRef.current.clientWidth : 1200);
+      const h = window.innerHeight || (containerRef.current ? containerRef.current.clientHeight : 700);
 
-      // 1200 * scale = w (completely fills 100% width)
-      const newScale = w / 1200;
-      // stageHeight * scale = h (completely fills 100% height, zero top/bottom black gaps)
+      const newScale = w / STAGE_WIDTH;
       const newStageHeight = Math.max(560, Math.round(h / newScale));
 
-      setDimensions({ scale: newScale, stageHeight: newStageHeight });
+      setDimensions({ windowWidth: w, scale: newScale, stageHeight: newStageHeight });
     };
 
     handleResize();
     const observer = new ResizeObserver(handleResize);
-    observer.observe(el);
+    if (containerRef.current) observer.observe(containerRef.current);
     window.addEventListener('resize', handleResize);
 
     return () => {
@@ -122,242 +67,47 @@ export default function FashionEditorial() {
     };
   }, []);
 
-  // Compute CSS keyframes dynamically
+  const isMobile = windowWidth < 860;
+
+  // Static CSS keyframes for marquee scroll and floating badges
   const cssKeyframes = useMemo(() => {
-    const staggerSpan = 0.40 * 6.111; // 2.444%
-    const slatDuration = 0.60 * 6.111; // 3.667%
-
-    let slatStyles = '';
-
-    for (let i = 0; i < SLAT_COUNT; i++) {
-      const delay = (i / (SLAT_COUNT - 1)) * staggerSpan;
-
-      // Flip 1 (Stack / Brown outgoing slats: 15.000% to 21.111%)
-      const f1Start = 15.000 + delay;
-      const f1End = f1Start + slatDuration;
-      slatStyles += `
-        @keyframes slat-f1-${i} {
-          0%, 14.800% {
-            transform: perspective(2200px) rotateY(0deg);
-            opacity: 0;
-          }
-          14.900%, ${f1Start.toFixed(3)}% {
-            transform: perspective(2200px) rotateY(0deg);
-            opacity: 1;
-            animation-timing-function: cubic-bezier(0.42, 0, 0.7, 0.55);
-          }
-          ${f1End.toFixed(3)}% {
-            transform: perspective(2200px) rotateY(-94deg);
-            opacity: 0;
-          }
-          ${(f1End + 0.01).toFixed(3)}%, 100% {
-            transform: perspective(2200px) rotateY(-94deg);
-            opacity: 0;
-          }
-        }
-      `;
-
-      // Flip 2 (GenAI / Green outgoing slats: 41.667% to 47.778%)
-      const f2Start = 41.667 + delay;
-      const f2End = f2Start + slatDuration;
-      slatStyles += `
-        @keyframes slat-f2-${i} {
-          0%, 41.500% {
-            transform: perspective(2200px) rotateY(0deg);
-            opacity: 0;
-          }
-          41.600%, ${f2Start.toFixed(3)}% {
-            transform: perspective(2200px) rotateY(0deg);
-            opacity: 1;
-            animation-timing-function: cubic-bezier(0.42, 0, 0.7, 0.55);
-          }
-          ${f2End.toFixed(3)}% {
-            transform: perspective(2200px) rotateY(-94deg);
-            opacity: 0;
-          }
-          ${(f2End + 0.01).toFixed(3)}%, 100% {
-            transform: perspective(2200px) rotateY(-94deg);
-            opacity: 0;
-          }
-        }
-      `;
-
-      // Flip 3 (Logic / Beige outgoing slats: 73.889% to 80.000%)
-      const f3Start = 73.889 + delay;
-      const f3End = f3Start + slatDuration;
-      slatStyles += `
-        @keyframes slat-f3-${i} {
-          0%, 73.700% {
-            transform: perspective(2200px) rotateY(0deg);
-            opacity: 0;
-          }
-          73.800%, ${f3Start.toFixed(3)}% {
-            transform: perspective(2200px) rotateY(0deg);
-            opacity: 1;
-            animation-timing-function: cubic-bezier(0.42, 0, 0.7, 0.55);
-          }
-          ${f3End.toFixed(3)}% {
-            transform: perspective(2200px) rotateY(-94deg);
-            opacity: 0;
-          }
-          ${(f3End + 0.01).toFixed(3)}%, 100% {
-            transform: perspective(2200px) rotateY(-94deg);
-            opacity: 0;
-          }
-        }
-      `;
-    }
-
     return `
-      ${slatStyles}
+      @import url('https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Volkhov:ital,wght@0,700;1,700&display=swap');
 
-      /* Slat Overlays: Visible ONLY during the flip window to prevent gap flicker */
-      @keyframes overlay-1-visibility {
-        0%, 14.800% { opacity: 0; visibility: hidden; pointer-events: none; }
-        14.900%, 21.150% { opacity: 1; visibility: visible; pointer-events: none; }
-        21.200%, 100% { opacity: 0; visibility: hidden; pointer-events: none; }
-      }
-
-      @keyframes overlay-2-visibility {
-        0%, 41.500% { opacity: 0; visibility: hidden; pointer-events: none; }
-        41.600%, 47.800% { opacity: 1; visibility: visible; pointer-events: none; }
-        47.850%, 100% { opacity: 0; visibility: hidden; pointer-events: none; }
-      }
-
-      @keyframes overlay-3-visibility {
-        0%, 73.700% { opacity: 0; visibility: hidden; pointer-events: none; }
-        73.800%, 80.050% { opacity: 1; visibility: visible; pointer-events: none; }
-        80.100%, 100% { opacity: 0; visibility: hidden; pointer-events: none; }
+      /* Seamless infinite marquee ticker scroll */
+      @keyframes marquee-scroll {
+        0% {
+          transform: translateX(0%);
+          -webkit-transform: translateX(0%);
+        }
+        100% {
+          transform: translateX(-50%);
+          -webkit-transform: translateX(-50%);
+        }
       }
 
-      /* Base layer transitions: Solid uninterrupted surfaces */
-      @keyframes green-base-layer {
-        0%, 14.999% { opacity: 0; visibility: hidden; }
-        15.000%, 47.778% { opacity: 1; visibility: visible; }
-        47.779%, 100% { opacity: 0; visibility: hidden; }
+      /* Subtle floating motion for pill badges */
+      @keyframes float-pill-1 {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-5px); }
+      }
+      @keyframes float-pill-2 {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(5px); }
       }
 
-      @keyframes beige-base-layer {
-        0%, 41.666% { opacity: 0; visibility: hidden; }
-        41.667%, 80.000% { opacity: 1; visibility: visible; }
-        80.001%, 100% { opacity: 0; visibility: hidden; }
+      /* Mobile drawer animation */
+      @keyframes slide-down {
+        from { opacity: 0; transform: translateY(-8px); }
+        to { opacity: 1; transform: translateY(0); }
       }
 
-      /* Giant word floating motions (main copy & sidebar sliver) */
-      @keyframes word-main-brown {
-        0%, 15.000% { transform: translateY(0px); opacity: 1; }
-        16.800% { transform: translateY(26px); opacity: 0; }
-        16.801%, 73.888% { transform: translateY(52px); opacity: 0; }
-        73.889% { transform: translateY(52px); opacity: 0; animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
-        79.800%, 100% { transform: translateY(0px); opacity: 1; }
-      }
-      @keyframes word-sliver-brown {
-        0%, 15.000% { transform: translateY(0px); opacity: 1; }
-        16.800% { transform: translateY(-26px); opacity: 0; }
-        16.801%, 73.888% { transform: translateY(-52px); opacity: 0; }
-        73.889% { transform: translateY(-52px); opacity: 0; animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
-        79.800%, 100% { transform: translateY(0px); opacity: 1; }
-      }
-
-      @keyframes word-main-green {
-        0%, 14.999% { transform: translateY(52px); opacity: 0; }
-        15.000% { transform: translateY(52px); opacity: 0; animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
-        20.900%, 41.667% { transform: translateY(0px); opacity: 1; }
-        43.500% { transform: translateY(26px); opacity: 0; }
-        43.501%, 100% { transform: translateY(52px); opacity: 0; }
-      }
-      @keyframes word-sliver-green {
-        0%, 14.999% { transform: translateY(-52px); opacity: 0; }
-        15.000% { transform: translateY(-52px); opacity: 0; animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
-        20.900%, 41.667% { transform: translateY(0px); opacity: 1; }
-        43.500% { transform: translateY(-26px); opacity: 0; }
-        43.501%, 100% { transform: translateY(-52px); opacity: 0; }
-      }
-
-      @keyframes word-main-beige {
-        0%, 41.666% { transform: translateY(52px); opacity: 0; }
-        41.667% { transform: translateY(52px); opacity: 0; animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
-        47.600%, 73.889% { transform: translateY(0px); opacity: 1; }
-        75.700% { transform: translateY(26px); opacity: 0; }
-        75.701%, 100% { transform: translateY(52px); opacity: 0; }
-      }
-      @keyframes word-sliver-beige {
-        0%, 41.666% { transform: translateY(-52px); opacity: 0; }
-        41.667% { transform: translateY(-52px); opacity: 0; animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
-        47.600%, 73.889% { transform: translateY(0px); opacity: 1; }
-        75.700% { transform: translateY(-26px); opacity: 0; }
-        75.701%, 100% { transform: translateY(-52px); opacity: 0; }
-      }
-
-      /* Sidebar upcoming preview thumbnail slide-up animations */
-      @keyframes preview-slide-green {
-        0%, 15.000% { transform: translateY(0%); opacity: 1; }
-        17.000% { transform: translateY(-100%); opacity: 0; }
-        17.001%, 73.888% { transform: translateY(100%); opacity: 0; }
-        73.889% { transform: translateY(100%); opacity: 0; animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
-        80.000%, 100% { transform: translateY(0%); opacity: 1; }
-      }
-      @keyframes preview-slide-beige {
-        0%, 14.999% { transform: translateY(100%); opacity: 0; }
-        15.000% { transform: translateY(100%); opacity: 0; animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
-        21.111%, 41.667% { transform: translateY(0%); opacity: 1; }
-        43.700% { transform: translateY(-100%); opacity: 0; }
-        43.701%, 100% { transform: translateY(100%); opacity: 0; }
-      }
-      @keyframes preview-slide-brown {
-        0%, 41.666% { transform: translateY(100%); opacity: 0; }
-        41.667% { transform: translateY(100%); opacity: 0; animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
-        47.778%, 73.889% { transform: translateY(0%); opacity: 1; }
-        75.900% { transform: translateY(-100%); opacity: 0; }
-        75.901%, 100% { transform: translateY(100%); opacity: 0; }
-      }
-
-      /* Sidebar Content Crossfades */
-      @keyframes sidebar-info-brown {
-        0%, 15.000% { opacity: 1; transform: translateY(0px); }
-        17.000% { opacity: 0; transform: translateY(-8px); }
-        17.001%, 73.888% { opacity: 0; transform: translateY(8px); }
-        73.889% { opacity: 0; transform: translateY(8px); animation-timing-function: ease-out; }
-        78.800%, 100% { opacity: 1; transform: translateY(0px); }
-      }
-      @keyframes sidebar-info-green {
-        0%, 14.999% { opacity: 0; transform: translateY(8px); }
-        15.000% { opacity: 0; transform: translateY(8px); animation-timing-function: ease-out; }
-        19.800%, 41.667% { opacity: 1; transform: translateY(0px); }
-        43.700% { opacity: 0; transform: translateY(-8px); }
-        43.701%, 100% { opacity: 0; transform: translateY(8px); }
-      }
-      @keyframes sidebar-info-beige {
-        0%, 41.666% { opacity: 0; transform: translateY(8px); }
-        41.667% { opacity: 0; transform: translateY(8px); animation-timing-function: ease-out; }
-        46.800%, 73.889% { opacity: 1; transform: translateY(0px); }
-        75.900% { opacity: 0; transform: translateY(-8px); }
-        75.901%, 100% { opacity: 0; transform: translateY(8px); }
-      }
-
-      /* Respect prefers-reduced-motion */
       @media (prefers-reduced-motion: reduce) {
         *, ::before, ::after {
-          animation-duration: 0.001ms !important;
+          animation-duration: 0.01ms !important;
           animation-iteration-count: 1 !important;
-          transition-duration: 0.001ms !important;
-        }
-        .slat-overlay-1, .slat-overlay-2, .slat-overlay-3 {
-          display: none !important;
-        }
-        .green-base-layer, .beige-base-layer {
-          display: none !important;
-        }
-        .word-main-green, .word-sliver-green,
-        .word-main-beige, .word-sliver-beige,
-        .sidebar-info-green, .sidebar-info-beige,
-        .preview-beige, .preview-brown {
-          display: none !important;
-        }
-        .word-main-brown, .word-sliver-brown,
-        .sidebar-info-brown, .preview-green {
-          opacity: 1 !important;
-          transform: none !important;
+          transition-duration: 0.01ms !important;
         }
       }
     `;
@@ -367,1010 +117,1076 @@ export default function FashionEditorial() {
     <div
       ref={containerRef}
       style={{
-        position: 'fixed',
-        inset: 0,
-        width: '100vw',
-        height: '100vh',
-        overflow: 'hidden',
-        userSelect: 'none',
-        WebkitFontSmoothing: 'antialiased',
-        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+        width: '100%',
+        minHeight: '100vh',
+        overflowX: 'hidden',
+        overflowY: 'auto',
+        position: 'relative',
+        backgroundColor: '#ffffff',
+        fontFamily: '"Playfair", Georgia, serif',
       }}
     >
       <style>{cssKeyframes}</style>
 
-      {/* 1200xStageHeight Core Editorial Panel scaled to 100vw x 100vh (Zero Black Gaps) */}
-      <div
-        style={{
-          width: 1200,
-          height: stageHeight,
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          transform: `scale(${scale})`,
-          transformOrigin: 'top left',
-          backgroundColor: '#ffffff',
-          overflow: 'hidden',
-        }}
-      >
-        {/* ========================================================================= */}
-        {/* 1. LEFT SIDEBAR (245px White Panel, 100% height) */}
-        {/* ========================================================================= */}
+      {/* RENDER DESKTOP VS MOBILE HERO */}
+      {isMobile ? (
+        /* MOBILE VIEW (< 860px): Fluid vertical responsive hero */
+        <MobileHeroSection
+          mobileMenuOpen={mobileMenuOpen}
+          setMobileMenuOpen={setMobileMenuOpen}
+        />
+      ) : (
+        /* DESKTOP VIEW (>= 860px): Stage-scaled responsive hero */
         <div
           style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: 245,
-            height: '100%',
-            backgroundColor: '#ffffff',
-            zIndex: 30,
-            overflow: 'hidden',
-            boxSizing: 'border-box',
-          }}
-        >
-          {/* Wordmark */}
-          <div style={{ position: 'absolute', top: 28, left: 28 }}>
-            <div
-              style={{
-                fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-                fontWeight: 900,
-                fontSize: 20,
-                letterSpacing: 3.5,
-                color: '#111116',
-                lineHeight: 1,
-              }}
-            >
-              MADHU
-            </div>
-            <div
-              style={{
-                fontSize: 7.5,
-                fontWeight: 800,
-                letterSpacing: 2,
-                color: '#888892',
-                marginTop: 5,
-                textTransform: 'uppercase',
-              }}
-            >
-              PORTFOLIO · 2026
-            </div>
-          </div>
-
-          {/* 'Next' Header & Prev/Next Arrows */}
-          <div
-            style={{
-              position: 'absolute',
-              top: 86,
-              left: 28,
-              width: 160,
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
-            <div
-              style={{
-                fontSize: 10,
-                fontWeight: 800,
-                letterSpacing: 2,
-                color: '#666670',
-                textTransform: 'uppercase',
-              }}
-            >
-              Next
-            </div>
-            <div style={{ display: 'flex', gap: 10 }}>
-              {/* Left arrow */}
-              <div
-                style={{
-                  width: 18,
-                  height: 18,
-                  borderRadius: '50%',
-                  border: '1px solid rgba(0,0,0,0.15)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                }}
-              >
-                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.5">
-                  <path d="M15 18l-6-6 6-6" />
-                </svg>
-              </div>
-              {/* Right arrow */}
-              <div
-                style={{
-                  width: 18,
-                  height: 18,
-                  borderRadius: '50%',
-                  border: '1px solid rgba(0,0,0,0.15)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                }}
-              >
-                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#222" strokeWidth="2.5">
-                  <path d="M9 18l6-6-6-6" />
-                </svg>
-              </div>
-            </div>
-          </div>
-
-          {/* 160x248 Clipped Preview Thumbnail Container */}
-          <div
-            style={{
-              position: 'absolute',
-              top: 114,
-              left: 28,
-              width: 160,
-              height: 248,
-              overflow: 'hidden',
-              borderRadius: 2,
-              backgroundColor: '#1b1b22',
-              boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)',
-            }}
-          >
-            {/* Preview 1: GenAI (shown during Stack story) */}
-            <div
-              className="preview-green"
-              style={{
-                position: 'absolute',
-                inset: 0,
-                animation: 'preview-slide-green 14.4s infinite',
-              }}
-            >
-              <PortfolioPreviewContent story={STORIES.green} />
-            </div>
-
-            {/* Preview 2: Logic (shown during GenAI story) */}
-            <div
-              className="preview-beige"
-              style={{
-                position: 'absolute',
-                inset: 0,
-                animation: 'preview-slide-beige 14.4s infinite',
-              }}
-            >
-              <PortfolioPreviewContent story={STORIES.beige} />
-            </div>
-
-            {/* Preview 3: Stack (shown during Logic story) */}
-            <div
-              className="preview-brown"
-              style={{
-                position: 'absolute',
-                inset: 0,
-                animation: 'preview-slide-brown 14.4s infinite',
-              }}
-            >
-              <PortfolioPreviewContent story={STORIES.brown} />
-            </div>
-          </div>
-
-          {/* Sidebar Metadata (Headline, Tech Range, Big Index Code) */}
-          <div style={{ position: 'absolute', top: 382, left: 28, right: 28, bottom: 24 }}>
-            {/* Stack Meta */}
-            <div
-              className="sidebar-info-brown"
-              style={{
-                position: 'absolute',
-                inset: 0,
-                animation: 'sidebar-info-brown 14.4s infinite',
-              }}
-            >
-              <SidebarInfo story={STORIES.brown} />
-            </div>
-
-            {/* GenAI Meta */}
-            <div
-              className="sidebar-info-green"
-              style={{
-                position: 'absolute',
-                inset: 0,
-                animation: 'sidebar-info-green 14.4s infinite',
-              }}
-            >
-              <SidebarInfo story={STORIES.green} />
-            </div>
-
-            {/* Logic Meta */}
-            <div
-              className="sidebar-info-beige"
-              style={{
-                position: 'absolute',
-                inset: 0,
-                animation: 'sidebar-info-beige 14.4s infinite',
-              }}
-            >
-              <SidebarInfo story={STORIES.beige} />
-            </div>
-          </div>
-
-          {/* Giant Word Dark Slivers (straddling boundary) */}
-          <div
-            className="word-sliver-brown"
-            style={{
-              position: 'absolute',
-              left: 372,
-              top: 24,
-              zIndex: 35,
-              animation: 'word-sliver-brown 14.4s infinite',
-            }}
-          >
-            <div
-              style={{
-                fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-                fontWeight: 800,
-                fontSize: 168,
-                letterSpacing: -5,
-                lineHeight: 0.8,
-                whiteSpace: 'nowrap',
-                color: STORIES.brown.sidebarWordColor,
-                transformOrigin: '0 0',
-                transform: 'rotate(90deg)',
-                pointerEvents: 'none',
-              }}
-            >
-              {STORIES.brown.name}
-            </div>
-          </div>
-
-          <div
-            className="word-sliver-green"
-            style={{
-              position: 'absolute',
-              left: 372,
-              top: 24,
-              zIndex: 35,
-              animation: 'word-sliver-green 14.4s infinite',
-            }}
-          >
-            <div
-              style={{
-                fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-                fontWeight: 800,
-                fontSize: 168,
-                letterSpacing: -5,
-                lineHeight: 0.8,
-                whiteSpace: 'nowrap',
-                color: STORIES.green.sidebarWordColor,
-                transformOrigin: '0 0',
-                transform: 'rotate(90deg)',
-                pointerEvents: 'none',
-              }}
-            >
-              {STORIES.green.name}
-            </div>
-          </div>
-
-          <div
-            className="word-sliver-beige"
-            style={{
-              position: 'absolute',
-              left: 372,
-              top: 24,
-              zIndex: 35,
-              animation: 'word-sliver-beige 14.4s infinite',
-            }}
-          >
-            <div
-              style={{
-                fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-                fontWeight: 800,
-                fontSize: 168,
-                letterSpacing: -5,
-                lineHeight: 0.8,
-                whiteSpace: 'nowrap',
-                color: STORIES.beige.sidebarWordColor,
-                transformOrigin: '0 0',
-                transform: 'rotate(90deg)',
-                pointerEvents: 'none',
-              }}
-            >
-              {STORIES.beige.name}
-            </div>
-          </div>
-        </div>
-
-        {/* ========================================================================= */}
-        {/* 2. MAIN COLOURED AREA (955px wide, 100% height, positioned left: 245px)   */}
-        {/* ========================================================================= */}
-        <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 245,
-            width: 955,
-            height: '100%',
-            overflow: 'hidden',
-          }}
-        >
-          {/* ----------------------------------------------------------------- */}
-          {/* LAYER 0: STACK BASE (Permanent solid resting base)                */}
-          {/* ----------------------------------------------------------------- */}
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              backgroundColor: STORIES.brown.panelBg,
-              zIndex: 1,
-            }}
-          >
-            <MainPortfolioContent story={STORIES.brown} stageHeight={stageHeight} />
-          </div>
-
-          {/* ----------------------------------------------------------------- */}
-          {/* LAYER 1: GENAI BASE LAYER (Solid surface beneath Flip 1 slats)    */}
-          {/* ----------------------------------------------------------------- */}
-          <div
-            className="green-base-layer"
-            style={{
-              position: 'absolute',
-              inset: 0,
-              backgroundColor: STORIES.green.panelBg,
-              zIndex: 2,
-              animation: 'green-base-layer 14.4s infinite',
-            }}
-          >
-            <MainPortfolioContent story={STORIES.green} stageHeight={stageHeight} />
-          </div>
-
-          {/* ----------------------------------------------------------------- */}
-          {/* LAYER 2: LOGIC BASE LAYER (Solid surface beneath Flip 2 slats)    */}
-          {/* ----------------------------------------------------------------- */}
-          <div
-            className="beige-base-layer"
-            style={{
-              position: 'absolute',
-              inset: 0,
-              backgroundColor: STORIES.beige.panelBg,
-              zIndex: 3,
-              animation: 'beige-base-layer 14.4s infinite',
-            }}
-          >
-            <MainPortfolioContent story={STORIES.beige} stageHeight={stageHeight} />
-          </div>
-
-          {/* ----------------------------------------------------------------- */}
-          {/* GIANT WORD MAIN LIGHT COPIES (Z-INDEX: 15)                        */}
-          {/* ----------------------------------------------------------------- */}
-          <div
-            className="word-main-brown"
-            style={{
-              position: 'absolute',
-              left: 127,
-              top: 24,
-              zIndex: 15,
-              animation: 'word-main-brown 14.4s infinite',
-            }}
-          >
-            <div
-              style={{
-                fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-                fontWeight: 800,
-                fontSize: 168,
-                letterSpacing: -5,
-                lineHeight: 0.8,
-                whiteSpace: 'nowrap',
-                color: STORIES.brown.mainWordColor,
-                transformOrigin: '0 0',
-                transform: 'rotate(90deg)',
-                pointerEvents: 'none',
-              }}
-            >
-              {STORIES.brown.name}
-            </div>
-          </div>
-
-          <div
-            className="word-main-green"
-            style={{
-              position: 'absolute',
-              left: 127,
-              top: 24,
-              zIndex: 15,
-              animation: 'word-main-green 14.4s infinite',
-            }}
-          >
-            <div
-              style={{
-                fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-                fontWeight: 800,
-                fontSize: 168,
-                letterSpacing: -5,
-                lineHeight: 0.8,
-                whiteSpace: 'nowrap',
-                color: STORIES.green.mainWordColor,
-                transformOrigin: '0 0',
-                transform: 'rotate(90deg)',
-                pointerEvents: 'none',
-              }}
-            >
-              {STORIES.green.name}
-            </div>
-          </div>
-
-          <div
-            className="word-main-beige"
-            style={{
-              position: 'absolute',
-              left: 127,
-              top: 24,
-              zIndex: 15,
-              animation: 'word-main-beige 14.4s infinite',
-            }}
-          >
-            <div
-              style={{
-                fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-                fontWeight: 800,
-                fontSize: 168,
-                letterSpacing: -5,
-                lineHeight: 0.8,
-                whiteSpace: 'nowrap',
-                color: STORIES.beige.mainWordColor,
-                transformOrigin: '0 0',
-                transform: 'rotate(90deg)',
-                pointerEvents: 'none',
-              }}
-            >
-              {STORIES.beige.name}
-            </div>
-          </div>
-
-          {/* ----------------------------------------------------------------- */}
-          {/* SIGNATURE MOVE: 12 VERTICAL VENETIAN-BLIND SLAT OVERLAYS         */}
-          {/* ----------------------------------------------------------------- */}
-
-          {/* Flip 1 Slats: Stack -> GenAI (z-index: 20) */}
-          <div
-            className="slat-overlay-1"
-            style={{
-              position: 'absolute',
-              inset: 0,
-              zIndex: 20,
-              pointerEvents: 'none',
-              animation: 'overlay-1-visibility 14.4s infinite',
-            }}
-          >
-            {Array.from({ length: SLAT_COUNT }).map((_, i) => (
-              <div
-                key={`slat-f1-${i}`}
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: i * SLAT_WIDTH,
-                  width: SLAT_WIDTH + 1.2,
-                  height: '100%',
-                  overflow: 'hidden',
-                  transformOrigin: '50% 50%',
-                  backfaceVisibility: 'hidden',
-                  WebkitBackfaceVisibility: 'hidden',
-                  outline: '1px solid transparent',
-                  animation: `slat-f1-${i} 14.4s infinite`,
-                }}
-              >
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: -i * SLAT_WIDTH,
-                    width: MAIN_WIDTH,
-                    height: '100%',
-                    backgroundColor: STORIES.brown.panelBg,
-                  }}
-                >
-                  <MainPortfolioContent story={STORIES.brown} stageHeight={stageHeight} />
-                  <div
-                    style={{
-                      position: 'absolute',
-                      left: 127,
-                      top: 24,
-                      fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-                      fontWeight: 800,
-                      fontSize: 168,
-                      letterSpacing: -5,
-                      lineHeight: 0.8,
-                      whiteSpace: 'nowrap',
-                      color: STORIES.brown.mainWordColor,
-                      transformOrigin: '0 0',
-                      transform: 'rotate(90deg)',
-                    }}
-                  >
-                    {STORIES.brown.name}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Flip 2 Slats: GenAI -> Logic (z-index: 22) */}
-          <div
-            className="slat-overlay-2"
-            style={{
-              position: 'absolute',
-              inset: 0,
-              zIndex: 22,
-              pointerEvents: 'none',
-              animation: 'overlay-2-visibility 14.4s infinite',
-            }}
-          >
-            {Array.from({ length: SLAT_COUNT }).map((_, i) => (
-              <div
-                key={`slat-f2-${i}`}
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: i * SLAT_WIDTH,
-                  width: SLAT_WIDTH + 1.2,
-                  height: '100%',
-                  overflow: 'hidden',
-                  transformOrigin: '50% 50%',
-                  backfaceVisibility: 'hidden',
-                  WebkitBackfaceVisibility: 'hidden',
-                  outline: '1px solid transparent',
-                  animation: `slat-f2-${i} 14.4s infinite`,
-                }}
-              >
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: -i * SLAT_WIDTH,
-                    width: MAIN_WIDTH,
-                    height: '100%',
-                    backgroundColor: STORIES.green.panelBg,
-                  }}
-                >
-                  <MainPortfolioContent story={STORIES.green} stageHeight={stageHeight} />
-                  <div
-                    style={{
-                      position: 'absolute',
-                      left: 127,
-                      top: 24,
-                      fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-                      fontWeight: 800,
-                      fontSize: 168,
-                      letterSpacing: -5,
-                      lineHeight: 0.8,
-                      whiteSpace: 'nowrap',
-                      color: STORIES.green.mainWordColor,
-                      transformOrigin: '0 0',
-                      transform: 'rotate(90deg)',
-                    }}
-                  >
-                    {STORIES.green.name}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Flip 3 Slats: Logic -> Stack (z-index: 24) */}
-          <div
-            className="slat-overlay-3"
-            style={{
-              position: 'absolute',
-              inset: 0,
-              zIndex: 24,
-              pointerEvents: 'none',
-              animation: 'overlay-3-visibility 14.4s infinite',
-            }}
-          >
-            {Array.from({ length: SLAT_COUNT }).map((_, i) => (
-              <div
-                key={`slat-f3-${i}`}
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: i * SLAT_WIDTH,
-                  width: SLAT_WIDTH + 1.2,
-                  height: '100%',
-                  overflow: 'hidden',
-                  transformOrigin: '50% 50%',
-                  backfaceVisibility: 'hidden',
-                  WebkitBackfaceVisibility: 'hidden',
-                  outline: '1px solid transparent',
-                  animation: `slat-f3-${i} 14.4s infinite`,
-                }}
-              >
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: -i * SLAT_WIDTH,
-                    width: MAIN_WIDTH,
-                    height: '100%',
-                    backgroundColor: STORIES.beige.panelBg,
-                  }}
-                >
-                  <MainPortfolioContent story={STORIES.beige} stageHeight={stageHeight} />
-                  <div
-                    style={{
-                      position: 'absolute',
-                      left: 127,
-                      top: 24,
-                      fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-                      fontWeight: 800,
-                      fontSize: 168,
-                      letterSpacing: -5,
-                      lineHeight: 0.8,
-                      whiteSpace: 'nowrap',
-                      color: STORIES.beige.mainWordColor,
-                      transformOrigin: '0 0',
-                      transform: 'rotate(90deg)',
-                    }}
-                  >
-                    {STORIES.beige.name}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Main Portfolio Content Sub-Component (Developer Showcase, 158x85 card, 3 product cards, kicker)
-// ---------------------------------------------------------------------------
-function MainPortfolioContent({ story, stageHeight }) {
-  return (
-    <div style={{ position: 'relative', width: 955, height: '100%', pointerEvents: 'none' }}>
-      {/* 430x520 Developer Tech Visualization Centerpiece (bottom-aligned) */}
-      <div
-        style={{
-          position: 'absolute',
-          left: 175,
-          bottom: 0,
-          width: 430,
-          height: 520,
-          zIndex: 5,
-        }}
-      >
-        <TechIllustrationSvg id={story.id} />
-      </div>
-
-      {/* Developer's Name & Role Kicker */}
-      <div
-        style={{
-          position: 'absolute',
-          right: 28,
-          bottom: 188,
-          textAlign: 'right',
-          zIndex: 8,
-        }}
-      >
-        <div
-          style={{
-            fontSize: 9,
-            fontWeight: 800,
-            letterSpacing: 3,
-            color: 'rgba(255, 255, 255, 0.75)',
-            textTransform: 'uppercase',
-            marginBottom: 3,
-          }}
-        >
-          {story.kicker}
-        </div>
-        <div
-          style={{
-            fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-            fontSize: 17,
-            fontWeight: 800,
-            letterSpacing: 1.2,
-            color: '#ffffff',
-            textTransform: 'uppercase',
-            textShadow: '0 2px 10px rgba(0,0,0,0.35)',
-          }}
-        >
-          {story.developerName}
-        </div>
-      </div>
-
-      {/* 158x85 White Thumbnail Card Top-Right */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 24,
-          right: 28,
-          width: 158,
-          height: 85,
-          backgroundColor: '#ffffff',
-          borderRadius: 3,
-          boxShadow: '0 12px 28px rgba(0, 0, 0, 0.16)',
-          boxSizing: 'border-box',
-          padding: '9px 10px',
-          display: 'flex',
-          gap: 10,
-          alignItems: 'center',
-          zIndex: 8,
-        }}
-      >
-        <div
-          style={{
-            width: 46,
-            height: 67,
-            borderRadius: 2,
-            overflow: 'hidden',
-            backgroundColor: story.panelBg,
-            flexShrink: 0,
+            width: '100%',
+            height: stageHeight * scale,
             position: 'relative',
+            overflow: 'hidden',
+            backgroundColor: '#ffffff',
           }}
         >
-          <TechSwatchGraphic id={story.id} />
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <div
             style={{
-              fontSize: 8,
-              fontWeight: 800,
-              letterSpacing: 1.5,
-              color: '#111116',
-              textTransform: 'uppercase',
-              lineHeight: 1.2,
-            }}
-          >
-            {story.lookKicker}
-          </div>
-          <div
-            style={{
-              fontSize: 7.5,
-              fontWeight: 700,
-              color: '#7b7b84',
-              textTransform: 'uppercase',
-              letterSpacing: 1,
-              marginTop: 2,
-            }}
-          >
-            {story.lookTitle}
-          </div>
-          <div
-            style={{
-              fontSize: 7,
-              fontWeight: 500,
-              color: '#44444c',
-              lineHeight: 1.35,
-              marginTop: 4,
-            }}
-          >
-            {story.lookDesc}
-          </div>
-        </div>
-      </div>
-
-      {/* Three 105x150 White Project / Skill Showcase Cards Bottom-Right */}
-      <div
-        style={{
-          position: 'absolute',
-          bottom: 24,
-          right: 28,
-          display: 'flex',
-          gap: 12,
-          zIndex: 8,
-        }}
-      >
-        {story.products.map((item, idx) => (
-          <div
-            key={idx}
-            style={{
-              width: 105,
-              height: 150,
+              width: STAGE_WIDTH,
+              height: stageHeight,
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              transform: `scale(${scale})`,
+              transformOrigin: 'top left',
               backgroundColor: '#ffffff',
-              borderRadius: 3,
-              boxShadow: '0 10px 24px rgba(0, 0, 0, 0.14)',
-              boxSizing: 'border-box',
-              padding: '10px 8px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
+              overflow: 'hidden',
             }}
           >
-            <div
-              style={{
-                width: '100%',
-                height: 72,
-                borderRadius: 2,
-                backgroundColor: '#f6f6f8',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <ProjectTechIcon icon={item.icon} color={story.panelBg} />
-            </div>
+            {/* Desktop Hero Content */}
+            <DesktopHeroContent stageHeight={stageHeight} />
 
-            <div style={{ marginTop: 6 }}>
-              <div
-                style={{
-                  fontSize: 7.5,
-                  fontWeight: 800,
-                  letterSpacing: 1.4,
-                  color: '#111116',
-                  textTransform: 'uppercase',
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                }}
-              >
-                {item.brand}
-              </div>
-              <div
-                style={{
-                  fontSize: 7.5,
-                  fontWeight: 600,
-                  color: '#44444f',
-                  marginTop: 2,
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                }}
-              >
-                {item.name}
-              </div>
-              <div
-                style={{
-                  fontSize: 8,
-                  fontWeight: 700,
-                  color: '#111116',
-                  marginTop: 3,
-                  letterSpacing: -0.1,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 3,
-                }}
-              >
-                <span style={{ width: 4, height: 4, borderRadius: '50%', backgroundColor: '#22c55e', display: 'inline-block' }} />
-                {item.highlight}
-              </div>
-            </div>
+            {/* Desktop Slanted Marquee Ribbon */}
+            <SlantedTickerRibbon isMobile={false} />
           </div>
-        ))}
-      </div>
+        </div>
+      )}
+
+      {/* Under Hero: Dedicated 4-Line Editorial Statement Section (h3 size text only) */}
+      <EditorialStatementSection isMobile={isMobile} />
     </div>
   );
 }
 
 // ---------------------------------------------------------------------------
-// Sidebar Preview Content (160x248 thumbnail card)
+// MOBILE HERO SECTION (< 860px Breakpoint)
 // ---------------------------------------------------------------------------
-function PortfolioPreviewContent({ story }) {
+function MobileHeroSection({ mobileMenuOpen, setMobileMenuOpen }) {
   return (
     <div
       style={{
         width: '100%',
-        height: '100%',
-        backgroundColor: story.panelBg,
         position: 'relative',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        padding: 14,
-        boxSizing: 'border-box',
+        backgroundColor: '#ffffff',
+        overflow: 'hidden',
       }}
     >
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-        <span
+      {/* 1. Mobile Deep Forest Green Capsule Navbar (Matches Reference Image) */}
+      <nav
+        style={{
+          position: 'sticky',
+          top: 12,
+          margin: '12px auto 0 auto',
+          width: 'calc(100% - 24px)',
+          maxWidth: 520,
+          height: 56,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          backgroundColor: '#283b30',
+          backgroundImage: 'linear-gradient(135deg, #2d4336 0%, #223429 100%)',
+          borderRadius: 36,
+          padding: '0 10px 0 14px',
+          boxShadow: '0 10px 28px rgba(0, 0, 0, 0.22), 0 2px 8px rgba(0, 0, 0, 0.15)',
+          border: '1px solid rgba(255, 255, 255, 0.08)',
+          zIndex: 50,
+          boxSizing: 'border-box',
+        }}
+      >
+        {/* Brand Logo & Name */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }}>
+          <div
+            style={{
+              width: 36,
+              height: 36,
+              borderRadius: '50%',
+              backgroundColor: '#f59e0b',
+              backgroundImage: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#1a2920',
+              fontWeight: 800,
+              fontSize: 18,
+              fontFamily: '"Playfair", Georgia, serif',
+              boxShadow: '0 3px 10px rgba(0, 0, 0, 0.25)',
+            }}
+          >
+            M
+          </div>
+          <span
+            style={{
+              fontFamily: '"Playfair", Georgia, serif',
+              fontSize: 18,
+              fontWeight: 700,
+              color: '#ffffff',
+              letterSpacing: 0.2,
+            }}
+          >
+            Madhu<span style={{ color: '#f59e0b' }}>.</span>
+          </span>
+        </div>
+
+        {/* Right: Pure White Pill "Contact Me" Button + Hamburger Toggle */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <button
+            type="button"
+            style={{
+              fontFamily: '"Playfair", Georgia, serif',
+              fontSize: 12.5,
+              fontWeight: 700,
+              color: '#283b30',
+              backgroundColor: '#ffffff',
+              border: 'none',
+              borderRadius: 24,
+              padding: '8px 16px',
+              cursor: 'pointer',
+              letterSpacing: 0.2,
+              boxShadow: '0 3px 10px rgba(0, 0, 0, 0.15)',
+            }}
+          >
+            Contact Me
+          </button>
+
+          {/* Hamburger Menu Toggle Button */}
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle mobile menu"
+            style={{
+              width: 36,
+              height: 36,
+              borderRadius: '50%',
+              backgroundColor: 'rgba(255, 255, 255, 0.12)',
+              border: '1px solid rgba(255, 255, 255, 0.15)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 4,
+              cursor: 'pointer',
+            }}
+          >
+            {mobileMenuOpen ? (
+              <span style={{ fontSize: 16, color: '#ffffff', fontWeight: 'bold', lineHeight: 1 }}>✕</span>
+            ) : (
+              <>
+                <span style={{ width: 16, height: 2, backgroundColor: '#ffffff', borderRadius: 1 }} />
+                <span style={{ width: 16, height: 2, backgroundColor: '#f59e0b', borderRadius: 1 }} />
+                <span style={{ width: 16, height: 2, backgroundColor: '#ffffff', borderRadius: 1 }} />
+              </>
+            )}
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile Menu Dropdown Drawer */}
+      {mobileMenuOpen && (
+        <div
           style={{
-            fontSize: 7.5,
+            position: 'fixed',
+            top: 76,
+            left: 12,
+            right: 12,
+            backgroundColor: '#283b30',
+            backgroundImage: 'linear-gradient(135deg, #2d4336 0%, #223429 100%)',
+            borderRadius: 20,
+            padding: '16px 20px',
+            boxShadow: '0 16px 36px rgba(0, 0, 0, 0.35)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            zIndex: 49,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 10,
+            animation: 'slide-down 0.2s ease-out',
+          }}
+        >
+          {['Home', 'Services', 'About', 'Projects', 'Blogs', 'Testimonials'].map((link, idx) => (
+            <div
+              key={link}
+              onClick={() => setMobileMenuOpen(false)}
+              style={{
+                fontFamily: '"Playfair", Georgia, serif',
+                fontSize: 15,
+                fontWeight: idx === 0 ? 700 : 500,
+                color: idx === 0 ? '#f59e0b' : '#e5e7eb',
+                padding: '8px 4px',
+                borderBottom: idx < 5 ? '1px solid rgba(255, 255, 255, 0.08)' : 'none',
+                cursor: 'pointer',
+              }}
+            >
+              {link}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Background Shapes for Mobile */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          width: '100%',
+          height: '100%',
+          pointerEvents: 'none',
+          overflow: 'hidden',
+          zIndex: 1,
+        }}
+      >
+        <svg
+          style={{ position: 'absolute', top: -40, right: -60, width: 340, height: 340 }}
+          viewBox="0 0 1440 724"
+          fill="none"
+        >
+          <path
+            d="M758.307 222C717.907 153.2 741.474 13.3333 758.307 -48L1437.81 -149L1502.31 122.5L1463.81 723.5C1385.14 724.5 1209.71 717 1137.31 679C1046.81 631.5 1087.81 555 1012.81 515C937.807 475 980.807 369.5 954.807 329.5C928.807 289.5 808.807 308 758.307 222Z"
+            fill="#FED7A2"
+            opacity="0.9"
+          />
+        </svg>
+
+        {/* Flying Airplane on Mobile */}
+        <div style={{ position: 'absolute', top: 50, right: 18, zIndex: 2 }}>
+          <svg width="75" height="50" viewBox="0 0 125 80" fill="none">
+            <path
+              d="M5 70 C40 50, 75 40, 110 20"
+              stroke="#2ba0ff"
+              strokeWidth="2.2"
+              strokeDasharray="4 4"
+              strokeOpacity="0.85"
+            />
+            <g transform="translate(100, 10) rotate(-18)">
+              <path d="M0 8 L22 2 L26 8 L10 12 L16 19 L12 20 L8 13 L2 14 L0 8 Z" fill="#ffffff" stroke="#1ea1f3" strokeWidth="1.3" />
+              <path d="M14 4 L24 2 L26 8 L18 7 Z" fill="#1ea1f3" />
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      {/* 2. Mobile Hero Content Stack */}
+      <div
+        style={{
+          position: 'relative',
+          zIndex: 5,
+          padding: '40px 20px 0 20px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          textAlign: 'center',
+          boxSizing: 'border-box',
+        }}
+      >
+        {/* Kicker badge */}
+        <div
+          style={{
+            fontFamily: '"Playfair", Georgia, serif',
+            fontSize: 12,
             fontWeight: 800,
             letterSpacing: 2,
-            color: 'rgba(255,255,255,0.7)',
+            color: '#ea580c',
             textTransform: 'uppercase',
+            marginBottom: 12,
           }}
         >
-          {story.nextIndex} / NEXT
-        </span>
-        <span
+          BEST ARCHITECTURE · IJJI MADHU VENKAT
+        </div>
+
+        {/* Headline with Playfair & Curved Orange Underline */}
+        <h1
           style={{
-            fontSize: 8,
-            fontWeight: 800,
-            letterSpacing: 1.5,
-            color: '#ffffff',
-            textTransform: 'uppercase',
+            fontFamily: '"Playfair", Georgia, serif',
+            fontSize: 'clamp(28px, 7.5vw, 36px)',
+            fontWeight: 700,
+            lineHeight: 1.25,
+            letterSpacing: -0.4,
+            color: '#181e4b',
+            margin: '0 0 14px 0',
+            maxWidth: 480,
           }}
         >
-          {story.name}
-        </span>
-      </div>
+          Build,{' '}
+          <span
+            style={{
+              position: 'relative',
+              display: 'inline-block',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            scale
+            {/* Iconic Curved Orange Brush Stroke Underline */}
+            <svg
+              width="100%"
+              height="14"
+              viewBox="0 0 160 14"
+              fill="none"
+              style={{
+                position: 'absolute',
+                bottom: -2,
+                left: 0,
+                width: '100%',
+                zIndex: -1,
+                overflow: 'visible',
+                pointerEvents: 'none',
+              }}
+            >
+              <path
+                d="M3 9 C40 3, 110 2, 155 7 C115 13, 50 14, 4 10 Z"
+                fill="#ea580c"
+              />
+              <path
+                d="M12 7 C60 4, 130 3, 152 8 C105 11, 45 10, 15 8 Z"
+                fill="#ff6b35"
+                opacity="0.8"
+              />
+            </svg>
+          </span>{' '}
+          and deploy modern intelligent systems
+        </h1>
 
-      <div style={{ width: '100%', height: 140, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <MiniTechPreviewSvg id={story.id} />
-      </div>
+        {/* Subtitle in Playfair */}
+        <p
+          style={{
+            fontFamily: '"Playfair", Georgia, serif',
+            fontSize: 14.5,
+            fontWeight: 500,
+            lineHeight: 1.6,
+            color: '#5e6282',
+            margin: '0 0 22px 0',
+            maxWidth: 460,
+          }}
+        >
+          Architecting high-scale web platforms, generative AI autonomous agents, and resilient cloud microservices with React, Next.js, Node.js, and PostgreSQL.
+        </p>
 
-      <div style={{ borderTop: '1px solid rgba(255,255,255,0.25)', paddingTop: 8 }}>
+        {/* CTA Buttons Row */}
         <div
           style={{
-            fontSize: 7.5,
-            fontWeight: 800,
-            letterSpacing: 1.5,
-            color: '#ffffff',
-            textTransform: 'uppercase',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+            gap: 16,
+            marginBottom: 28,
           }}
         >
-          SPECIALIZATION
+          <button
+            type="button"
+            style={{
+              fontFamily: '"Playfair", Georgia, serif',
+              fontSize: 13.5,
+              fontWeight: 700,
+              color: '#ffffff',
+              backgroundColor: '#ea580c',
+              backgroundImage: 'linear-gradient(135deg, #ff6b35 0%, #ea580c 100%)',
+              border: 'none',
+              borderRadius: 10,
+              padding: '12px 24px',
+              boxShadow: '0 12px 24px rgba(234, 88, 12, 0.3)',
+              cursor: 'pointer',
+              letterSpacing: 0.2,
+            }}
+          >
+            Find out more
+          </button>
+
+          {/* Play Demo Button */}
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 10,
+              cursor: 'pointer',
+            }}
+          >
+            <div
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: '50%',
+                backgroundColor: '#ea580c',
+                backgroundImage: 'linear-gradient(135deg, #ff6b35 0%, #ea580c 100%)',
+                boxShadow: '0 10px 22px rgba(234, 88, 12, 0.28)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+              }}
+            >
+              <svg width="11" height="13" viewBox="0 0 12 14" fill="none">
+                <path d="M11 7L1 1.2265V12.7735L11 7Z" fill="#ffffff" />
+              </svg>
+            </div>
+            <span
+              style={{
+                fontFamily: '"Playfair", Georgia, serif',
+                fontSize: 14,
+                fontWeight: 600,
+                color: '#5e6282',
+                letterSpacing: 0.2,
+              }}
+            >
+              Play Demo
+            </span>
+          </div>
         </div>
+
+        {/* 3. Portrait Cutout with Floating Badges (Touching Marquee at Bottom) */}
         <div
           style={{
-            fontSize: 7,
-            color: 'rgba(255,255,255,0.85)',
-            marginTop: 2,
+            position: 'relative',
+            display: 'inline-flex',
+            alignItems: 'flex-end',
+            justifyContent: 'center',
+            width: '100%',
+            maxWidth: 380,
+            marginTop: 10,
+            paddingBottom: 8,
           }}
         >
-          {story.lookTitle}
+          {/* Badge 1: White pill on Bottom-Left */}
+          <div
+            style={{
+              position: 'absolute',
+              bottom: 46,
+              left: 4,
+              zIndex: 14,
+              display: 'flex',
+              alignItems: 'center',
+              backgroundColor: '#ffffff',
+              color: '#181e4b',
+              padding: '7px 14px',
+              borderRadius: 20,
+              border: '1.5px solid rgba(234, 88, 12, 0.35)',
+              boxShadow: '0 8px 20px rgba(0, 0, 0, 0.1)',
+              animation: 'float-pill-1 4.5s ease-in-out infinite',
+            }}
+          >
+            <div
+              style={{
+                position: 'absolute',
+                top: -7,
+                left: 12,
+                width: 0,
+                height: 0,
+                borderLeft: '5px solid transparent',
+                borderRight: '5px solid transparent',
+                borderBottom: '8px solid #ea580c',
+                transform: 'rotate(-24deg)',
+              }}
+            />
+            <span
+              style={{
+                fontFamily: '"Playfair", Georgia, serif',
+                fontSize: 12,
+                fontWeight: 700,
+                letterSpacing: 0.2,
+                whiteSpace: 'nowrap',
+              }}
+            >
+              Full Stack Developer
+            </span>
+          </div>
+
+          {/* Badge 2: Orange pill on Top-Right */}
+          <div
+            style={{
+              position: 'absolute',
+              top: 50,
+              right: 4,
+              zIndex: 14,
+              display: 'flex',
+              alignItems: 'center',
+              backgroundColor: '#ea580c',
+              backgroundImage: 'linear-gradient(135deg, #ff6b35 0%, #ea580c 100%)',
+              color: '#ffffff',
+              padding: '7px 14px',
+              borderRadius: 20,
+              boxShadow: '0 10px 24px rgba(234, 88, 12, 0.35)',
+              animation: 'float-pill-2 5s ease-in-out infinite',
+            }}
+          >
+            <div
+              style={{
+                position: 'absolute',
+                top: -7,
+                left: 12,
+                width: 0,
+                height: 0,
+                borderLeft: '5px solid transparent',
+                borderRight: '5px solid transparent',
+                borderBottom: '8px solid #ea580c',
+                transform: 'rotate(-24deg)',
+              }}
+            />
+            <span
+              style={{
+                fontFamily: '"Playfair", Georgia, serif',
+                fontSize: 12,
+                fontWeight: 700,
+                letterSpacing: 0.2,
+                whiteSpace: 'nowrap',
+              }}
+            >
+              React · Node · Next.js
+            </span>
+          </div>
+
+          {/* Transparent Cutout Portrait */}
+          <CutoutPortrait
+            src={profilePic || '/madhu.jpg'}
+            alt="Ijji Madhu Venkat"
+            style={{
+              maxHeight: 'clamp(280px, 46vh, 370px)',
+              maxWidth: '85vw',
+              width: 'auto',
+              height: 'auto',
+              objectFit: 'contain',
+              filter: 'drop-shadow(0 16px 26px rgba(0, 0, 0, 0.22)) drop-shadow(0 6px 14px rgba(234, 88, 12, 0.15))',
+              position: 'relative',
+              zIndex: 8,
+              pointerEvents: 'none',
+              userSelect: 'none',
+              display: 'block',
+            }}
+          />
         </div>
+      </div>
+
+      {/* 4. Slanted Marquee Ribbon for Mobile */}
+      <div style={{ position: 'relative', width: '100%', height: 60, marginTop: -14, overflow: 'hidden' }}>
+        <SlantedTickerRibbon isMobile={true} />
       </div>
     </div>
   );
 }
 
 // ---------------------------------------------------------------------------
-// Sidebar Info Sub-Component (Headline, Tech Range, Big Index)
+// DESKTOP HERO CONTENT (>= 860px Breakpoint)
 // ---------------------------------------------------------------------------
-function SidebarInfo({ story }) {
+function DesktopHeroContent({ stageHeight }) {
   return (
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
+        position: 'absolute',
+        inset: 0,
+        width: STAGE_WIDTH,
         height: '100%',
+        overflow: 'hidden',
+        background: 'radial-gradient(circle at 8% 18%, rgba(213, 174, 228, 0.42) 0%, rgba(213, 174, 228, 0.15) 38%, transparent 68%), #ffffff',
       }}
     >
-      <div>
-        <div
-          style={{
-            fontSize: 8.5,
-            fontWeight: 800,
-            letterSpacing: 1.4,
-            color: '#1a1a20',
-            textTransform: 'uppercase',
-            lineHeight: 1.35,
-          }}
-        >
-          {story.headline}
+      {/* ------------------------------------------------------------------- */}
+      {/* 1. EXACT REFERENCE DARK FOREST GREEN CAPSULE NAVBAR                */}
+      {/* (Pixel-Perfect match to media_1790525601368.png)                  */}
+      {/* ------------------------------------------------------------------- */}
+      <nav
+        style={{
+          position: 'absolute',
+          top: 24,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          height: 60,
+          display: 'flex',
+          alignItems: 'center',
+          backgroundColor: '#283b30',
+          backgroundImage: 'linear-gradient(135deg, #2d4336 0%, #223429 100%)',
+          borderRadius: 40,
+          padding: '0 8px 0 16px',
+          boxShadow: '0 14px 36px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.15)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          zIndex: 20,
+          boxSizing: 'border-box',
+          gap: 38,
+        }}
+      >
+        {/* Left: Brand Monogram Circle + Name (Exact match to Olivia. in image) */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer' }}>
+          <div
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: '50%',
+              backgroundColor: '#f59e0b',
+              backgroundImage: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#1a2920',
+              fontWeight: 800,
+              fontSize: 20,
+              fontFamily: '"Playfair", Georgia, serif',
+              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+            }}
+          >
+            M
+          </div>
+          <span
+            style={{
+              fontFamily: '"Playfair", Georgia, serif',
+              fontSize: 19,
+              fontWeight: 700,
+              color: '#ffffff',
+              letterSpacing: 0.2,
+            }}
+          >
+            Madhu<span style={{ color: '#f59e0b' }}>.</span>
+          </span>
         </div>
-        <div
+
+        {/* Center: Nav Links with generous spacing & Playfair font */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 30, padding: '0 8px' }}>
+          <span
+            style={{
+              fontFamily: '"Playfair", Georgia, serif',
+              fontSize: 14.5,
+              fontWeight: 700,
+              color: '#f59e0b',
+              borderBottom: '2.5px solid #f59e0b',
+              paddingBottom: 3,
+              cursor: 'pointer',
+              letterSpacing: 0.2,
+            }}
+          >
+            Home
+          </span>
+          {['Services', 'About', 'Projects', 'Blogs', 'Testimonials'].map((link) => (
+            <span
+              key={link}
+              style={{
+                fontFamily: '"Playfair", Georgia, serif',
+                fontSize: 14,
+                fontWeight: 500,
+                color: '#d1d5db',
+                cursor: 'pointer',
+                letterSpacing: 0.2,
+                transition: 'color 0.2s ease',
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = '#ffffff')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = '#d1d5db')}
+            >
+              {link}
+            </span>
+          ))}
+        </div>
+
+        {/* Right: Pure White Pill "Contact Me" Button with Dark Forest Text */}
+        <button
+          type="button"
           style={{
-            fontSize: 9.5,
-            fontWeight: 600,
-            color: '#555562',
-            marginTop: 5,
+            fontFamily: '"Playfair", Georgia, serif',
+            fontSize: 13.5,
+            fontWeight: 700,
+            color: '#283b30',
+            backgroundColor: '#ffffff',
+            border: 'none',
+            borderRadius: 30,
+            padding: '10px 24px',
+            cursor: 'pointer',
             letterSpacing: 0.2,
+            boxShadow: '0 4px 14px rgba(0, 0, 0, 0.18)',
+            transition: 'transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'scale(1.03)';
+            e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.25)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'scale(1)';
+            e.currentTarget.style.boxShadow = '0 4px 14px rgba(0, 0, 0, 0.18)';
           }}
         >
-          {story.techRange}
-        </div>
+          Contact Me
+        </button>
+      </nav>
+
+      {/* 2. JADOO HERO BACKGROUND SHAPE (Peach) */}
+      <svg
+        style={{
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          width: '100%',
+          height: '100%',
+          pointerEvents: 'none',
+          zIndex: 1,
+          overflow: 'visible',
+        }}
+        viewBox="0 0 1440 724"
+        preserveAspectRatio="none"
+        fill="none"
+      >
+        <defs>
+          <filter id="filter0_f_hero" x="-570" y="-210" width="780" height="800" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+            <feGaussianBlur stdDeviation="75" />
+          </filter>
+        </defs>
+
+        <g opacity="0.45" filter="url(#filter0_f_hero)">
+          <ellipse cx="-180.528" cy="188.597" rx="239.472" ry="248.432" fill="#D5AEE4" />
+        </g>
+
+        <path
+          d="M758.307 222C717.907 153.2 741.474 13.3333 758.307 -48L1437.81 -149L1502.31 122.5L1463.81 723.5C1385.14 724.5 1209.71 717 1137.31 679C1046.81 631.5 1087.81 555 1012.81 515C937.807 475 980.807 369.5 954.807 329.5C928.807 289.5 808.807 308 758.307 222Z"
+          fill="#FED7A2"
+          opacity="0.92"
+        />
+      </svg>
+
+      {/* 3. TWO FLYING AIRPLANES */}
+      <div style={{ position: 'absolute', top: 90, left: 620, zIndex: 4, pointerEvents: 'none' }}>
+        <svg width="125" height="80" viewBox="0 0 125 80" fill="none">
+          <path
+            d="M5 70 C40 50, 75 40, 110 20"
+            stroke="#2ba0ff"
+            strokeWidth="2"
+            strokeDasharray="4 4"
+            strokeOpacity="0.85"
+          />
+          <g transform="translate(100, 10) rotate(-18)">
+            <path d="M0 8 L22 2 L26 8 L10 12 L16 19 L12 20 L8 13 L2 14 L0 8 Z" fill="#ffffff" stroke="#1ea1f3" strokeWidth="1.3" />
+            <path d="M14 4 L24 2 L26 8 L18 7 Z" fill="#1ea1f3" />
+            <polygon points="6,9 11,8 9,12" fill="#1ea1f3" />
+          </g>
+        </svg>
       </div>
 
-      <div>
+      <div style={{ position: 'absolute', top: 95, right: 45, zIndex: 4, pointerEvents: 'none' }}>
+        <svg width="95" height="70" viewBox="0 0 95 70" fill="none">
+          <path
+            d="M10 60 C35 42, 60 30, 85 16"
+            stroke="#2ba0ff"
+            strokeWidth="2"
+            strokeDasharray="3 3"
+            strokeOpacity="0.85"
+          />
+          <g transform="translate(74, 8) rotate(-28)">
+            <path d="M0 7 L20 2 L24 7 L9 11 L14 17 L11 18 L7 12 L2 13 L0 7 Z" fill="#ffffff" stroke="#1ea1f3" strokeWidth="1.3" />
+            <path d="M12 4 L22 2 L24 7 L16 6 Z" fill="#1ea1f3" />
+          </g>
+        </svg>
+      </div>
+
+      {/* 4. MAIN HERO CONTENT CONTAINER (Flexbox centered) */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 86,
+          bottom: 0,
+          left: 60,
+          right: 50,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          zIndex: 6,
+          boxSizing: 'border-box',
+        }}
+      >
+        {/* Left Column: Kicker, Headline, Subtitle, Buttons */}
         <div
           style={{
-            fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-            fontSize: 38,
-            fontWeight: 900,
-            letterSpacing: -1.5,
-            color: '#111116',
-            lineHeight: 0.9,
+            width: 530,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            zIndex: 8,
           }}
         >
-          {story.index}
+          <div
+            style={{
+              fontFamily: '"Playfair", Georgia, serif',
+              fontSize: 12.5,
+              fontWeight: 800,
+              letterSpacing: 2.2,
+              color: '#ea580c',
+              textTransform: 'uppercase',
+              marginBottom: 14,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+            }}
+          >
+            BEST ARCHITECTURE · IJJI MADHU VENKAT
+          </div>
+
+          <h1
+            style={{
+              fontFamily: '"Playfair", Georgia, serif',
+              fontSize: 38,
+              fontWeight: 700,
+              lineHeight: 1.25,
+              letterSpacing: -0.4,
+              color: '#181e4b',
+              margin: '0 0 16px 0',
+            }}
+          >
+            Build,{' '}
+            <span
+              style={{
+                position: 'relative',
+                display: 'inline-block',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              scale
+              <svg
+                width="100%"
+                height="14"
+                viewBox="0 0 160 14"
+                fill="none"
+                style={{
+                  position: 'absolute',
+                  bottom: -2,
+                  left: 0,
+                  width: '100%',
+                  zIndex: -1,
+                  overflow: 'visible',
+                  pointerEvents: 'none',
+                }}
+              >
+                <path
+                  d="M3 9 C40 3, 110 2, 155 7 C115 13, 50 14, 4 10 Z"
+                  fill="#ea580c"
+                />
+                <path
+                  d="M12 7 C60 4, 130 3, 152 8 C105 11, 45 10, 15 8 Z"
+                  fill="#ff6b35"
+                  opacity="0.8"
+                />
+              </svg>
+            </span>{' '}
+            and deploy modern intelligent systems
+          </h1>
+
+          <p
+            style={{
+              fontFamily: '"Playfair", Georgia, serif',
+              fontSize: 14.5,
+              fontWeight: 500,
+              lineHeight: 1.65,
+              color: '#5e6282',
+              margin: '0 0 26px 0',
+              maxWidth: 460,
+            }}
+          >
+            Architecting high-scale web platforms, generative AI autonomous agents, and resilient cloud microservices with React, Next.js, Node.js, and PostgreSQL. Delivering exceptional performance and seamless UX.
+          </p>
+
+          {/* CTA Buttons Row */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 24,
+            }}
+          >
+            <button
+              type="button"
+              style={{
+                fontFamily: '"Playfair", Georgia, serif',
+                fontSize: 14,
+                fontWeight: 700,
+                color: '#ffffff',
+                backgroundColor: '#ea580c',
+                backgroundImage: 'linear-gradient(135deg, #ff6b35 0%, #ea580c 100%)',
+                border: 'none',
+                borderRadius: 10,
+                padding: '13px 26px',
+                boxShadow: '0 14px 28px rgba(234, 88, 12, 0.32)',
+                cursor: 'pointer',
+                letterSpacing: 0.2,
+              }}
+            >
+              Find out more
+            </button>
+
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 12,
+                cursor: 'pointer',
+              }}
+            >
+              <div
+                style={{
+                  width: 44,
+                  height: 44,
+                  borderRadius: '50%',
+                  backgroundColor: '#ea580c',
+                  backgroundImage: 'linear-gradient(135deg, #ff6b35 0%, #ea580c 100%)',
+                  boxShadow: '0 12px 26px rgba(234, 88, 12, 0.3)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                }}
+              >
+                <svg width="12" height="14" viewBox="0 0 12 14" fill="none">
+                  <path d="M11 7L1 1.2265V12.7735L11 7Z" fill="#ffffff" />
+                </svg>
+              </div>
+              <span
+                style={{
+                  fontFamily: '"Playfair", Georgia, serif',
+                  fontSize: 14.5,
+                  fontWeight: 600,
+                  color: '#5e6282',
+                  letterSpacing: 0.2,
+                }}
+              >
+                Play Demo
+              </span>
+            </div>
+          </div>
         </div>
+
+        {/* Right Column: Hero Portrait of Ijji Madhu Venkat with Floating Badges */}
         <div
           style={{
-            fontSize: 7.5,
-            fontWeight: 700,
-            letterSpacing: 2,
-            color: '#9999a0',
-            textTransform: 'uppercase',
-            marginTop: 4,
+            flex: 1,
+            display: 'flex',
+            justifyContent: 'flex-end',
+            alignItems: 'flex-end',
+            position: 'relative',
+            zIndex: 8,
+            height: '100%',
+            paddingRight: 25,
+            paddingBottom: 20,
+            boxSizing: 'border-box',
           }}
         >
-          FOCUS DOMAIN
+          <div
+            style={{
+              position: 'relative',
+              display: 'inline-flex',
+              alignItems: 'flex-end',
+              justifyContent: 'center',
+            }}
+          >
+            {/* 1. Floating White Card Pill: Role Title + Orange Pointer */}
+            <div
+              style={{
+                position: 'absolute',
+                bottom: 74,
+                left: -36,
+                zIndex: 14,
+                display: 'flex',
+                alignItems: 'center',
+                backgroundColor: '#ffffff',
+                color: '#181e4b',
+                padding: '9px 18px',
+                borderRadius: 24,
+                border: '1.5px solid rgba(234, 88, 12, 0.35)',
+                boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)',
+                animation: 'float-pill-1 4.5s ease-in-out infinite',
+              }}
+            >
+              <div
+                style={{
+                  position: 'absolute',
+                  top: -8,
+                  left: 14,
+                  width: 0,
+                  height: 0,
+                  borderLeft: '6px solid transparent',
+                  borderRight: '6px solid transparent',
+                  borderBottom: '10px solid #ea580c',
+                  transform: 'rotate(-24deg)',
+                }}
+              />
+              <span
+                style={{
+                  fontFamily: '"Playfair", Georgia, serif',
+                  fontSize: 13,
+                  fontWeight: 700,
+                  letterSpacing: 0.3,
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                Full Stack Developer
+              </span>
+            </div>
+
+            {/* 2. Floating Vibrant Orange Pill: Tech Domain */}
+            <div
+              style={{
+                position: 'absolute',
+                bottom: 154,
+                right: -28,
+                zIndex: 14,
+                display: 'flex',
+                alignItems: 'center',
+                backgroundColor: '#ea580c',
+                backgroundImage: 'linear-gradient(135deg, #ff6b35 0%, #ea580c 100%)',
+                color: '#ffffff',
+                padding: '9px 18px',
+                borderRadius: 24,
+                boxShadow: '0 12px 28px rgba(234, 88, 12, 0.38)',
+                animation: 'float-pill-2 5s ease-in-out infinite',
+              }}
+            >
+              <div
+                style={{
+                  position: 'absolute',
+                  top: -8,
+                  left: 14,
+                  width: 0,
+                  height: 0,
+                  borderLeft: '6px solid transparent',
+                  borderRight: '6px solid transparent',
+                  borderBottom: '10px solid #ea580c',
+                  transform: 'rotate(-24deg)',
+                }}
+              />
+              <span
+                style={{
+                  fontFamily: '"Playfair", Georgia, serif',
+                  fontSize: 13,
+                  fontWeight: 700,
+                  letterSpacing: 0.3,
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                React · Node · Next.js
+              </span>
+            </div>
+
+            {/* 3. Ijji Madhu Venkat Transparent Cutout Image */}
+            <CutoutPortrait
+              src={profilePic || '/madhu.jpg'}
+              alt="Ijji Madhu Venkat"
+              style={{
+                maxHeight: 440,
+                maxWidth: 405,
+                width: 'auto',
+                height: 'auto',
+                objectFit: 'contain',
+                filter: 'drop-shadow(0 20px 30px rgba(0, 0, 0, 0.25)) drop-shadow(0 8px 18px rgba(234, 88, 12, 0.15))',
+                position: 'relative',
+                zIndex: 8,
+                pointerEvents: 'none',
+                userSelect: 'none',
+                display: 'block',
+              }}
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -1378,469 +1194,342 @@ function SidebarInfo({ story }) {
 }
 
 // ---------------------------------------------------------------------------
-// High-Tech Illustrations (430x520)
+// Editorial Statement Section (Under Hero Section: Exactly 4 lines, h3 size)
+// Fully responsive on Mobile & Desktop in Playfair Font
 // ---------------------------------------------------------------------------
-function TechIllustrationSvg({ id }) {
-  if (id === 'brown') {
-    return (
-      <svg width="430" height="520" viewBox="0 0 430 520" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="ideGrad" x1="50" y1="80" x2="380" y2="480" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#221e1a" />
-            <stop offset="0.6" stopColor="#181512" />
-            <stop offset="1" stopColor="#0d0b09" />
-          </linearGradient>
-          <linearGradient id="accentBrown" x1="100" y1="120" x2="330" y2="350" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#e3d6c7" />
-            <stop offset="1" stopColor="#a89987" />
-          </linearGradient>
-          <linearGradient id="glassLayer" x1="70" y1="150" x2="360" y2="460" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#ffffff" stopOpacity="0.12" />
-            <stop offset="1" stopColor="#ffffff" stopOpacity="0.03" />
-          </linearGradient>
-          <filter id="shadowFS" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="18" stdDeviation="24" floodColor="#000000" floodOpacity="0.5" />
-          </filter>
-        </defs>
-
-        <circle cx="215" cy="240" r="170" fill="#c4b5a2" fillOpacity="0.2" />
-
-        <g filter="url(#shadowFS)">
-          <rect x="55" y="100" width="320" height="420" rx="10" fill="url(#ideGrad)" stroke="rgba(255,255,255,0.12)" strokeWidth="1.5" />
-          
-          <rect x="55" y="100" width="320" height="34" rx="10" fill="#2d2722" />
-          <circle cx="75" cy="117" r="4.5" fill="#ef4444" />
-          <circle cx="90" cy="117" r="4.5" fill="#f59e0b" />
-          <circle cx="105" cy="117" r="4.5" fill="#10b981" />
-          <text x="215" y="121" fill="#c5b8a8" fontSize="8" fontWeight="700" letterSpacing="1.5" textAnchor="middle" fontFamily="monospace">
-            MADHU_VENKAT.STACK.TS
-          </text>
-
-          <g fontFamily="monospace" fontSize="8.5" fill="#e8dcd0">
-            <text x="78" y="160">
-              <tspan fill="#d97706">class </tspan>
-              <tspan fill="#fef3c7" fontWeight="bold">FullStackArchitecture </tspan>
-              <tspan fill="#a89987">&#123;</tspan>
-            </text>
-            <text x="94" y="180">
-              <tspan fill="#93c5fd">readonly </tspan>
-              <tspan fill="#f3ede6">engineer </tspan>
-              <tspan fill="#d97706">= </tspan>
-              <tspan fill="#86efac">"Ijji Madhu Venkat"</tspan>;
-            </text>
-            <text x="94" y="200">
-              <tspan fill="#93c5fd">readonly </tspan>
-              <tspan fill="#f3ede6">stack </tspan>
-              <tspan fill="#d97706">= </tspan>
-              <tspan fill="#a89987">[</tspan>
-            </text>
-            <text x="110" y="218" fill="#cbd5e1">"React 19", "Next.js 15", "Node.js",</text>
-            <text x="110" y="236" fill="#cbd5e1">"TypeScript", "REST", "GraphQL"</text>
-            <text x="94" y="254" fill="#a89987">];</text>
-
-            <text x="94" y="280">
-              <tspan fill="#c084fc">async </tspan>
-              <tspan fill="#60a5fa">deployProduction</tspan>
-              <tspan fill="#a89987">() &#123;</tspan>
-            </text>
-            <text x="110" y="300">
-              <tspan fill="#c084fc">return await </tspan>
-              <tspan fill="#f3ede6">this.buildScale(&#123; </tspan>
-              <tspan fill="#86efac">uptime: 99.99 </tspan>
-              <tspan fill="#f3ede6">&#125;);</tspan>
-            </text>
-            <text x="94" y="320" fill="#a89987">&#125;</text>
-            <text x="78" y="340" fill="#a89987">&#125;</text>
-          </g>
-
-          <rect x="75" y="360" width="280" height="52" rx="6" fill="url(#glassLayer)" stroke="rgba(255,255,255,0.18)" strokeWidth="1" />
-          <circle cx="98" cy="386" r="12" fill="#3b322a" />
-          <path d="M93 386 L98 381 L103 386 L98 391 Z" fill="#e8dcd0" />
-          <text x="120" y="382" fill="#ffffff" fontSize="9.5" fontWeight="800" letterSpacing="0.8">FRONTEND ARCHITECTURE</text>
-          <text x="120" y="396" fill="#c4b5a2" fontSize="7.5" fontWeight="500">React · Next.js · SSR · High Performance Virtual DOM</text>
-
-          <rect x="75" y="422" width="280" height="52" rx="6" fill="url(#glassLayer)" stroke="rgba(255,255,255,0.18)" strokeWidth="1" />
-          <circle cx="98" cy="448" r="12" fill="#3b322a" />
-          <rect x="94" y="443" width="8" height="10" rx="1" fill="#e8dcd0" />
-          <text x="120" y="444" fill="#ffffff" fontSize="9.5" fontWeight="800" letterSpacing="0.8">BACKEND MICROSERVICES</text>
-          <text x="120" y="458" fill="#c4b5a2" fontSize="7.5" fontWeight="500">Node.js · Distributed APIs · WebSockets · Scalable Auth</text>
-        </g>
-
-        <rect x="290" y="148" width="70" height="20" rx="10" fill="rgba(34, 197, 94, 0.15)" stroke="#22c55e" strokeWidth="1" />
-        <circle cx="302" cy="158" r="3" fill="#22c55e" />
-        <text x="310" y="161" fill="#22c55e" fontSize="7" fontWeight="800" letterSpacing="1">ONLINE</text>
-      </svg>
-    );
-  }
-
-  if (id === 'green') {
-    return (
-      <svg width="430" height="520" viewBox="0 0 430 520" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="aiConsole" x1="50" y1="80" x2="380" y2="480" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#1c2518" />
-            <stop offset="0.6" stopColor="#141c11" />
-            <stop offset="1" stopColor="#0b1009" />
-          </linearGradient>
-          <linearGradient id="neuralGlow" x1="100" y1="120" x2="330" y2="350" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#4ade80" />
-            <stop offset="1" stopColor="#15803d" />
-          </linearGradient>
-          <linearGradient id="aiCard" x1="70" y1="150" x2="360" y2="460" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#ffffff" stopOpacity="0.1" />
-            <stop offset="1" stopColor="#ffffff" stopOpacity="0.02" />
-          </linearGradient>
-          <filter id="shadowAI" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="18" stdDeviation="24" floodColor="#000000" floodOpacity="0.5" />
-          </filter>
-        </defs>
-
-        <circle cx="215" cy="240" r="170" fill="#a4b893" fillOpacity="0.22" />
-
-        <g filter="url(#shadowAI)">
-          <rect x="55" y="100" width="320" height="420" rx="10" fill="url(#aiConsole)" stroke="rgba(255,255,255,0.12)" strokeWidth="1.5" />
-
-          <rect x="55" y="100" width="320" height="34" rx="10" fill="#222e1e" />
-          <circle cx="75" cy="117" r="4.5" fill="#ef4444" />
-          <circle cx="90" cy="117" r="4.5" fill="#f59e0b" />
-          <circle cx="105" cy="117" r="4.5" fill="#10b981" />
-          <text x="215" y="121" fill="#b8cbb0" fontSize="8" fontWeight="700" letterSpacing="1.5" textAnchor="middle" fontFamily="monospace">
-            GENAI_NEURAL_PIPELINE.RAG
-          </text>
-
-          <g stroke="rgba(134, 239, 172, 0.35)" strokeWidth="1.2">
-            <line x1="100" y1="180" x2="175" y2="160" />
-            <line x1="100" y1="180" x2="175" y2="200" />
-            <line x1="100" y1="180" x2="175" y2="240" />
-
-            <line x1="100" y1="220" x2="175" y2="160" />
-            <line x1="100" y1="220" x2="175" y2="200" />
-            <line x1="100" y1="220" x2="175" y2="240" />
-
-            <line x1="100" y1="260" x2="175" y2="160" />
-            <line x1="100" y1="260" x2="175" y2="200" />
-            <line x1="100" y1="260" x2="175" y2="240" />
-
-            <line x1="175" y1="160" x2="255" y2="180" />
-            <line x1="175" y1="160" x2="255" y2="230" />
-            <line x1="175" y1="200" x2="255" y2="180" />
-            <line x1="175" y1="200" x2="255" y2="230" />
-            <line x1="175" y1="240" x2="255" y2="180" />
-            <line x1="175" y1="240" x2="255" y2="230" />
-
-            <line x1="255" y1="180" x2="325" y2="210" />
-            <line x1="255" y1="230" x2="325" y2="210" />
-          </g>
-
-          <circle cx="100" cy="180" r="9" fill="#1e2c1a" stroke="#86efac" strokeWidth="2" />
-          <circle cx="100" cy="220" r="9" fill="#1e2c1a" stroke="#86efac" strokeWidth="2" />
-          <circle cx="100" cy="260" r="9" fill="#1e2c1a" stroke="#86efac" strokeWidth="2" />
-
-          <circle cx="175" cy="160" r="10" fill="#2b3e25" stroke="#4ade80" strokeWidth="2" />
-          <circle cx="175" cy="200" r="10" fill="#2b3e25" stroke="#4ade80" strokeWidth="2" />
-          <circle cx="175" cy="240" r="10" fill="#2b3e25" stroke="#4ade80" strokeWidth="2" />
-
-          <circle cx="255" cy="180" r="11" fill="#395232" stroke="#22c55e" strokeWidth="2.2" />
-          <circle cx="255" cy="230" r="11" fill="#395232" stroke="#22c55e" strokeWidth="2.2" />
-
-          <circle cx="325" cy="210" r="13" fill="#15803d" stroke="#bbf7d0" strokeWidth="2.5" />
-          <circle cx="325" cy="210" r="5" fill="#ffffff" />
-
-          <text x="100" y="285" fill="#86efac" fontSize="7" fontWeight="700" textAnchor="middle">INPUT EMBED</text>
-          <text x="175" y="285" fill="#86efac" fontSize="7" fontWeight="700" textAnchor="middle">TRANSFORMER</text>
-          <text x="255" y="285" fill="#86efac" fontSize="7" fontWeight="700" textAnchor="middle">ATTENTION</text>
-          <text x="325" y="285" fill="#86efac" fontSize="7" fontWeight="700" textAnchor="middle">SYNTHESIS</text>
-
-          <rect x="75" y="320" width="280" height="85" rx="6" fill="url(#aiCard)" stroke="rgba(255,255,255,0.18)" strokeWidth="1" />
-          <text x="92" y="342" fill="#ffffff" fontSize="9.5" fontWeight="800" letterSpacing="0.8">RAG & VECTOR SEARCH PIPELINE</text>
-          <text x="92" y="358" fill="#bbf7d0" fontSize="7.5" fontWeight="500">Vector Embeddings (Pinecone / Chroma) + LangChain Agents</text>
-          <text x="92" y="372" fill="#86efac" fontSize="7.5" fontWeight="500">Semantic Context Injection · Few-Shot Prompt Optimization</text>
-          <text x="92" y="386" fill="#cbd5e1" fontSize="7" fontFamily="monospace">Latency: 142ms · Precision: 98.4% · Zero-Hallucination Guardrails</text>
-
-          <rect x="75" y="420" width="280" height="52" rx="6" fill="url(#aiCard)" stroke="rgba(255,255,255,0.18)" strokeWidth="1" />
-          <circle cx="98" cy="446" r="12" fill="#2b3e25" />
-          <text x="98" y="450" fill="#86efac" fontSize="9" fontWeight="900" textAnchor="middle">AI</text>
-          <text x="120" y="442" fill="#ffffff" fontSize="9.5" fontWeight="800" letterSpacing="0.8">AUTONOMOUS LLM AGENTS</text>
-          <text x="120" y="456" fill="#b8cbb0" fontSize="7.5" fontWeight="500">Multi-Agent Collaboration · Tool Calling · Real-time Reasoning</text>
-        </g>
-      </svg>
-    );
-  }
-
+function EditorialStatementSection({ isMobile }) {
   return (
-    <svg width="430" height="520" viewBox="0 0 430 520" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="sqlConsole" x1="50" y1="80" x2="380" y2="480" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#1e2224" />
-          <stop offset="0.6" stopColor="#141718" />
-          <stop offset="1" stopColor="#0a0c0d" />
-        </linearGradient>
-        <linearGradient id="dsaCard" x1="70" y1="150" x2="360" y2="460" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#ffffff" stopOpacity="0.1" />
-          <stop offset="1" stopColor="#ffffff" stopOpacity="0.03" />
-        </linearGradient>
-        <filter id="shadowDSA" x="-20%" y="-20%" width="140%" height="140%">
-          <feDropShadow dx="0" dy="18" stdDeviation="24" floodColor="#000000" floodOpacity="0.5" />
-        </filter>
-      </defs>
+    <section
+      style={{
+        width: '100%',
+        backgroundColor: '#ffffff',
+        padding: isMobile ? '56px 20px 70px 20px' : '110px 40px 120px 40px',
+        boxSizing: 'border-box',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderTop: '1px solid rgba(234, 88, 12, 0.1)',
+        position: 'relative',
+        zIndex: 5,
+      }}
+    >
+      <div style={{ maxWidth: 1040, textAlign: 'center', margin: '0 auto', width: '100%' }}>
+        {/* Subtle orange accent kicker */}
+        <div
+          style={{
+            fontFamily: '"Playfair", Georgia, serif',
+            fontSize: isMobile ? 12 : 13,
+            fontWeight: 800,
+            letterSpacing: 2.8,
+            color: '#ea580c',
+            textTransform: 'uppercase',
+            marginBottom: isMobile ? 20 : 28,
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 8,
+          }}
+        >
+          <span style={{ width: 18, height: 2, backgroundColor: '#ea580c', display: 'inline-block' }} />
+          PHILOSOPHY & CODE ARCHITECTURE
+          <span style={{ width: 18, height: 2, backgroundColor: '#ea580c', display: 'inline-block' }} />
+        </div>
 
-      <circle cx="215" cy="240" r="170" fill="#d0dede" fillOpacity="0.25" />
-
-      <g filter="url(#shadowDSA)">
-        <rect x="55" y="100" width="320" height="420" rx="10" fill="url(#sqlConsole)" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
-
-        <rect x="55" y="100" width="320" height="34" rx="10" fill="#2c3336" />
-        <circle cx="75" cy="117" r="4.5" fill="#ef4444" />
-        <circle cx="90" cy="117" r="4.5" fill="#f59e0b" />
-        <circle cx="105" cy="117" r="4.5" fill="#10b981" />
-        <text x="215" y="121" fill="#d2dede" fontSize="8" fontWeight="700" letterSpacing="1.5" textAnchor="middle" fontFamily="monospace">
-          DSA_SQL_OPTIMIZER.ENGINE
-        </text>
-
-        <g stroke="rgba(255, 255, 255, 0.4)" strokeWidth="1.5">
-          <line x1="215" y1="165" x2="155" y2="205" />
-          <line x1="215" y1="165" x2="275" y2="205" />
-          <line x1="155" y1="205" x2="115" y2="245" />
-          <line x1="155" y1="205" x2="195" y2="245" />
-          <line x1="275" y1="205" x2="240" y2="245" />
-          <line x1="275" y1="205" x2="315" y2="245" />
-        </g>
-
-        <circle cx="215" cy="165" r="13" fill="#384347" stroke="#ffffff" strokeWidth="2" />
-        <text x="215" y="169" fill="#ffffff" fontSize="9" fontWeight="900" textAnchor="middle" fontFamily="monospace">42</text>
-
-        <circle cx="155" cy="205" r="11" fill="#2b3438" stroke="#93c5fd" strokeWidth="1.8" />
-        <text x="155" y="209" fill="#93c5fd" fontSize="8" fontWeight="900" textAnchor="middle" fontFamily="monospace">21</text>
-
-        <circle cx="275" cy="205" r="11" fill="#2b3438" stroke="#93c5fd" strokeWidth="1.8" />
-        <text x="275" y="209" fill="#93c5fd" fontSize="8" fontWeight="900" textAnchor="middle" fontFamily="monospace">68</text>
-
-        <circle cx="115" cy="245" r="9" fill="#1e2427" stroke="#cbd5e1" strokeWidth="1.5" />
-        <text x="115" y="248" fill="#cbd5e1" fontSize="7" fontWeight="800" textAnchor="middle" fontFamily="monospace">14</text>
-
-        <circle cx="195" cy="245" r="9" fill="#1e2427" stroke="#cbd5e1" strokeWidth="1.5" />
-        <text x="195" y="248" fill="#cbd5e1" fontSize="7" fontWeight="800" textAnchor="middle" fontFamily="monospace">35</text>
-
-        <circle cx="240" cy="245" r="9" fill="#1e2427" stroke="#cbd5e1" strokeWidth="1.5" />
-        <text x="240" y="248" fill="#cbd5e1" fontSize="7" fontWeight="800" textAnchor="middle" fontFamily="monospace">53</text>
-
-        <circle cx="315" cy="245" r="9" fill="#1e2427" stroke="#cbd5e1" strokeWidth="1.5" />
-        <text x="315" y="248" fill="#cbd5e1" fontSize="7" fontWeight="800" textAnchor="middle" fontFamily="monospace">89</text>
-
-        <rect x="150" y="270" width="130" height="20" rx="10" fill="rgba(147, 197, 253, 0.15)" stroke="#93c5fd" strokeWidth="1" />
-        <text x="215" y="283" fill="#93c5fd" fontSize="7.5" fontWeight="800" letterSpacing="1" textAnchor="middle">
-          BALANCED B-TREE · O(log n)
-        </text>
-
-        <rect x="75" y="305" width="280" height="100" rx="6" fill="url(#dsaCard)" stroke="rgba(255,255,255,0.18)" strokeWidth="1" />
-        <text x="92" y="325" fill="#ffffff" fontSize="9.5" fontWeight="800" letterSpacing="0.8">RELATIONAL DATABASE & SQL TUNING</text>
-        <g fontFamily="monospace" fontSize="7.5" fill="#e2e8f0">
-          <text x="92" y="344">
-            <tspan fill="#38bdf8">SELECT </tspan>
-            <tspan fill="#ffffff">u.id, u.name, </tspan>
-            <tspan fill="#4ade80">COUNT</tspan>
-            <tspan fill="#ffffff">(p.id) </tspan>
-            <tspan fill="#38bdf8">AS </tspan>
-            <tspan fill="#fef08a">total_skills</tspan>
-          </text>
-          <text x="92" y="358">
-            <tspan fill="#38bdf8">FROM </tspan>
-            <tspan fill="#ffffff">developers u </tspan>
-            <tspan fill="#38bdf8">INNER JOIN </tspan>
-            <tspan fill="#ffffff">projects p </tspan>
-            <tspan fill="#38bdf8">ON </tspan>
-            <tspan fill="#ffffff">u.id = p.dev_id</tspan>
-          </text>
-          <text x="92" y="372">
-            <tspan fill="#38bdf8">WHERE </tspan>
-            <tspan fill="#ffffff">u.name = </tspan>
-            <tspan fill="#86efac">'Ijji Madhu Venkat' </tspan>
-            <tspan fill="#38bdf8">GROUP BY </tspan>
-            <tspan fill="#ffffff">u.id;</tspan>
-          </text>
-          <text x="92" y="390" fill="#a7f3d0">-- EXPLAIN ANALYZE: Index Scan using idx_dev (Cost: 0.04ms)</text>
-        </g>
-
-        <rect x="75" y="420" width="280" height="52" rx="6" fill="url(#dsaCard)" stroke="rgba(255,255,255,0.18)" strokeWidth="1" />
-        <circle cx="98" cy="446" r="12" fill="#2c363a" />
-        <text x="98" y="450" fill="#93c5fd" fontSize="8" fontWeight="900" textAnchor="middle">SQL</text>
-        <text x="120" y="442" fill="#ffffff" fontSize="9.5" fontWeight="800" letterSpacing="0.8">DATA INTEGRITY & ACID ENGINE</text>
-        <text x="120" y="456" fill="#cbd5e1" fontSize="7.5" fontWeight="500">PostgreSQL · Transaction Isolation · Deadlock Prevention</text>
-      </g>
-    </svg>
+        {/* 4 Lines of Text, purely using h3 size and Playfair font */}
+        <h3
+          style={{
+            fontFamily: '"Playfair", Georgia, serif',
+            fontSize: isMobile ? 'clamp(18px, 4.4vw, 24px)' : 32,
+            fontWeight: 600,
+            lineHeight: isMobile ? 1.6 : 1.68,
+            color: '#181e4b',
+            letterSpacing: -0.3,
+            margin: 0,
+          }}
+        >
+          <div style={{ marginBottom: isMobile ? 10 : 12 }}>
+            Architecting high-performance distributed systems with scalable full-stack engineering.
+          </div>
+          <div style={{ marginBottom: isMobile ? 10 : 12 }}>
+            Crafting reactive cloud-native platforms powered by modern React, Next.js, and Node.js.
+          </div>
+          <div style={{ marginBottom: isMobile ? 10 : 12 }}>
+            Pioneering autonomous Generative AI workflows and context-aware intelligent agents.
+          </div>
+          <div>
+            Obsessed with clean algorithmic logic, ACID relational performance, and exceptional UX.
+          </div>
+        </h3>
+      </div>
+    </section>
   );
 }
 
 // ---------------------------------------------------------------------------
-// Thumbnail Swatch Graphic (46x67 for 158x85 card)
+// Slanted Dual Ticker Ribbon (Responsive)
 // ---------------------------------------------------------------------------
-function TechSwatchGraphic({ id }) {
-  if (id === 'brown') {
-    return (
-      <svg width="46" height="67" viewBox="0 0 46 67" fill="none" style={{ position: 'absolute', inset: 0 }}>
-        <rect width="46" height="67" fill="#8a837a" />
-        <rect x="6" y="8" width="34" height="20" rx="2" fill="rgba(0,0,0,0.3)" />
-        <line x1="10" y1="14" x2="26" y2="14" stroke="#ffffff" strokeWidth="1.5" />
-        <line x1="10" y1="20" x2="32" y2="20" stroke="#f2efe6" strokeWidth="1.5" strokeOpacity="0.7" />
-        <rect x="6" y="34" width="34" height="24" rx="2" fill="rgba(255,255,255,0.2)" />
-        <text x="23" y="49" fill="#111" fontSize="7" fontWeight="900" textAnchor="middle">STACK</text>
-      </svg>
-    );
-  }
+const TICKER_ITEMS = [
+  'App Design',
+  'Website Design',
+  'Dashboard',
+  'Wireframe',
+  'Full Stack Development',
+  'Generative AI & LLMs',
+  'Next.js & React',
+  'UI/UX Architecture',
+  'Cloud & DevOps',
+];
 
-  if (id === 'green') {
-    return (
-      <svg width="46" height="67" viewBox="0 0 46 67" fill="none" style={{ position: 'absolute', inset: 0 }}>
-        <rect width="46" height="67" fill="#788967" />
-        <circle cx="23" cy="22" r="10" fill="rgba(255,255,255,0.25)" />
-        <circle cx="23" cy="22" r="4" fill="#ffffff" />
-        <line x1="12" y1="36" x2="34" y2="36" stroke="#ffffff" strokeWidth="1.5" />
-        <line x1="15" y1="42" x2="31" y2="42" stroke="rgba(255,255,255,0.7)" strokeWidth="1.2" />
-        <text x="23" y="58" fill="#111" fontSize="7" fontWeight="900" textAnchor="middle">GENAI</text>
-      </svg>
-    );
-  }
-
+function StarburstIcon({ isMobile }) {
+  const size = isMobile ? 16 : 20;
   return (
-    <svg width="46" height="67" viewBox="0 0 46 67" fill="none" style={{ position: 'absolute', inset: 0 }}>
-      <rect width="46" height="67" fill="#bac0c0" />
-      <circle cx="23" cy="14" r="5" fill="#111" />
-      <line x1="23" y1="19" x2="14" y2="28" stroke="#111" strokeWidth="1.5" />
-      <line x1="23" y1="19" x2="32" y2="28" stroke="#111" strokeWidth="1.5" />
-      <circle cx="14" cy="28" r="4" fill="#333" />
-      <circle cx="32" cy="28" r="4" fill="#333" />
-      <rect x="8" y="38" width="30" height="20" rx="2" fill="rgba(0,0,0,0.25)" />
-      <text x="23" y="51" fill="#fff" fontSize="6.5" fontWeight="900" textAnchor="middle">SQL/DSA</text>
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 20 20"
+      fill="none"
+      style={{
+        flexShrink: 0,
+        margin: isMobile ? '0 14px' : '0 22px',
+        display: 'inline-block',
+        verticalAlign: 'middle',
+      }}
+    >
+      <line x1="10" y1="2" x2="10" y2="18" stroke="#ffffff" strokeWidth="2.3" strokeLinecap="round" />
+      <line x1="2" y1="10" x2="18" y2="10" stroke="#ffffff" strokeWidth="2.3" strokeLinecap="round" />
+      <line x1="4.34" y1="4.34" x2="15.66" y2="15.66" stroke="#ffffff" strokeWidth="2.3" strokeLinecap="round" />
+      <line x1="4.34" y1="15.66" x2="15.66" y2="4.34" stroke="#ffffff" strokeWidth="2.3" strokeLinecap="round" />
     </svg>
   );
 }
 
-// ---------------------------------------------------------------------------
-// Mini Preview Graphic in Sidebar Thumbnail (160x248)
-// ---------------------------------------------------------------------------
-function MiniTechPreviewSvg({ id }) {
-  if (id === 'brown') {
-    return (
-      <svg width="110" height="130" viewBox="0 0 110 130" fill="none">
-        <rect x="10" y="20" width="90" height="90" rx="6" fill="#241e19" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
-        <rect x="10" y="20" width="90" height="18" rx="6" fill="#382e25" />
-        <circle cx="22" cy="29" r="3" fill="#ef4444" />
-        <circle cx="31" cy="29" r="3" fill="#f59e0b" />
-        <circle cx="40" cy="29" r="3" fill="#10b981" />
-        <line x1="20" y1="52" x2="60" y2="52" stroke="#d97706" strokeWidth="2.5" strokeLinecap="round" />
-        <line x1="20" y1="64" x2="85" y2="64" stroke="#e8dcd0" strokeWidth="2" strokeLinecap="round" />
-        <line x1="20" y1="76" x2="70" y2="76" stroke="#93c5fd" strokeWidth="2" strokeLinecap="round" />
-        <line x1="20" y1="88" x2="50" y2="88" stroke="#86efac" strokeWidth="2" strokeLinecap="round" />
-      </svg>
-    );
-  }
-
-  if (id === 'green') {
-    return (
-      <svg width="110" height="130" viewBox="0 0 110 130" fill="none">
-        <circle cx="55" cy="65" r="45" fill="rgba(0,0,0,0.2)" />
-        <circle cx="55" cy="40" r="10" fill="#2d4224" stroke="#86efac" strokeWidth="2" />
-        <circle cx="35" cy="80" r="10" fill="#2d4224" stroke="#86efac" strokeWidth="2" />
-        <circle cx="75" cy="80" r="10" fill="#2d4224" stroke="#86efac" strokeWidth="2" />
-        <line x1="55" y1="50" x2="35" y2="70" stroke="#86efac" strokeWidth="1.8" />
-        <line x1="55" y1="50" x2="75" y2="70" stroke="#86efac" strokeWidth="1.8" />
-        <line x1="45" y1="80" x2="65" y2="80" stroke="#86efac" strokeWidth="1.8" />
-        <circle cx="55" cy="65" r="5" fill="#ffffff" />
-      </svg>
-    );
-  }
+function SlantedTickerRibbon({ isMobile = false }) {
+  const duplicatedItems = [...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS];
 
   return (
-    <svg width="110" height="130" viewBox="0 0 110 130" fill="none">
-      <circle cx="55" cy="35" r="10" fill="#273336" stroke="#ffffff" strokeWidth="2" />
-      <text x="55" y="39" fill="#fff" fontSize="8" fontWeight="bold" textAnchor="middle">ROOT</text>
-      <line x1="55" y1="45" x2="35" y2="75" stroke="rgba(255,255,255,0.6)" strokeWidth="1.5" />
-      <line x1="55" y1="45" x2="75" y2="75" stroke="rgba(255,255,255,0.6)" strokeWidth="1.5" />
-      <circle cx="35" cy="75" r="8" fill="#1b2426" stroke="#93c5fd" strokeWidth="1.8" />
-      <circle cx="75" cy="75" r="8" fill="#1b2426" stroke="#93c5fd" strokeWidth="1.8" />
-      <rect x="25" y="96" width="60" height="18" rx="3" fill="#2c3639" />
-      <text x="55" y="108" fill="#93c5fd" fontSize="7" fontWeight="bold" textAnchor="middle">SQL INDEX</text>
-    </svg>
+    <div
+      style={{
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        width: '100%',
+        height: isMobile ? 58 : 78,
+        zIndex: 28,
+        pointerEvents: 'none',
+      }}
+    >
+      {/* 1. Background Deep Navy Ribbon */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: isMobile ? 8 : 12,
+          left: '-10%',
+          width: '120%',
+          height: isMobile ? 42 : 52,
+          backgroundColor: '#181e4b',
+          backgroundImage: 'linear-gradient(90deg, #14183e 0%, #181e4b 50%, #111535 100%)',
+          transform: 'rotate(0.95deg)',
+          transformOrigin: '50% 50%',
+          zIndex: 1,
+          boxShadow: '0 4px 14px rgba(24, 30, 75, 0.25)',
+        }}
+      />
+
+      {/* 2. Foreground Vibrant Orange Ribbon */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: isMobile ? 8 : 12,
+          left: '-10%',
+          width: '120%',
+          height: isMobile ? 42 : 52,
+          backgroundColor: '#ea580c',
+          backgroundImage: 'linear-gradient(90deg, #ff6b35 0%, #ea580c 50%, #d9480f 100%)',
+          transform: 'rotate(-1.6deg)',
+          transformOrigin: '50% 50%',
+          zIndex: 2,
+          display: 'flex',
+          alignItems: 'center',
+          overflow: 'hidden',
+          boxShadow: '0 8px 24px rgba(234, 88, 12, 0.35), 0 2px 6px rgba(0, 0, 0, 0.12)',
+        }}
+      >
+        <div
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            whiteSpace: 'nowrap',
+            animation: 'marquee-scroll 28s linear infinite',
+            willChange: 'transform',
+          }}
+        >
+          {duplicatedItems.map((item, idx) => (
+            <span
+              key={`ticker-${idx}`}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                fontFamily: '"Playfair", Georgia, serif',
+                fontSize: isMobile ? 14 : 16,
+                fontWeight: 700,
+                color: '#ffffff',
+                letterSpacing: -0.2,
+                userSelect: 'none',
+              }}
+            >
+              {item}
+              <StarburstIcon isMobile={isMobile} />
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
 // ---------------------------------------------------------------------------
-// Project / Tech Icons for 105x150 Cards
+// Transparent Cutout Portrait Component for Ijji Madhu Venkat
 // ---------------------------------------------------------------------------
-function ProjectTechIcon({ icon, color }) {
-  switch (icon) {
-    case 'code':
-      return (
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <polyline points="16 18 22 12 16 6" />
-          <polyline points="8 6 2 12 8 18" />
-        </svg>
-      );
-    case 'server':
-      return (
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <rect x="2" y="2" width="20" height="8" rx="2" ry="2" />
-          <rect x="2" y="14" width="20" height="8" rx="2" ry="2" />
-          <line x1="6" y1="6" x2="6.01" y2="6" />
-          <line x1="6" y1="18" x2="6.01" y2="18" />
-        </svg>
-      );
-    case 'cloud':
-      return (
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
-        </svg>
-      );
-    case 'neural':
-      return (
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="6" cy="6" r="3" />
-          <circle cx="6" cy="18" r="3" />
-          <circle cx="18" cy="12" r="3" />
-          <line x1="8.5" y1="7.5" x2="15.5" y2="10.5" />
-          <line x1="8.5" y1="16.5" x2="15.5" y2="13.5" />
-        </svg>
-      );
-    case 'vector':
-      return (
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <polygon points="12 2 2 7 12 12 22 7 12 2" />
-          <polyline points="2 17 12 22 22 17" />
-          <polyline points="2 12 12 17 22 12" />
-        </svg>
-      );
-    case 'brain':
-      return (
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M12 2a4 4 0 0 0-4 4c0 .74.2 1.43.56 2.03A5 5 0 0 0 5 13a5 5 0 0 0 3 4.58V20a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.42A5 5 0 0 0 19 13a5 5 0 0 0-3.56-4.97A4 4 0 0 0 12 2z" />
-        </svg>
-      );
-    case 'tree':
-      return (
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="5" r="3" />
-          <circle cx="6" cy="19" r="3" />
-          <circle cx="18" cy="19" r="3" />
-          <line x1="12" y1="8" x2="6" y2="16" />
-          <line x1="12" y1="8" x2="18" y2="16" />
-        </svg>
-      );
-    case 'database':
-      return (
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <ellipse cx="12" cy="5" rx="9" ry="3" />
-          <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
-          <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
-        </svg>
-      );
-    case 'speed':
-      return (
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="12" r="10" />
-          <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
-        </svg>
-      );
-    default:
-      return null;
-  }
+const cutoutCache = new Map();
+
+function CutoutPortrait({ src, alt, style }) {
+  const [cutoutUrl, setCutoutUrl] = useState(() => (src ? cutoutCache.get(src) || null : null));
+
+  useEffect(() => {
+    if (!src) return;
+    if (cutoutCache.has(src)) {
+      setCutoutUrl(cutoutCache.get(src));
+      return;
+    }
+
+    let isMounted = true;
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.src = src;
+
+    img.onload = () => {
+      try {
+        const w = img.naturalWidth || 800;
+        const h = img.naturalHeight || 800;
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
+        ctx.drawImage(img, 0, 0);
+
+        const imgData = ctx.getImageData(0, 0, w, h);
+        const d = imgData.data;
+
+        // Sample top corners to check black background level
+        let maxBg = 0;
+        for (let y = 0; y < 8; y++) {
+          for (let x = 0; x < 8; x++) {
+            const idx = (y * w + x) * 4;
+            const b = Math.max(d[idx], d[idx + 1], d[idx + 2]);
+            if (b > maxBg) maxBg = b;
+          }
+        }
+
+        const bgThreshold = Math.max(16, maxBg + 12);
+        const featherSpan = 14;
+
+        const visited = new Uint8Array(w * h);
+        const queue = new Int32Array(w * h);
+        let head = 0;
+        let tail = 0;
+
+        for (let x = 0; x < w; x++) {
+          const topIdx = x;
+          const bTop = Math.max(d[topIdx * 4], d[topIdx * 4 + 1], d[topIdx * 4 + 2]);
+          if (bTop <= bgThreshold + featherSpan) {
+            visited[topIdx] = 1;
+            queue[tail++] = topIdx;
+          }
+        }
+
+        for (let y = 0; y < h; y++) {
+          const leftIdx = y * w;
+          const bLeft = Math.max(d[leftIdx * 4], d[leftIdx * 4 + 1], d[leftIdx * 4 + 2]);
+          if (!visited[leftIdx] && bLeft <= bgThreshold + featherSpan) {
+            visited[leftIdx] = 1;
+            queue[tail++] = leftIdx;
+          }
+
+          const rightIdx = y * w + (w - 1);
+          const bRight = Math.max(d[rightIdx * 4], d[rightIdx * 4 + 1], d[rightIdx * 4 + 2]);
+          if (!visited[rightIdx] && bRight <= bgThreshold + featherSpan) {
+            visited[rightIdx] = 1;
+            queue[tail++] = rightIdx;
+          }
+        }
+
+        while (head < tail) {
+          const cur = queue[head++];
+          const cx = cur % w;
+          const cy = (cur / w) | 0;
+
+          const neighbors = [
+            cx > 0 ? cur - 1 : -1,
+            cx < w - 1 ? cur + 1 : -1,
+            cy > 0 ? cur - w : -1,
+            cy < h - 1 ? cur + w : -1,
+          ];
+
+          for (let i = 0; i < 4; i++) {
+            const n = neighbors[i];
+            if (n !== -1 && !visited[n]) {
+              const nIdx = n * 4;
+              const b = Math.max(d[nIdx], d[nIdx + 1], d[nIdx + 2]);
+              if (b <= bgThreshold) {
+                visited[n] = 1;
+                queue[tail++] = n;
+              } else if (b <= bgThreshold + featherSpan) {
+                visited[n] = 2;
+              }
+            }
+          }
+        }
+
+        for (let i = 0; i < w * h; i++) {
+          const p = i * 4;
+          if (visited[i] === 1) {
+            d[p + 3] = 0;
+          } else if (visited[i] === 2) {
+            const b = Math.max(d[p], d[p + 1], d[p + 2]);
+            const factor = Math.min(1, Math.max(0, (b - bgThreshold) / featherSpan));
+            d[p + 3] = Math.round(d[p + 3] * factor);
+          }
+        }
+
+        ctx.putImageData(imgData, 0, 0);
+        const dataUrl = canvas.toDataURL('image/png');
+        cutoutCache.set(src, dataUrl);
+        if (isMounted) {
+          setCutoutUrl(dataUrl);
+        }
+      } catch (err) {
+        console.error('Cutout processing error:', err);
+        if (isMounted) setCutoutUrl(src);
+      }
+    };
+
+    img.onerror = () => {
+      if (isMounted) setCutoutUrl('/madhu.jpg');
+    };
+
+    return () => {
+      isMounted = false;
+    };
+  }, [src]);
+
+  return (
+    <img
+      src={cutoutUrl || src || '/madhu.jpg'}
+      alt={alt}
+      style={{
+        ...style,
+        display: 'block',
+      }}
+    />
+  );
 }
