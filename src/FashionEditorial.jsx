@@ -5,21 +5,16 @@ import profilePic from './profilePic';
  * Ijji Madhu Venkat — Luxury Editorial Developer Portfolio
  * 
  * Features:
- * - Playfair Typography (@import Google Font Playfair with variable optical size & weights).
- * - Exact Dark Forest Green Capsule Pill Navbar from user reference (media_1790525601368.png):
- *   - Deep hunter-green container (#283b30).
- *   - Golden-amber monogram badge ("M") + crisp white "Madhu." with amber dot.
- *   - Nav links in Playfair with golden-amber active "Home" + underline.
- *   - Pure white pill "Contact Me" button with dark forest text.
- * - 100% Fully Mobile Responsive:
- *   - Desktop View (>= 860px): High-precision stage scaling without black reload gaps.
- *   - Mobile View (< 860px): Fluid vertical layout, mobile dark capsule navbar with hamburger drawer,
- *     touch-optimized white & orange buttons, centered portrait with floating badges touching the ticker.
- * - Exact Jadoo Organic Peach Shape & Lilac Atmospheric Aura.
- * - Flying passenger airplanes with curved trails.
- * - Headline with curved orange brush stroke underline in 'Playfair', serif.
- * - Slanted Infinite Marquee Ticker Ribbon in Orange & White UI theme.
- * - Editorial Statement Section: Exactly 4 lines of text in h3 size Playfair font.
+ * - In-Hero Transparent Navbar: Directly on the hero section canvas with NO separate background,
+ *   transparent styling with 3D isometric cube logo, menu items, and pill button.
+ * - Sticky Scrolled Navbar: When user scrolls past the hero section, the navbar smoothly slides in
+ *   at the top with a white frosted background (rgba(255, 255, 255, 0.98)) and shadow.
+ * - Continuous 4-Line Philosophy Statement: 4 points flowing continuously with NO breaking divs.
+ * - Animated bouncing scroll down arrow button below the 4-line text.
+ * - PrebuiltUI 3D cube logo + "Madhu." in Playfair font.
+ * - 100% Fully Mobile Responsive (Mobile & Desktop).
+ * - Jadoo Organic Peach Shape, Lilac Atmospheric Aura, and Flying Airplanes.
+ * - Slanted Infinite Marquee Ticker Ribbon in Orange & White theme.
  */
 
 const STAGE_WIDTH = 1200;
@@ -33,7 +28,7 @@ const getInitialDimensions = () => {
     return {
       windowWidth: w,
       scale: s,
-      stageHeight: Math.max(560, Math.round(h / s)),
+      stageHeight: Math.max(540, Math.round(h / s)),
     };
   }
   return { windowWidth: 1200, scale: 1, stageHeight: 700 };
@@ -43,6 +38,7 @@ export default function FashionEditorial() {
   const containerRef = useRef(null);
   const [{ windowWidth, scale, stageHeight }, setDimensions] = useState(getInitialDimensions);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   // Synchronous layout effect for instant resize and mount
   useLayoutEffect(() => {
@@ -51,7 +47,7 @@ export default function FashionEditorial() {
       const h = window.innerHeight || (containerRef.current ? containerRef.current.clientHeight : 700);
 
       const newScale = w / STAGE_WIDTH;
-      const newStageHeight = Math.max(560, Math.round(h / newScale));
+      const newStageHeight = Math.max(540, Math.round(h / newScale));
 
       setDimensions({ windowWidth: w, scale: newScale, stageHeight: newStageHeight });
     };
@@ -67,9 +63,25 @@ export default function FashionEditorial() {
     };
   }, []);
 
+  // Scroll listener: activates sticky navbar ONLY after scrolling down past the hero section
+  useEffect(() => {
+    const handleScroll = () => {
+      const heroThreshold = Math.max(380, (stageHeight * scale) * 0.7);
+      if (window.scrollY > heroThreshold) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [stageHeight, scale]);
+
   const isMobile = windowWidth < 860;
 
-  // Static CSS keyframes for marquee scroll and floating badges
+  // Static CSS keyframes for marquee scroll, floating badges, and scroll arrow
   const cssKeyframes = useMemo(() => {
     return `
       @import url('https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap');
@@ -97,10 +109,35 @@ export default function FashionEditorial() {
         50% { transform: translateY(5px); }
       }
 
+      /* Sticky navbar slide down animation */
+      @keyframes nav-slide-down {
+        from {
+          opacity: 0;
+          transform: translateY(-100%);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
       /* Mobile drawer animation */
       @keyframes slide-down {
         from { opacity: 0; transform: translateY(-8px); }
         to { opacity: 1; transform: translateY(0); }
+      }
+
+      /* Bouncing animation for scroll down arrow */
+      @keyframes bounce-scroll {
+        0%, 20%, 50%, 80%, 100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(10px);
+        }
+        60% {
+          transform: translateY(5px);
+        }
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -120,7 +157,6 @@ export default function FashionEditorial() {
         width: '100%',
         minHeight: '100vh',
         overflowX: 'hidden',
-        overflowY: 'auto',
         position: 'relative',
         backgroundColor: '#ffffff',
         fontFamily: '"Playfair", Georgia, serif',
@@ -128,15 +164,24 @@ export default function FashionEditorial() {
     >
       <style>{cssKeyframes}</style>
 
-      {/* RENDER DESKTOP VS MOBILE HERO */}
+      {/* STICKY NAVBAR: Only appears after scrolling down past the hero section */}
+      {isScrolled && (
+        <StickyScrolledNavbar
+          isMobile={isMobile}
+          mobileMenuOpen={mobileMenuOpen}
+          setMobileMenuOpen={setMobileMenuOpen}
+        />
+      )}
+
+      {/* HERO SECTION */}
       {isMobile ? (
-        /* MOBILE VIEW (< 860px): Fluid vertical responsive hero */
+        /* MOBILE VIEW (< 860px): Fluid vertical responsive hero with transparent navbar directly on hero */
         <MobileHeroSection
           mobileMenuOpen={mobileMenuOpen}
           setMobileMenuOpen={setMobileMenuOpen}
         />
       ) : (
-        /* DESKTOP VIEW (>= 860px): Stage-scaled responsive hero */
+        /* DESKTOP VIEW (>= 860px): Stage-scaled responsive hero with transparent navbar directly on hero */
         <div
           style={{
             width: '100%',
@@ -159,7 +204,7 @@ export default function FashionEditorial() {
               overflow: 'hidden',
             }}
           >
-            {/* Desktop Hero Content */}
+            {/* Desktop Hero Content with In-Hero Transparent Navbar */}
             <DesktopHeroContent stageHeight={stageHeight} />
 
             {/* Desktop Slanted Marquee Ribbon */}
@@ -168,9 +213,511 @@ export default function FashionEditorial() {
         </div>
       )}
 
-      {/* Under Hero: Dedicated 4-Line Editorial Statement Section (h3 size text only) */}
+      {/* Under Hero: Dedicated Continuous 4-Line Philosophy Section with Bouncing Scroll Down Arrow */}
       <EditorialStatementSection isMobile={isMobile} />
     </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// STICKY SCROLLED NAVBAR (Appears only AFTER scrolling down past the hero)
+// Clean white background with soft shadow & frosted blur
+// ---------------------------------------------------------------------------
+function StickyScrolledNavbar({ isMobile, mobileMenuOpen, setMobileMenuOpen }) {
+  return (
+    <nav
+      style={{
+        height: 70,
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        padding: isMobile ? '0 20px' : '0 clamp(24px, 5vw, 96px)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        zIndex: 100,
+        backgroundColor: 'rgba(255, 255, 255, 0.96)',
+        backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)',
+        color: '#374151',
+        boxShadow: '0px 4px 25px 0px rgba(0, 0, 0, 0.07)',
+        borderBottom: '1px solid rgba(0, 0, 0, 0.05)',
+        boxSizing: 'border-box',
+        animation: 'nav-slide-down 0.28s ease-out',
+      }}
+    >
+      {/* Brand Logo: 3D Isometric Cube + "Madhu." */}
+      <a
+        href="#"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 12,
+          textDecoration: 'none',
+          color: '#181e4b',
+        }}
+      >
+        <svg
+          width="32"
+          height="34"
+          viewBox="0 0 31 40"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style={{ flexShrink: 0 }}
+        >
+          <path
+            d="m8.75 11.3 6.75 3.884 6.75-3.885M8.75 34.58v-7.755L2 22.939m27 0-6.75 3.885v7.754M2.405 15.408 15.5 22.954l13.095-7.546M15.5 38V22.939M29 28.915V16.962a2.98 2.98 0 0 0-1.5-2.585L17 8.4a3.01 3.01 0 0 0-3 0L3.5 14.377A3 3 0 0 0 2 16.962v11.953A2.98 2.98 0 0 0 3.5 31.5L14 37.477a3.01 3.01 0 0 0 3 0L27.5 31.5a3 3 0 0 0 1.5-2.585"
+            stroke="#ea580c"
+            strokeWidth="2.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+
+        <span
+          style={{
+            fontFamily: '"Playfair", Georgia, serif',
+            fontSize: 22,
+            fontWeight: 700,
+            color: '#181e4b',
+            letterSpacing: 0.2,
+          }}
+        >
+          Madhu<span style={{ color: '#ea580c' }}>.</span>
+        </span>
+      </a>
+
+      {/* Desktop Navigation Links */}
+      {!isMobile && (
+        <ul
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 40,
+            listStyle: 'none',
+            margin: 0,
+            padding: 0,
+          }}
+        >
+          {['Home', 'Services', 'Portfolio', 'Pricing'].map((item, idx) => (
+            <li key={item}>
+              <a
+                href={item === 'Home' ? '#' : `#${item.toLowerCase()}`}
+                style={{
+                  fontFamily: '"Playfair", Georgia, serif',
+                  fontSize: 15,
+                  fontWeight: idx === 0 ? 700 : 500,
+                  color: idx === 0 ? '#ea580c' : '#4b5563',
+                  textDecoration: 'none',
+                  transition: 'color 0.2s ease',
+                  padding: '4px 0',
+                  borderBottom: idx === 0 ? '2px solid #ea580c' : 'none',
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = '#ea580c')}
+                onMouseLeave={(e) => {
+                  if (idx !== 0) e.currentTarget.style.color = '#4b5563';
+                }}
+              >
+                {item}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {/* Desktop "Get started" Pill Button */}
+      {!isMobile && (
+        <button
+          type="button"
+          onClick={() => {
+            const el = document.getElementById('editorial-statement');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }}
+          style={{
+            fontFamily: '"Playfair", Georgia, serif',
+            fontSize: 14,
+            fontWeight: 600,
+            color: '#4b5563',
+            backgroundColor: '#ffffff',
+            border: '1px solid #d1d5db',
+            borderRadius: 9999,
+            width: 160,
+            height: 44,
+            cursor: 'pointer',
+            transition: 'all 0.2s ease',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = '#ea580c';
+            e.currentTarget.style.borderColor = '#ea580c';
+            e.currentTarget.style.color = '#ffffff';
+            e.currentTarget.style.boxShadow = '0 6px 18px rgba(234, 88, 12, 0.28)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = '#ffffff';
+            e.currentTarget.style.borderColor = '#d1d5db';
+            e.currentTarget.style.color = '#4b5563';
+            e.currentTarget.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.05)';
+          }}
+        >
+          Get started
+        </button>
+      )}
+
+      {/* Mobile Menu Button Toggle */}
+      {isMobile && (
+        <button
+          aria-label="menu-btn"
+          type="button"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          style={{
+            background: 'none',
+            border: 'none',
+            padding: 6,
+            cursor: 'pointer',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="#000">
+            <path d="M 3 7 A 1.0001 1.0001 0 1 0 3 9 L 27 9 A 1.0001 1.0001 0 1 0 27 7 L 3 7 z M 3 14 A 1.0001 1.0001 0 1 0 3 16 L 27 16 A 1.0001 1.0001 0 1 0 27 14 L 3 14 z M 3 21 A 1.0001 1.0001 0 1 0 3 23 L 27 23 A 1.0001 1.0001 0 1 0 27 21 L 3 21 z"></path>
+          </svg>
+        </button>
+      )}
+
+      {/* Mobile Menu Dropdown Drawer */}
+      {isMobile && mobileMenuOpen && (
+        <div
+          style={{
+            position: 'absolute',
+            top: 70,
+            left: 0,
+            width: '100%',
+            backgroundColor: '#ffffff',
+            padding: 24,
+            boxShadow: '0 16px 36px rgba(0, 0, 0, 0.12)',
+            borderTop: '1px solid #f3f4f6',
+            boxSizing: 'border-box',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 16,
+            zIndex: 45,
+            animation: 'slide-down 0.2s ease-out',
+          }}
+        >
+          <ul
+            style={{
+              listStyle: 'none',
+              padding: 0,
+              margin: 0,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 14,
+            }}
+          >
+            {['Home', 'Services', 'Portfolio', 'Pricing'].map((item, idx) => (
+              <li key={item}>
+                <a
+                  href={item === 'Home' ? '#' : `#${item.toLowerCase()}`}
+                  onClick={() => setMobileMenuOpen(false)}
+                  style={{
+                    fontFamily: '"Playfair", Georgia, serif',
+                    fontSize: 15,
+                    fontWeight: idx === 0 ? 700 : 500,
+                    color: idx === 0 ? '#ea580c' : '#374151',
+                    textDecoration: 'none',
+                    display: 'block',
+                    padding: '6px 0',
+                  }}
+                >
+                  {item}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <button
+            type="button"
+            onClick={() => {
+              setMobileMenuOpen(false);
+              const el = document.getElementById('editorial-statement');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }}
+            style={{
+              fontFamily: '"Playfair", Georgia, serif',
+              fontSize: 14,
+              fontWeight: 600,
+              color: '#4b5563',
+              backgroundColor: '#ffffff',
+              border: '1px solid #d1d5db',
+              borderRadius: 9999,
+              width: 160,
+              height: 44,
+              cursor: 'pointer',
+              marginTop: 10,
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            Get started
+          </button>
+        </div>
+      )}
+    </nav>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// IN-HERO TRANSPARENT NAVBAR (Directly on Hero Canvas, No Separate Background)
+// ---------------------------------------------------------------------------
+function HeroTransparentNavbar({ isMobile, mobileMenuOpen, setMobileMenuOpen }) {
+  return (
+    <nav
+      style={{
+        height: 70,
+        position: 'relative',
+        width: '100%',
+        padding: isMobile ? '0 20px' : '0 48px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        zIndex: 35,
+        backgroundColor: 'transparent',
+        boxShadow: 'none',
+        borderBottom: 'none',
+        boxSizing: 'border-box',
+      }}
+    >
+      {/* Brand Logo: 3D Isometric Cube + "Madhu." */}
+      <a
+        href="#"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 12,
+          textDecoration: 'none',
+          color: '#181e4b',
+        }}
+      >
+        <svg
+          width="32"
+          height="34"
+          viewBox="0 0 31 40"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style={{ flexShrink: 0 }}
+        >
+          <path
+            d="m8.75 11.3 6.75 3.884 6.75-3.885M8.75 34.58v-7.755L2 22.939m27 0-6.75 3.885v7.754M2.405 15.408 15.5 22.954l13.095-7.546M15.5 38V22.939M29 28.915V16.962a2.98 2.98 0 0 0-1.5-2.585L17 8.4a3.01 3.01 0 0 0-3 0L3.5 14.377A3 3 0 0 0 2 16.962v11.953A2.98 2.98 0 0 0 3.5 31.5L14 37.477a3.01 3.01 0 0 0 3 0L27.5 31.5a3 3 0 0 0 1.5-2.585"
+            stroke="#ea580c"
+            strokeWidth="2.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+
+        <span
+          style={{
+            fontFamily: '"Playfair", Georgia, serif',
+            fontSize: 22,
+            fontWeight: 700,
+            color: '#181e4b',
+            letterSpacing: 0.2,
+          }}
+        >
+          Madhu<span style={{ color: '#ea580c' }}>.</span>
+        </span>
+      </a>
+
+      {/* Desktop Navigation Links directly on hero canvas */}
+      {!isMobile && (
+        <ul
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 40,
+            listStyle: 'none',
+            margin: 0,
+            padding: 0,
+          }}
+        >
+          {['Home', 'Services', 'Portfolio', 'Pricing'].map((item, idx) => (
+            <li key={item}>
+              <a
+                href={item === 'Home' ? '#' : `#${item.toLowerCase()}`}
+                style={{
+                  fontFamily: '"Playfair", Georgia, serif',
+                  fontSize: 15,
+                  fontWeight: idx === 0 ? 700 : 600,
+                  color: idx === 0 ? '#ea580c' : '#181e4b',
+                  textDecoration: 'none',
+                  transition: 'color 0.2s ease',
+                  padding: '4px 0',
+                  borderBottom: idx === 0 ? '2px solid #ea580c' : 'none',
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = '#ea580c')}
+                onMouseLeave={(e) => {
+                  if (idx !== 0) e.currentTarget.style.color = '#181e4b';
+                }}
+              >
+                {item}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {/* Desktop "Get started" Pill Button */}
+      {!isMobile && (
+        <button
+          type="button"
+          onClick={() => {
+            const el = document.getElementById('editorial-statement');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }}
+          style={{
+            fontFamily: '"Playfair", Georgia, serif',
+            fontSize: 14,
+            fontWeight: 600,
+            color: '#181e4b',
+            backgroundColor: 'rgba(255, 255, 255, 0.85)',
+            border: '1px solid rgba(24, 30, 75, 0.18)',
+            borderRadius: 9999,
+            width: 160,
+            height: 44,
+            cursor: 'pointer',
+            transition: 'all 0.2s ease',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+            backdropFilter: 'blur(6px)',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = '#ea580c';
+            e.currentTarget.style.borderColor = '#ea580c';
+            e.currentTarget.style.color = '#ffffff';
+            e.currentTarget.style.boxShadow = '0 6px 18px rgba(234, 88, 12, 0.28)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.85)';
+            e.currentTarget.style.borderColor = 'rgba(24, 30, 75, 0.18)';
+            e.currentTarget.style.color = '#181e4b';
+            e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.05)';
+          }}
+        >
+          Get started
+        </button>
+      )}
+
+      {/* Mobile Menu Button Toggle */}
+      {isMobile && (
+        <button
+          aria-label="menu-btn"
+          type="button"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          style={{
+            background: 'none',
+            border: 'none',
+            padding: 6,
+            cursor: 'pointer',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="#181e4b">
+            <path d="M 3 7 A 1.0001 1.0001 0 1 0 3 9 L 27 9 A 1.0001 1.0001 0 1 0 27 7 L 3 7 z M 3 14 A 1.0001 1.0001 0 1 0 3 16 L 27 16 A 1.0001 1.0001 0 1 0 27 14 L 3 14 z M 3 21 A 1.0001 1.0001 0 1 0 3 23 L 27 23 A 1.0001 1.0001 0 1 0 27 21 L 3 21 z"></path>
+          </svg>
+        </button>
+      )}
+
+      {/* Mobile Dropdown Menu Drawer */}
+      {isMobile && mobileMenuOpen && (
+        <div
+          style={{
+            position: 'absolute',
+            top: 70,
+            left: 0,
+            width: '100%',
+            backgroundColor: '#ffffff',
+            padding: 24,
+            boxShadow: '0 16px 36px rgba(0, 0, 0, 0.12)',
+            borderTop: '1px solid #f3f4f6',
+            boxSizing: 'border-box',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 16,
+            zIndex: 45,
+            animation: 'slide-down 0.2s ease-out',
+          }}
+        >
+          <ul
+            style={{
+              listStyle: 'none',
+              padding: 0,
+              margin: 0,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 14,
+            }}
+          >
+            {['Home', 'Services', 'Portfolio', 'Pricing'].map((item, idx) => (
+              <li key={item}>
+                <a
+                  href={item === 'Home' ? '#' : `#${item.toLowerCase()}`}
+                  onClick={() => setMobileMenuOpen(false)}
+                  style={{
+                    fontFamily: '"Playfair", Georgia, serif',
+                    fontSize: 15,
+                    fontWeight: idx === 0 ? 700 : 500,
+                    color: idx === 0 ? '#ea580c' : '#374151',
+                    textDecoration: 'none',
+                    display: 'block',
+                    padding: '6px 0',
+                  }}
+                >
+                  {item}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <button
+            type="button"
+            onClick={() => {
+              setMobileMenuOpen(false);
+              const el = document.getElementById('editorial-statement');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }}
+            style={{
+              fontFamily: '"Playfair", Georgia, serif',
+              fontSize: 14,
+              fontWeight: 600,
+              color: '#4b5563',
+              backgroundColor: '#ffffff',
+              border: '1px solid #d1d5db',
+              borderRadius: 9999,
+              width: 160,
+              height: 44,
+              cursor: 'pointer',
+              marginTop: 10,
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            Get started
+          </button>
+        </div>
+      )}
+    </nav>
   );
 }
 
@@ -187,155 +734,12 @@ function MobileHeroSection({ mobileMenuOpen, setMobileMenuOpen }) {
         overflow: 'hidden',
       }}
     >
-      {/* 1. Mobile Deep Forest Green Capsule Navbar (Matches Reference Image) */}
-      <nav
-        style={{
-          position: 'sticky',
-          top: 12,
-          margin: '12px auto 0 auto',
-          width: 'calc(100% - 24px)',
-          maxWidth: 520,
-          height: 56,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          backgroundColor: '#283b30',
-          backgroundImage: 'linear-gradient(135deg, #2d4336 0%, #223429 100%)',
-          borderRadius: 36,
-          padding: '0 10px 0 14px',
-          boxShadow: '0 10px 28px rgba(0, 0, 0, 0.22), 0 2px 8px rgba(0, 0, 0, 0.15)',
-          border: '1px solid rgba(255, 255, 255, 0.08)',
-          zIndex: 50,
-          boxSizing: 'border-box',
-        }}
-      >
-        {/* Brand Logo & Name */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }}>
-          <div
-            style={{
-              width: 36,
-              height: 36,
-              borderRadius: '50%',
-              backgroundColor: '#f59e0b',
-              backgroundImage: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#1a2920',
-              fontWeight: 800,
-              fontSize: 18,
-              fontFamily: '"Playfair", Georgia, serif',
-              boxShadow: '0 3px 10px rgba(0, 0, 0, 0.25)',
-            }}
-          >
-            M
-          </div>
-          <span
-            style={{
-              fontFamily: '"Playfair", Georgia, serif',
-              fontSize: 18,
-              fontWeight: 700,
-              color: '#ffffff',
-              letterSpacing: 0.2,
-            }}
-          >
-            Madhu<span style={{ color: '#f59e0b' }}>.</span>
-          </span>
-        </div>
-
-        {/* Right: Pure White Pill "Contact Me" Button + Hamburger Toggle */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <button
-            type="button"
-            style={{
-              fontFamily: '"Playfair", Georgia, serif',
-              fontSize: 12.5,
-              fontWeight: 700,
-              color: '#283b30',
-              backgroundColor: '#ffffff',
-              border: 'none',
-              borderRadius: 24,
-              padding: '8px 16px',
-              cursor: 'pointer',
-              letterSpacing: 0.2,
-              boxShadow: '0 3px 10px rgba(0, 0, 0, 0.15)',
-            }}
-          >
-            Contact Me
-          </button>
-
-          {/* Hamburger Menu Toggle Button */}
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle mobile menu"
-            style={{
-              width: 36,
-              height: 36,
-              borderRadius: '50%',
-              backgroundColor: 'rgba(255, 255, 255, 0.12)',
-              border: '1px solid rgba(255, 255, 255, 0.15)',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 4,
-              cursor: 'pointer',
-            }}
-          >
-            {mobileMenuOpen ? (
-              <span style={{ fontSize: 16, color: '#ffffff', fontWeight: 'bold', lineHeight: 1 }}>✕</span>
-            ) : (
-              <>
-                <span style={{ width: 16, height: 2, backgroundColor: '#ffffff', borderRadius: 1 }} />
-                <span style={{ width: 16, height: 2, backgroundColor: '#f59e0b', borderRadius: 1 }} />
-                <span style={{ width: 16, height: 2, backgroundColor: '#ffffff', borderRadius: 1 }} />
-              </>
-            )}
-          </button>
-        </div>
-      </nav>
-
-      {/* Mobile Menu Dropdown Drawer */}
-      {mobileMenuOpen && (
-        <div
-          style={{
-            position: 'fixed',
-            top: 76,
-            left: 12,
-            right: 12,
-            backgroundColor: '#283b30',
-            backgroundImage: 'linear-gradient(135deg, #2d4336 0%, #223429 100%)',
-            borderRadius: 20,
-            padding: '16px 20px',
-            boxShadow: '0 16px 36px rgba(0, 0, 0, 0.35)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            zIndex: 49,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 10,
-            animation: 'slide-down 0.2s ease-out',
-          }}
-        >
-          {['Home', 'Services', 'About', 'Projects', 'Blogs', 'Testimonials'].map((link, idx) => (
-            <div
-              key={link}
-              onClick={() => setMobileMenuOpen(false)}
-              style={{
-                fontFamily: '"Playfair", Georgia, serif',
-                fontSize: 15,
-                fontWeight: idx === 0 ? 700 : 500,
-                color: idx === 0 ? '#f59e0b' : '#e5e7eb',
-                padding: '8px 4px',
-                borderBottom: idx < 5 ? '1px solid rgba(255, 255, 255, 0.08)' : 'none',
-                cursor: 'pointer',
-              }}
-            >
-              {link}
-            </div>
-          ))}
-        </div>
-      )}
+      {/* 1. Transparent Navbar directly on mobile hero canvas */}
+      <HeroTransparentNavbar
+        isMobile={true}
+        mobileMenuOpen={mobileMenuOpen}
+        setMobileMenuOpen={setMobileMenuOpen}
+      />
 
       {/* Background Shapes for Mobile */}
       <div
@@ -385,7 +789,7 @@ function MobileHeroSection({ mobileMenuOpen, setMobileMenuOpen }) {
         style={{
           position: 'relative',
           zIndex: 5,
-          padding: '40px 20px 0 20px',
+          padding: '28px 20px 0 20px',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -488,6 +892,10 @@ function MobileHeroSection({ mobileMenuOpen, setMobileMenuOpen }) {
         >
           <button
             type="button"
+            onClick={() => {
+              const el = document.getElementById('editorial-statement');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }}
             style={{
               fontFamily: '"Playfair", Georgia, serif',
               fontSize: 13.5,
@@ -692,129 +1100,8 @@ function DesktopHeroContent({ stageHeight }) {
         background: 'radial-gradient(circle at 8% 18%, rgba(213, 174, 228, 0.42) 0%, rgba(213, 174, 228, 0.15) 38%, transparent 68%), #ffffff',
       }}
     >
-      {/* ------------------------------------------------------------------- */}
-      {/* 1. EXACT REFERENCE DARK FOREST GREEN CAPSULE NAVBAR                */}
-      {/* (Pixel-Perfect match to media_1790525601368.png)                  */}
-      {/* ------------------------------------------------------------------- */}
-      <nav
-        style={{
-          position: 'absolute',
-          top: 24,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          height: 60,
-          display: 'flex',
-          alignItems: 'center',
-          backgroundColor: '#283b30',
-          backgroundImage: 'linear-gradient(135deg, #2d4336 0%, #223429 100%)',
-          borderRadius: 40,
-          padding: '0 8px 0 16px',
-          boxShadow: '0 14px 36px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.15)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          zIndex: 20,
-          boxSizing: 'border-box',
-          gap: 38,
-        }}
-      >
-        {/* Left: Brand Monogram Circle + Name (Exact match to Olivia. in image) */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer' }}>
-          <div
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: '50%',
-              backgroundColor: '#f59e0b',
-              backgroundImage: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#1a2920',
-              fontWeight: 800,
-              fontSize: 20,
-              fontFamily: '"Playfair", Georgia, serif',
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
-            }}
-          >
-            M
-          </div>
-          <span
-            style={{
-              fontFamily: '"Playfair", Georgia, serif',
-              fontSize: 19,
-              fontWeight: 700,
-              color: '#ffffff',
-              letterSpacing: 0.2,
-            }}
-          >
-            Madhu<span style={{ color: '#f59e0b' }}>.</span>
-          </span>
-        </div>
-
-        {/* Center: Nav Links with generous spacing & Playfair font */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 30, padding: '0 8px' }}>
-          <span
-            style={{
-              fontFamily: '"Playfair", Georgia, serif',
-              fontSize: 14.5,
-              fontWeight: 700,
-              color: '#f59e0b',
-              borderBottom: '2.5px solid #f59e0b',
-              paddingBottom: 3,
-              cursor: 'pointer',
-              letterSpacing: 0.2,
-            }}
-          >
-            Home
-          </span>
-          {['Services', 'About', 'Projects', 'Blogs', 'Testimonials'].map((link) => (
-            <span
-              key={link}
-              style={{
-                fontFamily: '"Playfair", Georgia, serif',
-                fontSize: 14,
-                fontWeight: 500,
-                color: '#d1d5db',
-                cursor: 'pointer',
-                letterSpacing: 0.2,
-                transition: 'color 0.2s ease',
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = '#ffffff')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = '#d1d5db')}
-            >
-              {link}
-            </span>
-          ))}
-        </div>
-
-        {/* Right: Pure White Pill "Contact Me" Button with Dark Forest Text */}
-        <button
-          type="button"
-          style={{
-            fontFamily: '"Playfair", Georgia, serif',
-            fontSize: 13.5,
-            fontWeight: 700,
-            color: '#283b30',
-            backgroundColor: '#ffffff',
-            border: 'none',
-            borderRadius: 30,
-            padding: '10px 24px',
-            cursor: 'pointer',
-            letterSpacing: 0.2,
-            boxShadow: '0 4px 14px rgba(0, 0, 0, 0.18)',
-            transition: 'transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'scale(1.03)';
-            e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.25)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.boxShadow = '0 4px 14px rgba(0, 0, 0, 0.18)';
-          }}
-        >
-          Contact Me
-        </button>
-      </nav>
+      {/* 1. Transparent Navbar directly on Hero Section Canvas (No Separate Background) */}
+      <HeroTransparentNavbar isMobile={false} />
 
       {/* 2. JADOO HERO BACKGROUND SHAPE (Peach) */}
       <svg
@@ -887,7 +1174,7 @@ function DesktopHeroContent({ stageHeight }) {
       <div
         style={{
           position: 'absolute',
-          top: 86,
+          top: 76,
           bottom: 0,
           left: 60,
           right: 50,
@@ -998,6 +1285,10 @@ function DesktopHeroContent({ stageHeight }) {
           >
             <button
               type="button"
+              onClick={() => {
+                const el = document.getElementById('editorial-statement');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
               style={{
                 fontFamily: '"Playfair", Georgia, serif',
                 fontSize: 14,
@@ -1194,16 +1485,17 @@ function DesktopHeroContent({ stageHeight }) {
 }
 
 // ---------------------------------------------------------------------------
-// Editorial Statement Section (Under Hero Section: Exactly 4 lines, h3 size)
-// Fully responsive on Mobile & Desktop in Playfair Font
+// Editorial Statement Section (Under Hero Section: Exactly 4 points, continuous)
+// Flowing continuously across 4 lines with NO breaking divs
 // ---------------------------------------------------------------------------
 function EditorialStatementSection({ isMobile }) {
   return (
     <section
+      id="editorial-statement"
       style={{
         width: '100%',
         backgroundColor: '#ffffff',
-        padding: isMobile ? '56px 20px 70px 20px' : '110px 40px 120px 40px',
+        padding: isMobile ? '64px 20px 80px 20px' : '110px 40px 130px 40px',
         boxSizing: 'border-box',
         display: 'flex',
         flexDirection: 'column',
@@ -1214,52 +1506,101 @@ function EditorialStatementSection({ isMobile }) {
         zIndex: 5,
       }}
     >
-      <div style={{ maxWidth: 1040, textAlign: 'center', margin: '0 auto', width: '100%' }}>
-        {/* Subtle orange accent kicker */}
-        <div
-          style={{
-            fontFamily: '"Playfair", Georgia, serif',
-            fontSize: isMobile ? 12 : 13,
-            fontWeight: 800,
-            letterSpacing: 2.8,
-            color: '#ea580c',
-            textTransform: 'uppercase',
-            marginBottom: isMobile ? 20 : 28,
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 8,
-          }}
-        >
-          <span style={{ width: 18, height: 2, backgroundColor: '#ea580c', display: 'inline-block' }} />
-          PHILOSOPHY & CODE ARCHITECTURE
-          <span style={{ width: 18, height: 2, backgroundColor: '#ea580c', display: 'inline-block' }} />
-        </div>
-
-        {/* 4 Lines of Text, purely using h3 size and Playfair font */}
+      <div
+        style={{
+          maxWidth: 1040,
+          textAlign: 'center',
+          margin: '0 auto',
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        {/* Exactly 4 Points Flowing Continuously with No Line-Breaking Divs */}
         <h3
           style={{
             fontFamily: '"Playfair", Georgia, serif',
-            fontSize: isMobile ? 'clamp(18px, 4.4vw, 24px)' : 32,
+            fontSize: isMobile ? 'clamp(18px, 4.4vw, 24px)' : 30,
             fontWeight: 600,
-            lineHeight: isMobile ? 1.6 : 1.68,
+            lineHeight: 1.74,
             color: '#181e4b',
-            letterSpacing: -0.3,
+            letterSpacing: -0.2,
             margin: 0,
+            maxWidth: 1020,
+            textAlign: 'center',
           }}
         >
-          <div style={{ marginBottom: isMobile ? 10 : 12 }}>
-            Architecting high-performance distributed systems with scalable full-stack engineering.
-          </div>
-          <div style={{ marginBottom: isMobile ? 10 : 12 }}>
-            Crafting reactive cloud-native platforms powered by modern React, Next.js, and Node.js.
-          </div>
-          <div style={{ marginBottom: isMobile ? 10 : 12 }}>
-            Pioneering autonomous Generative AI workflows and context-aware intelligent agents.
-          </div>
-          <div>
-            Obsessed with clean algorithmic logic, ACID relational performance, and exceptional UX.
-          </div>
+          Architecting high-performance distributed systems with scalable full-stack engineering. Crafting reactive cloud-native platforms powered by modern React, Next.js, and Node.js. Pioneering autonomous Generative AI workflows and context-aware intelligent agents. Obsessed with clean algorithmic logic, ACID relational performance, and exceptional UX.
         </h3>
+
+        {/* Scroll Down Arrow Indicator directly below the 4 lines */}
+        <div
+          onClick={() => {
+            window.scrollBy({ top: 450, behavior: 'smooth' });
+          }}
+          style={{
+            marginTop: isMobile ? 36 : 54,
+            display: 'inline-flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            animation: 'bounce-scroll 2.2s infinite ease-in-out',
+            gap: 10,
+          }}
+        >
+          <div
+            style={{
+              width: isMobile ? 44 : 50,
+              height: isMobile ? 44 : 50,
+              borderRadius: '50%',
+              backgroundColor: '#ffffff',
+              border: '2px solid #ea580c',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 8px 24px rgba(234, 88, 12, 0.22)',
+              transition: 'transform 0.2s ease, background-color 0.2s ease',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = '#ea580c';
+              const svg = e.currentTarget.querySelector('svg');
+              if (svg) svg.style.stroke = '#ffffff';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = '#ffffff';
+              const svg = e.currentTarget.querySelector('svg');
+              if (svg) svg.style.stroke = '#ea580c';
+            }}
+          >
+            <svg
+              width={isMobile ? "20" : "22"}
+              height={isMobile ? "20" : "22"}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#ea580c"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{ transition: 'stroke 0.2s ease' }}
+            >
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          <span
+            style={{
+              fontFamily: '"Playfair", Georgia, serif',
+              fontSize: 12,
+              fontWeight: 700,
+              letterSpacing: 2,
+              color: '#ea580c',
+              textTransform: 'uppercase',
+            }}
+          >
+            Scroll Down
+          </span>
+        </div>
       </div>
     </section>
   );
