@@ -3,6 +3,7 @@ import profilePic from './profilePic';
 import SettleDeck from './SettleDeck';
 import FullscreenCards from './FullscreenCards';
 import ProcessTimeline from './ProcessTimeline';
+import Footer from './Footer';
 
 /**
  * Ijji Madhu Venkat — Luxury Editorial Developer Portfolio
@@ -227,6 +228,9 @@ export default function FashionEditorial() {
 
       {/* How It Works / Process Timeline */}
       <ProcessTimeline />
+
+      {/* Footer Section */}
+      <Footer />
     </div>
   );
 }
