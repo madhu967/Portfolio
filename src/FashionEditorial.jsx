@@ -816,7 +816,7 @@ function MobileHeroSection({ mobileMenuOpen, setMobileMenuOpen }) {
         <h1
           style={{
             fontFamily: '"Playfair", Georgia, serif',
-            fontSize: 'clamp(28px, 7.5vw, 36px)',
+            fontSize: 'clamp(32px, 8.2vw, 42px)',
             fontWeight: 700,
             lineHeight: 1.25,
             letterSpacing: -0.4,
@@ -1215,7 +1215,7 @@ function DesktopHeroContent({ stageHeight }) {
           <h1
             style={{
               fontFamily: '"Playfair", Georgia, serif',
-              fontSize: 38,
+              fontSize: 44,
               fontWeight: 700,
               lineHeight: 1.25,
               letterSpacing: -0.4,
@@ -1622,7 +1622,7 @@ const TICKER_ITEMS = [
 ];
 
 function StarburstIcon({ isMobile }) {
-  const size = isMobile ? 16 : 20;
+  const size = isMobile ? 12 : 15;
   return (
     <svg
       width={size}
@@ -1631,15 +1631,15 @@ function StarburstIcon({ isMobile }) {
       fill="none"
       style={{
         flexShrink: 0,
-        margin: isMobile ? '0 14px' : '0 22px',
+        margin: isMobile ? '0 10px' : '0 16px',
         display: 'inline-block',
         verticalAlign: 'middle',
       }}
     >
-      <line x1="10" y1="2" x2="10" y2="18" stroke="#ffffff" strokeWidth="2.3" strokeLinecap="round" />
-      <line x1="2" y1="10" x2="18" y2="10" stroke="#ffffff" strokeWidth="2.3" strokeLinecap="round" />
-      <line x1="4.34" y1="4.34" x2="15.66" y2="15.66" stroke="#ffffff" strokeWidth="2.3" strokeLinecap="round" />
-      <line x1="4.34" y1="15.66" x2="15.66" y2="4.34" stroke="#ffffff" strokeWidth="2.3" strokeLinecap="round" />
+      <line x1="10" y1="2" x2="10" y2="18" stroke="#ffffff" strokeWidth="2.1" strokeLinecap="round" />
+      <line x1="2" y1="10" x2="18" y2="10" stroke="#ffffff" strokeWidth="2.1" strokeLinecap="round" />
+      <line x1="4.34" y1="4.34" x2="15.66" y2="15.66" stroke="#ffffff" strokeWidth="2.1" strokeLinecap="round" />
+      <line x1="4.34" y1="15.66" x2="15.66" y2="4.34" stroke="#ffffff" strokeWidth="2.1" strokeLinecap="round" />
     </svg>
   );
 }
@@ -1654,7 +1654,7 @@ function SlantedTickerRibbon({ isMobile = false }) {
         bottom: 0,
         left: 0,
         width: '100%',
-        height: isMobile ? 58 : 78,
+        height: isMobile ? 46 : 60,
         zIndex: 28,
         pointerEvents: 'none',
       }}
@@ -1663,10 +1663,10 @@ function SlantedTickerRibbon({ isMobile = false }) {
       <div
         style={{
           position: 'absolute',
-          bottom: isMobile ? 8 : 12,
+          bottom: isMobile ? 6 : 8,
           left: '-10%',
           width: '120%',
-          height: isMobile ? 42 : 52,
+          height: isMobile ? 32 : 40,
           backgroundColor: '#181e4b',
           backgroundImage: 'linear-gradient(90deg, #14183e 0%, #181e4b 50%, #111535 100%)',
           transform: 'rotate(0.95deg)',
@@ -1680,10 +1680,10 @@ function SlantedTickerRibbon({ isMobile = false }) {
       <div
         style={{
           position: 'absolute',
-          bottom: isMobile ? 8 : 12,
+          bottom: isMobile ? 6 : 8,
           left: '-10%',
           width: '120%',
-          height: isMobile ? 42 : 52,
+          height: isMobile ? 32 : 40,
           backgroundColor: '#ea580c',
           backgroundImage: 'linear-gradient(90deg, #ff6b35 0%, #ea580c 50%, #d9480f 100%)',
           transform: 'rotate(-1.6deg)',
@@ -1711,10 +1711,10 @@ function SlantedTickerRibbon({ isMobile = false }) {
                 display: 'inline-flex',
                 alignItems: 'center',
                 fontFamily: '"Playfair", Georgia, serif',
-                fontSize: isMobile ? 14 : 16,
+                fontSize: isMobile ? 12 : 13.5,
                 fontWeight: 700,
                 color: '#ffffff',
-                letterSpacing: -0.2,
+                letterSpacing: -0.1,
                 userSelect: 'none',
               }}
             >
