@@ -1,6 +1,8 @@
 import React, { useLayoutEffect, useEffect, useRef, useState, useMemo } from 'react';
 import profilePic from './profilePic';
 import SettleDeck from './SettleDeck';
+import FullscreenCards from './FullscreenCards';
+import ProcessTimeline from './ProcessTimeline';
 
 /**
  * Ijji Madhu Venkat — Luxury Editorial Developer Portfolio
@@ -159,7 +161,7 @@ export default function FashionEditorial() {
         minHeight: '100vh',
         overflowX: 'clip',
         position: 'relative',
-        backgroundColor: '#ffffff',
+        backgroundColor: '#fbfdf3',
         fontFamily: '"Playfair", Georgia, serif',
       }}
     >
@@ -189,7 +191,7 @@ export default function FashionEditorial() {
             height: stageHeight * scale,
             position: 'relative',
             overflow: 'hidden',
-            backgroundColor: '#ffffff',
+            backgroundColor: '#ebeedc',
           }}
         >
           <div
@@ -201,7 +203,7 @@ export default function FashionEditorial() {
               left: 0,
               transform: `scale(${scale})`,
               transformOrigin: 'top left',
-              backgroundColor: '#ffffff',
+              backgroundColor: '#ebeedc',
               overflow: 'hidden',
             }}
           >
@@ -219,6 +221,12 @@ export default function FashionEditorial() {
 
       {/* Settle: Pinned Scroll Deck Sequence (Services Provided) */}
       <SettleDeck />
+
+      {/* Fullscreen Rolling Cards */}
+      <FullscreenCards />
+
+      {/* How It Works / Process Timeline */}
+      <ProcessTimeline />
     </div>
   );
 }
@@ -734,7 +742,7 @@ function MobileHeroSection({ mobileMenuOpen, setMobileMenuOpen }) {
       style={{
         width: '100%',
         position: 'relative',
-        backgroundColor: '#ffffff',
+        backgroundColor: '#ebeedc',
         overflow: 'hidden',
       }}
     >
