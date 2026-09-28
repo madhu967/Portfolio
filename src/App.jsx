@@ -1,7 +1,12 @@
+import React from 'react'
 import FashionEditorial from './FashionEditorial'
 
-function App() {
-  return <FashionEditorial />
+const App = () => {
+  return (
+    <>
+      <FashionEditorial />
+    </>
+  )
 }
 
 export default App
