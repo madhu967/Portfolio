@@ -35,19 +35,19 @@ const STEPS = [
 
 const THEMES = {
   coral: {
-    bg: '#fff1f0',
-    border: '#ffccc7',
-    accent: '#ff4d4f'
+    bg: 'linear-gradient(145deg, #fffcfb, #fff0ef)',
+    border: 'rgba(255, 180, 175, 0.4)',
+    accent: '#f43f5e'
   },
   blue: {
-    bg: '#e6f4ff',
-    border: '#91caff',
-    accent: '#1677ff'
+    bg: 'linear-gradient(145deg, #f7fbff, #eaf4ff)',
+    border: 'rgba(186, 230, 253, 0.5)',
+    accent: '#0ea5e9'
   },
   mint: {
-    bg: '#f6ffed',
-    border: '#b7eb8f',
-    accent: '#52c41a'
+    bg: 'linear-gradient(145deg, #f8fdfa, #e6fcf0)',
+    border: 'rgba(167, 243, 208, 0.5)',
+    accent: '#10b981'
   }
 };
 
@@ -88,6 +88,7 @@ export default function ProcessTimeline() {
         .pt-wrapper {
           position: relative;
           width: 100%;
+          background: radial-gradient(ellipse at 50% 36%, #fbfdf3 0%, #ebeedc 55%, #dce0cb 100%);
           padding: 80px 20px;
           overflow: hidden;
           font-family: 'Inter', sans-serif;
@@ -97,7 +98,7 @@ export default function ProcessTimeline() {
         .pt-bg-lines {
           position: absolute;
           inset: 0;
-          background-image: linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px);
+          background-image: linear-gradient(rgba(19, 20, 15, 0.05) 1px, transparent 1px);
           background-size: 100% 32px;
           pointer-events: none;
           z-index: 1;
@@ -115,11 +116,11 @@ export default function ProcessTimeline() {
         }
         .pt-edge-fade-left {
           left: 0;
-          background: linear-gradient(to right, #fbfdf3, transparent);
+          background: linear-gradient(to right, #ebeedc, transparent);
         }
         .pt-edge-fade-right {
           right: 0;
-          background: linear-gradient(to left, #fbfdf3, transparent);
+          background: linear-gradient(to left, #ebeedc, transparent);
         }
 
         .pt-container {
@@ -164,84 +165,124 @@ export default function ProcessTimeline() {
           position: absolute;
           width: 280px;
           padding: 8px;
-          border-radius: 25px;
-          background-color: #ffffff;
-          border: 1px solid rgba(0,0,0,0.05);
-          box-shadow: 0 10px 20px rgba(0,0,0,0.05), 0 2px 5px rgba(0,0,0,0.02);
+          border-radius: 28px;
+          background-color: rgba(255, 255, 255, 0.98);
+          border: 1px solid rgba(0, 0, 0, 0.04);
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03),
+                      0 12px 25px -4px rgba(0, 0, 0, 0.06),
+                      0 30px 50px -15px rgba(0, 0, 0, 0.08);
           z-index: 5;
-          transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), z-index 0s;
+          backdrop-filter: blur(8px);
+          transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15),
+                      box-shadow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15),
+                      z-index 0s;
           cursor: default;
         }
 
         .pt-card:hover {
           z-index: 20;
-          transform: var(--hover-rotate) scale(1.05) !important;
+          transform: var(--hover-rotate) translateY(-6px) scale(1.06) !important;
+          box-shadow: 0 10px 20px -2px rgba(0, 0, 0, 0.04),
+                      0 25px 40px -5px rgba(0, 0, 0, 0.08),
+                      0 45px 70px -15px rgba(0, 0, 0, 0.12);
         }
 
         .pt-card-inner {
           position: relative;
-          border-radius: 15px;
-          padding: 40px 20px 24px;
+          border-radius: 20px;
+          padding: 44px 24px 28px;
           border: 1px solid;
           display: flex;
           flex-direction: column;
           align-items: center;
           text-align: center;
+          box-shadow: inset 1px 1px 0px rgba(255, 255, 255, 0.8),
+                      inset -1px -1px 0px rgba(0, 0, 0, 0.02);
         }
 
         .pt-pin {
           position: absolute;
-          top: -16px;
+          top: -18px;
           left: 50%;
           transform: translateX(-50%);
           z-index: 10;
+          filter: drop-shadow(0px 8px 6px rgba(0, 0, 0, 0.18));
+          transition: transform 0.3s ease;
+        }
+
+        .pt-card:hover .pt-pin {
+          transform: translateX(-50%) translateY(-2px) scale(1.05);
         }
 
         .pt-card-num {
           font-family: 'Caveat', cursive;
-          font-size: 36px;
+          font-size: 42px;
           line-height: 1;
-          margin-bottom: 24px;
+          margin-bottom: 20px;
+          opacity: 0.9;
+          transform: rotate(-3deg);
         }
 
         .pt-card-title {
-          font-size: 24px;
-          font-weight: 600;
-          line-height: 1.1;
-          color: #1f2937;
-          margin: 0 0 12px 0;
+          font-size: 22px;
+          font-weight: 700;
+          line-height: 1.2;
+          color: #111827;
+          margin: 0 0 14px 0;
+          letter-spacing: -0.02em;
         }
 
         .pt-card-desc {
-          font-size: 14px;
-          line-height: 20px;
-          color: #6b7280;
+          font-size: 14.5px;
+          line-height: 1.5;
+          color: #4b5563;
           letter-spacing: -0.01em;
           margin: 0;
         }
 
         /* Mobile Layout */
+        .pt-svg-path-mobile {
+          display: none;
+        }
+
         @media (max-width: 768px) {
+          .pt-wrapper {
+            padding: 60px 20px;
+          }
           .pt-container {
             height: auto;
             display: flex;
             flex-direction: column;
-            gap: 32px;
+            gap: 48px;
             align-items: center;
+            position: relative;
           }
           .pt-card {
             position: relative;
             top: auto !important;
             left: auto !important;
             width: 100%;
-            max-width: 320px;
+            max-width: 360px;
             transform: none !important;
+            z-index: 5;
           }
           .pt-card:hover {
-            transform: scale(1.02) !important;
+            transform: translateY(-4px) scale(1.02) !important;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
           }
           .pt-svg-path {
             display: none;
+          }
+          .pt-svg-path-mobile {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
           }
         }
       `}</style>
@@ -263,6 +304,14 @@ export default function ProcessTimeline() {
           />
         </svg>
 
+        {/* Vertical Dashed Path for Mobile */}
+        <svg className="pt-svg-path-mobile" viewBox="0 0 4 1000" preserveAspectRatio="none">
+          <path
+            className="pt-path-line"
+            d="M 2 0 L 2 1000"
+          />
+        </svg>
+
         {STEPS.map((step, index) => {
           const theme = THEMES[step.theme];
           const positionStyles = getCardStyle(index);
@@ -272,7 +321,7 @@ export default function ProcessTimeline() {
               <div
                 className="pt-card-inner"
                 style={{
-                  backgroundColor: theme.bg,
+                  background: theme.bg,
                   borderColor: theme.border,
                 }}
               >
