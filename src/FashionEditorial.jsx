@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useEffect, useRef, useState, useMemo } from 'react';
 import profilePic from './profilePic';
+import SettleDeck from './SettleDeck';
 
 /**
  * Ijji Madhu Venkat — Luxury Editorial Developer Portfolio
@@ -156,7 +157,7 @@ export default function FashionEditorial() {
       style={{
         width: '100%',
         minHeight: '100vh',
-        overflowX: 'hidden',
+        overflowX: 'clip',
         position: 'relative',
         backgroundColor: '#ffffff',
         fontFamily: '"Playfair", Georgia, serif',
@@ -215,6 +216,9 @@ export default function FashionEditorial() {
 
       {/* Under Hero: Dedicated Continuous 4-Line Philosophy Section with Bouncing Scroll Down Arrow */}
       <EditorialStatementSection isMobile={isMobile} />
+
+      {/* Settle: Pinned Scroll Deck Sequence (Services Provided) */}
+      <SettleDeck />
     </div>
   );
 }
@@ -1537,7 +1541,9 @@ function EditorialStatementSection({ isMobile }) {
         {/* Scroll Down Arrow Indicator directly below the 4 lines */}
         <div
           onClick={() => {
-            window.scrollBy({ top: 450, behavior: 'smooth' });
+            const el = document.getElementById('services');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+            else window.scrollBy({ top: 550, behavior: 'smooth' });
           }}
           style={{
             marginTop: isMobile ? 36 : 54,

@@ -9,7 +9,7 @@ body {
   padding: 0;
   width: 100%;
   min-height: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
   overflow-y: auto !important;
   background-color: #ffffff;
   scroll-behavior: smooth;
@@ -20,6 +20,6 @@ body {
   padding: 0;
   width: 100%;
   min-height: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
   background-color: #ffffff;
 }
