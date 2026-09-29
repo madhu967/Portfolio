@@ -88,7 +88,7 @@ export default function ProcessTimeline() {
         .pt-wrapper {
           position: relative;
           width: 100%;
-          background: radial-gradient(ellipse at 50% 36%, #fbfdf3 0%, #ebeedc 55%, #dce0cb 100%);
+          background: radial-gradient(ellipse at 50% 36%, #ebeedc 0%, #dce0cb 55%, #dce0cb 100%);
           padding: 80px 20px;
           overflow: hidden;
           font-family: 'Inter', sans-serif;

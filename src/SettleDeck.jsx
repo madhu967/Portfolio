@@ -32,11 +32,11 @@ const BACK_CARDS_DATA = [
     subtitle: 'DISTRIBUTED ARCHITECTURE',
     body: 'Resilient cloud backends, ACID relational performance, and microservice meshes engineered for absolute fault-tolerance.',
     bg: '#c2502f',
-    textColor: '#fbfdf3',
+    textColor: '#ebeedc',
     subColor: 'rgba(251, 253, 243, 0.72)',
     badgeBg: 'rgba(251, 253, 243, 0.15)',
     badgeBorder: 'rgba(251, 253, 243, 0.25)',
-    iconColor: '#fbfdf3',
+    iconColor: '#ebeedc',
     settleTilt: -2.0,
     settleX: -4,
     settleY: 0,
@@ -95,11 +95,11 @@ const BACK_CARDS_DATA = [
     subtitle: 'REACTIVE PLATFORMS',
     body: 'High-speed React & Next.js client systems with sub-50ms latency, zero layout shift, and silky 60fps view transitions.',
     bg: '#1f6f5c',
-    textColor: '#fbfdf3',
+    textColor: '#ebeedc',
     subColor: 'rgba(251, 253, 243, 0.75)',
     badgeBg: 'rgba(251, 253, 243, 0.14)',
     badgeBorder: 'rgba(251, 253, 243, 0.25)',
-    iconColor: '#fbfdf3',
+    iconColor: '#ebeedc',
     settleTilt: -4.5,
     settleX: -12,
     settleY: 8,
@@ -666,7 +666,7 @@ export default function SettleDeck() {
                   backgroundColor: 'rgba(217, 164, 65, 0.15)',
                   border: '1px solid rgba(217, 164, 65, 0.3)',
                   color: '#d9a441',
-                  fontFamily: 'Oswald, sans-serif',
+                  fontFamily: "'Space Mono', monospace",
                   fontSize: 11,
                   letterSpacing: '0.15em',
                   textTransform: 'uppercase',
@@ -707,7 +707,7 @@ export default function SettleDeck() {
                 </svg>
               </div>
 
-              <h3 className="settle-card-title" style={{ textAlign: 'center', color: '#fbfdf3' }}>
+              <h3 className="settle-card-title" style={{ textAlign: 'center', color: '#ebeedc' }}>
                 Disciplines
               </h3>
               <div className="settle-card-sub" style={{ color: '#d9a441' }}>
@@ -731,11 +731,11 @@ export default function SettleDeck() {
                 paddingTop: 12,
               }}
             >
-              <span style={{ fontFamily: 'Oswald, sans-serif', fontSize: 11, letterSpacing: '0.2em', color: 'rgba(251, 253, 243, 0.5)' }}>
+              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, letterSpacing: '0.2em', color: 'rgba(251, 253, 243, 0.5)' }}>
                 ARCHITECTURE & AI
               </span>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#d9a441' }}>
-                <span style={{ fontFamily: 'Oswald, sans-serif', fontSize: 11, letterSpacing: '0.15em' }}>SCROLL TO UNLOCK</span>
+                <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, letterSpacing: '0.15em' }}>SCROLL TO UNLOCK</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                   <path d="m9 18 6-6-6-6" />
                 </svg>
@@ -773,7 +773,7 @@ export default function SettleDeck() {
                     backgroundColor: card.badgeBg,
                     border: `1px solid ${card.badgeBorder}`,
                     color: card.textColor,
-                    fontFamily: 'Oswald, sans-serif',
+                    fontFamily: "'Space Mono', monospace",
                     fontSize: 10.5,
                     letterSpacing: '0.16em',
                     textTransform: 'uppercase',
@@ -823,10 +823,10 @@ export default function SettleDeck() {
                   paddingTop: 12,
                 }}
               >
-                <span style={{ fontFamily: 'Oswald, sans-serif', fontSize: 11, letterSpacing: '0.2em', opacity: 0.75 }}>
+                <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, letterSpacing: '0.2em', opacity: 0.75 }}>
                   IJJI MADHU VENKAT
                 </span>
-                <span style={{ fontFamily: 'Oswald, sans-serif', fontSize: 11, letterSpacing: '0.15em', fontWeight: 600 }}>
+                <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, letterSpacing: '0.15em', fontWeight: 600 }}>
                   CORE DISCIPLINE
                 </span>
               </div>

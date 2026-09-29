@@ -4,7 +4,6 @@ import DriftHero from './DriftHero';
 import SettleDeck from './SettleDeck';
 import Orrery from './Orrery';
 import FullscreenCards from './FullscreenCards';
-import ProcessTimeline from './ProcessTimeline';
 import FolderArchive from './FolderArchive';
 import Footer from './Footer';
 
@@ -166,7 +165,7 @@ export default function FashionEditorial() {
         overflowX: 'clip',
         position: 'relative',
         backgroundColor: '#fbfdf3',
-        fontFamily: '"DM Sans", sans-serif',
+        fontFamily: "'Space Mono', monospace",
       }}
     >
       <style>{cssKeyframes}</style>
@@ -227,9 +226,6 @@ export default function FashionEditorial() {
 
       {/* Fullscreen Rolling Cards */}
       <FullscreenCards />
-
-      {/* How It Works / Process Timeline */}
-      <ProcessTimeline />
 
       {/* GATE 2027 Resources / Folder Archive */}
       <FolderArchive />
@@ -298,7 +294,7 @@ function StickyScrolledNavbar({ isMobile, mobileMenuOpen, setMobileMenuOpen }) {
 
         <span
           style={{
-            fontFamily: '"Playfair", Georgia, serif',
+            fontFamily: "'Spectral', serif",
             fontSize: 22,
             fontWeight: 700,
             color: '#181e4b',
@@ -326,7 +322,7 @@ function StickyScrolledNavbar({ isMobile, mobileMenuOpen, setMobileMenuOpen }) {
               <a
                 href={item === 'Home' ? '#' : `#${item.toLowerCase()}`}
                 style={{
-                  fontFamily: '"Playfair", Georgia, serif',
+                  fontFamily: "'Spectral', serif",
                   fontSize: 15,
                   fontWeight: idx === 0 ? 700 : 500,
                   color: idx === 0 ? '#ea580c' : '#4b5563',
@@ -356,7 +352,7 @@ function StickyScrolledNavbar({ isMobile, mobileMenuOpen, setMobileMenuOpen }) {
             if (el) el.scrollIntoView({ behavior: 'smooth' });
           }}
           style={{
-            fontFamily: '"Playfair", Georgia, serif',
+            fontFamily: "'Spectral', serif",
             fontSize: 14,
             fontWeight: 600,
             color: '#4b5563',
@@ -447,7 +443,7 @@ function StickyScrolledNavbar({ isMobile, mobileMenuOpen, setMobileMenuOpen }) {
                   href={item === 'Home' ? '#' : `#${item.toLowerCase()}`}
                   onClick={() => setMobileMenuOpen(false)}
                   style={{
-                    fontFamily: '"Playfair", Georgia, serif',
+                    fontFamily: "'Spectral', serif",
                     fontSize: 15,
                     fontWeight: idx === 0 ? 700 : 500,
                     color: idx === 0 ? '#ea580c' : '#374151',
@@ -470,7 +466,7 @@ function StickyScrolledNavbar({ isMobile, mobileMenuOpen, setMobileMenuOpen }) {
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }}
             style={{
-              fontFamily: '"Playfair", Georgia, serif',
+              fontFamily: "'Spectral', serif",
               fontSize: 14,
               fontWeight: 600,
               color: '#4b5563',
@@ -545,7 +541,7 @@ function HeroTransparentNavbar({ isMobile, mobileMenuOpen, setMobileMenuOpen }) 
 
         <span
           style={{
-            fontFamily: '"Playfair", Georgia, serif',
+            fontFamily: "'Spectral', serif",
             fontSize: 22,
             fontWeight: 700,
             color: '#181e4b',
@@ -573,7 +569,7 @@ function HeroTransparentNavbar({ isMobile, mobileMenuOpen, setMobileMenuOpen }) 
               <a
                 href={item === 'Home' ? '#' : `#${item.toLowerCase()}`}
                 style={{
-                  fontFamily: '"Playfair", Georgia, serif',
+                  fontFamily: "'Spectral', serif",
                   fontSize: 15,
                   fontWeight: idx === 0 ? 700 : 600,
                   color: idx === 0 ? '#ea580c' : '#181e4b',
@@ -603,7 +599,7 @@ function HeroTransparentNavbar({ isMobile, mobileMenuOpen, setMobileMenuOpen }) 
             if (el) el.scrollIntoView({ behavior: 'smooth' });
           }}
           style={{
-            fontFamily: '"Playfair", Georgia, serif',
+            fontFamily: "'Spectral', serif",
             fontSize: 14,
             fontWeight: 600,
             color: '#181e4b',
@@ -695,7 +691,7 @@ function HeroTransparentNavbar({ isMobile, mobileMenuOpen, setMobileMenuOpen }) 
                   href={item === 'Home' ? '#' : `#${item.toLowerCase()}`}
                   onClick={() => setMobileMenuOpen(false)}
                   style={{
-                    fontFamily: '"Playfair", Georgia, serif',
+                    fontFamily: "'Spectral', serif",
                     fontSize: 15,
                     fontWeight: idx === 0 ? 700 : 500,
                     color: idx === 0 ? '#ea580c' : '#374151',
@@ -718,7 +714,7 @@ function HeroTransparentNavbar({ isMobile, mobileMenuOpen, setMobileMenuOpen }) 
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }}
             style={{
-              fontFamily: '"Playfair", Georgia, serif',
+              fontFamily: "'Spectral', serif",
               fontSize: 14,
               fontWeight: 600,
               color: '#4b5563',
@@ -821,7 +817,7 @@ function MobileHeroSection({ mobileMenuOpen, setMobileMenuOpen }) {
         {/* Kicker badge */}
         <div
           style={{
-            fontFamily: '"Playfair", Georgia, serif',
+            fontFamily: "'Spectral', serif",
             fontSize: 12,
             fontWeight: 800,
             letterSpacing: 2,
@@ -836,7 +832,7 @@ function MobileHeroSection({ mobileMenuOpen, setMobileMenuOpen }) {
         {/* Headline with Playfair & Curved Orange Underline */}
         <h1
           style={{
-            fontFamily: '"Playfair", Georgia, serif',
+            fontFamily: "'Spectral', serif",
             fontSize: 'clamp(32px, 8.2vw, 42px)',
             fontWeight: 700,
             lineHeight: 1.25,
@@ -888,7 +884,7 @@ function MobileHeroSection({ mobileMenuOpen, setMobileMenuOpen }) {
         {/* Subtitle in Playfair */}
         <p
           style={{
-            fontFamily: '"Playfair", Georgia, serif',
+            fontFamily: "'Spectral', serif",
             fontSize: 14.5,
             fontWeight: 500,
             lineHeight: 1.6,
@@ -918,7 +914,7 @@ function MobileHeroSection({ mobileMenuOpen, setMobileMenuOpen }) {
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }}
             style={{
-              fontFamily: '"Playfair", Georgia, serif',
+              fontFamily: "'Spectral', serif",
               fontSize: 13.5,
               fontWeight: 700,
               color: '#ffffff',
@@ -964,7 +960,7 @@ function MobileHeroSection({ mobileMenuOpen, setMobileMenuOpen }) {
             </div>
             <span
               style={{
-                fontFamily: '"Playfair", Georgia, serif',
+                fontFamily: "'Spectral', serif",
                 fontSize: 14,
                 fontWeight: 600,
                 color: '#5e6282',
@@ -1022,7 +1018,7 @@ function MobileHeroSection({ mobileMenuOpen, setMobileMenuOpen }) {
             />
             <span
               style={{
-                fontFamily: '"Playfair", Georgia, serif',
+                fontFamily: "'Spectral', serif",
                 fontSize: 12,
                 fontWeight: 700,
                 letterSpacing: 0.2,
@@ -1066,7 +1062,7 @@ function MobileHeroSection({ mobileMenuOpen, setMobileMenuOpen }) {
             />
             <span
               style={{
-                fontFamily: '"Playfair", Georgia, serif',
+                fontFamily: "'Spectral', serif",
                 fontSize: 12,
                 fontWeight: 700,
                 letterSpacing: 0.2,
@@ -1218,7 +1214,7 @@ function DesktopHeroContent({ stageHeight }) {
         >
           <div
             style={{
-              fontFamily: '"Playfair", Georgia, serif',
+              fontFamily: "'Spectral', serif",
               fontSize: 12.5,
               fontWeight: 800,
               letterSpacing: 2.2,
@@ -1235,7 +1231,7 @@ function DesktopHeroContent({ stageHeight }) {
 
           <h1
             style={{
-              fontFamily: '"Playfair", Georgia, serif',
+              fontFamily: "'Spectral', serif",
               fontSize: 44,
               fontWeight: 700,
               lineHeight: 1.25,
@@ -1284,7 +1280,7 @@ function DesktopHeroContent({ stageHeight }) {
 
           <p
             style={{
-              fontFamily: '"Playfair", Georgia, serif',
+              fontFamily: "'Spectral', serif",
               fontSize: 14.5,
               fontWeight: 500,
               lineHeight: 1.65,
@@ -1311,7 +1307,7 @@ function DesktopHeroContent({ stageHeight }) {
                 if (el) el.scrollIntoView({ behavior: 'smooth' });
               }}
               style={{
-                fontFamily: '"Playfair", Georgia, serif',
+                fontFamily: "'Spectral', serif",
                 fontSize: 14,
                 fontWeight: 700,
                 color: '#ffffff',
@@ -1356,7 +1352,7 @@ function DesktopHeroContent({ stageHeight }) {
               </div>
               <span
                 style={{
-                  fontFamily: '"Playfair", Georgia, serif',
+                  fontFamily: "'Spectral', serif",
                   fontSize: 14.5,
                   fontWeight: 600,
                   color: '#5e6282',
@@ -1425,7 +1421,7 @@ function DesktopHeroContent({ stageHeight }) {
               />
               <span
                 style={{
-                  fontFamily: '"Playfair", Georgia, serif',
+                  fontFamily: "'Spectral', serif",
                   fontSize: 13,
                   fontWeight: 700,
                   letterSpacing: 0.3,
@@ -1469,7 +1465,7 @@ function DesktopHeroContent({ stageHeight }) {
               />
               <span
                 style={{
-                  fontFamily: '"Playfair", Georgia, serif',
+                  fontFamily: "'Spectral', serif",
                   fontSize: 13,
                   fontWeight: 700,
                   letterSpacing: 0.3,
@@ -1541,7 +1537,7 @@ function EditorialStatementSection({ isMobile }) {
         {/* Exactly 4 Points Flowing Continuously with No Line-Breaking Divs */}
         <h3
           style={{
-            fontFamily: '"Playfair", Georgia, serif',
+            fontFamily: "'Spectral', serif",
             fontSize: isMobile ? 'clamp(18px, 4.4vw, 24px)' : 30,
             fontWeight: 600,
             lineHeight: 1.74,
@@ -1613,7 +1609,7 @@ function EditorialStatementSection({ isMobile }) {
           </div>
           <span
             style={{
-              fontFamily: '"Playfair", Georgia, serif',
+              fontFamily: "'Spectral', serif",
               fontSize: 12,
               fontWeight: 700,
               letterSpacing: 2,
@@ -1733,7 +1729,7 @@ function SlantedTickerRibbon({ isMobile = false }) {
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                fontFamily: '"Playfair", Georgia, serif',
+                fontFamily: "'Spectral', serif",
                 fontSize: isMobile ? 12 : 13.5,
                 fontWeight: 700,
                 color: '#ffffff',
@@ -1929,7 +1925,7 @@ function LuxuryNavbar({ isMobile }) {
           />
         </svg>
         <span style={{
-          fontFamily: '"Instrument Serif", serif', fontSize: isMobile ? '1.4rem' : '1.7rem', color: '#171717', letterSpacing: '0.01em', position: 'relative', top: '1px'
+          fontFamily: "'Spectral', serif", fontSize: isMobile ? '1.4rem' : '1.7rem', color: '#171717', letterSpacing: '0.01em', position: 'relative', top: '1px'
         }}>
           Ijji Madhu Venkat
         </span>
@@ -1943,7 +1939,7 @@ function LuxuryNavbar({ isMobile }) {
               key={item} href={`#${item.toLowerCase()}`}
               style={{
                 textDecoration: 'none', color: '#171717', fontSize: '0.95rem', fontWeight: 500,
-                fontFamily: '"DM Sans", sans-serif', transition: 'opacity 0.2s ease'
+                fontFamily: "'Space Mono', monospace", transition: 'opacity 0.2s ease'
               }}
               onMouseEnter={e => e.currentTarget.style.opacity = 0.6}
               onMouseLeave={e => e.currentTarget.style.opacity = 1}
@@ -1956,7 +1952,7 @@ function LuxuryNavbar({ isMobile }) {
             style={{
               padding: '0.65rem 1.6rem', borderRadius: '0.4rem', fontSize: '0.9rem', fontWeight: 600,
               color: '#f4f1ea', background: '#171717', textDecoration: 'none',
-              fontFamily: '"DM Sans", sans-serif', transition: 'all 0.3s ease'
+              fontFamily: "'Space Mono', monospace", transition: 'all 0.3s ease'
             }}
             onMouseEnter={e => { e.currentTarget.style.background = '#333'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
             onMouseLeave={e => { e.currentTarget.style.background = '#171717'; e.currentTarget.style.transform = 'translateY(0)'; }}
@@ -2000,7 +1996,7 @@ function LuxuryNavbar({ isMobile }) {
               onClick={() => setMenuOpen(false)}
               style={{
                 textDecoration: 'none', color: '#171717', fontSize: '1.1rem', fontWeight: 500,
-                fontFamily: '"DM Sans", sans-serif', paddingBottom: '0.5rem', borderBottom: '1px solid rgba(0,0,0,0.05)'
+                fontFamily: "'Space Mono', monospace", paddingBottom: '0.5rem', borderBottom: '1px solid rgba(0,0,0,0.05)'
               }}
             >
               {item}
@@ -2012,7 +2008,7 @@ function LuxuryNavbar({ isMobile }) {
             style={{
               padding: '0.8rem', borderRadius: '0.4rem', fontSize: '1rem', fontWeight: 600,
               color: '#f4f1ea', background: '#171717', textDecoration: 'none', textAlign: 'center',
-              fontFamily: '"DM Sans", sans-serif', marginTop: '0.5rem'
+              fontFamily: "'Space Mono', monospace", marginTop: '0.5rem'
             }}
           >
             Let's Talk

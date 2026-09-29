@@ -155,7 +155,7 @@ function ItemArt({ id }) {
     case "paper":
       return (
         <div className="dd-art dd-paper" style={{ padding: '36px', textAlign: 'left', color: '#171717', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          <h3 style={{ margin: '0', fontSize: '28px', fontFamily: '"Instrument Serif", serif', fontWeight: 'normal', letterSpacing: '0.02em', lineHeight: '1' }}>Ijji Madhu Venkat</h3>
+          <h3 style={{ margin: '0', fontSize: '28px', fontFamily: "'Spectral', serif", fontWeight: 'normal', letterSpacing: '0.02em', lineHeight: '1' }}>Ijji Madhu Venkat</h3>
           <div style={{ fontSize: '13px', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#555', fontWeight: 'bold', marginBottom: '4px' }}>Software Engineer</div>
           
           <div style={{ fontSize: '14.5px', lineHeight: '1.6', color: '#444' }}>
@@ -181,7 +181,7 @@ function ItemArt({ id }) {
       return (
         <div className="dd-art dd-portrait" style={{ display: 'flex', flexDirection: 'column' }}>
           <span className="dd-portrait-face" />
-          <div style={{ marginTop: '16px', textAlign: 'center', fontFamily: '"Instrument Serif", serif', fontSize: '22px', color: '#171717', letterSpacing: '0.05em' }}>
+          <div style={{ marginTop: '16px', textAlign: 'center', fontFamily: "'Spectral', serif", fontSize: '22px', color: '#171717', letterSpacing: '0.05em' }}>
             Vision & Code
           </div>
         </div>

@@ -58,7 +58,7 @@ export default function FolderArchive() {
         @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap');
 
         .fa-section {
-          background-color: #f4f7f0;
+          background-color: #fbfdf3;
           color: #0f0f0f;
           min-height: 100svh;
           display: flex;

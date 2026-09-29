@@ -189,7 +189,7 @@ body {
 
 .kex-after-section {
   min-height: 80vh;
-  background: #080808;
+  background: #fbfdf3;
 }
 
 @media (max-width: 800px) {

@@ -303,7 +303,7 @@ export default function Orrery() {
           width: 100%;
           min-height: 100vh;
           min-height: 100svh;
-          background: radial-gradient(circle at center, #f7f5ef 0%, #f1eee6 40%, #e3ded2 100%);
+          background: radial-gradient(circle at center, #fbfdf3 0%, #f7f5ef 50%, #ebeedc 100%);
           display: flex;
           flex-direction: row;
           overflow: hidden;
@@ -392,7 +392,7 @@ export default function Orrery() {
           border-radius: 50%;
           overflow: hidden;
           box-shadow: 0 20px 40px rgba(26, 24, 19, 0.15), inset 0 0 0 1px rgba(255,255,255,0.4);
-          background: #e3ded2;
+          background: #fbfdf3;
           z-index: 50; 
           pointer-events: none;
         }
