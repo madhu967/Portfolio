@@ -286,7 +286,7 @@ export default function Orrery() {
           width: 100%;
           min-height: 100vh;
           min-height: 100svh;
-          background: #fbfdf3;
+          background-color: #fbfdf3;
           display: flex;
           flex-direction: row;
           overflow: hidden;

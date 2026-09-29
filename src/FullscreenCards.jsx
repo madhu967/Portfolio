@@ -12,14 +12,14 @@ body {
 
 .kex-scroll-page {
   width: 100%;
-  background: #ff4b00;
+  background: #13140f;
   font-family: 'Space Mono', monospace;
 }
 
 .kex-scroll-scene {
   position: relative;
   height: 560vh;
-  background: #ff4b00;
+  background: #13140f;
 }
 
 .kex-sticky-stage {
@@ -28,7 +28,7 @@ body {
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  background: #ff4b00;
+  background: #13140f;
 }
 
 /* HERO */
@@ -235,10 +235,10 @@ const cards = [
     title: "Create Without Fear",
     description:
       "A bold space for ideas to rise, move, and become visible without waiting for permission.",
-    bg: "#000000",
-    text: "#ffffff",
-    muted: "rgba(255,255,255,0.72)",
-    numberColor: "rgba(255,255,255,0.22)",
+    bg: "#181e4b",
+    text: "#fbfdf3",
+    muted: "rgba(251,253,243,0.72)",
+    numberColor: "rgba(251,253,243,0.15)",
   },
   {
     number: "02",
@@ -246,10 +246,10 @@ const cards = [
     title: "Art First Always",
     description:
       "Every card arrives like a statement, cutting through the page with strong motion and clean contrast.",
-    bg: "#1117ff",
-    text: "#ffffff",
-    muted: "rgba(255,255,255,0.76)",
-    numberColor: "rgba(255,255,255,0.22)",
+    bg: "#1f6f5c",
+    text: "#ebeedc",
+    muted: "rgba(235,238,220,0.76)",
+    numberColor: "rgba(235,238,220,0.22)",
   },
   {
     number: "03",
@@ -257,10 +257,10 @@ const cards = [
     title: "Build Loud Ideas",
     description:
       "Smooth scroll movement, cinematic angles, and bold typography make each section feel alive.",
-    bg: "#f2f0e8",
-    text: "#050505",
-    muted: "rgba(0,0,0,0.62)",
-    numberColor: "rgba(0,0,0,0.13)",
+    bg: "#e9e3d6",
+    text: "#13140f",
+    muted: "rgba(19,20,15,0.65)",
+    numberColor: "rgba(19,20,15,0.13)",
   },
   {
     number: "04",
@@ -268,10 +268,10 @@ const cards = [
     title: "No More Limits",
     description:
       "A premium scroll experience designed for portfolios, agencies, artists, and experimental landing pages.",
-    bg: "#ff3f00",
-    text: "#ffffff",
-    muted: "rgba(255,255,255,0.76)",
-    numberColor: "rgba(255,255,255,0.24)",
+    bg: "#c2502f",
+    text: "#ebeedc",
+    muted: "rgba(235,238,220,0.76)",
+    numberColor: "rgba(235,238,220,0.24)",
   },
 ];
 
