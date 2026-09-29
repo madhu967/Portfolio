@@ -423,7 +423,7 @@ export default function SettleDeck() {
         position: 'relative',
         width: '100%',
         minHeight: isAutoPlay ? '100svh' : '230vh',
-        backgroundColor: '#fbfdf3',
+        backgroundColor: '#f4f1ea',
         color: '#13140f',
       }}
     >
@@ -439,7 +439,7 @@ export default function SettleDeck() {
           height: 100svh;
           clip-path: inset(0 0 0 0);
           -webkit-clip-path: inset(0 0 0 0);
-          background: #fbfdf3;
+          background: #f4f1ea;
           perspective: 1400px;
           perspective-origin: 50% 50%;
           display: flex;

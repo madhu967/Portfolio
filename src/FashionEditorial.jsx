@@ -164,7 +164,7 @@ export default function FashionEditorial() {
         minHeight: '100vh',
         overflowX: 'clip',
         position: 'relative',
-        backgroundColor: '#fbfdf3',
+        backgroundColor: '#ffffff',
         fontFamily: "'Space Mono', monospace",
       }}
     >
@@ -189,7 +189,7 @@ export default function FashionEditorial() {
               height: stageHeight * scale,
               position: 'relative',
               overflow: 'hidden',
-              backgroundColor: '#fbfdf3',
+              backgroundColor: '#ffffff',
             }}
           >
             <div
@@ -201,7 +201,7 @@ export default function FashionEditorial() {
                 left: 0,
                 transform: `scale(${scale})`,
                 transformOrigin: 'top left',
-                backgroundColor: '#fbfdf3',
+                backgroundColor: '#ffffff',
                 overflow: 'hidden',
               }}
             >
@@ -747,7 +747,7 @@ function MobileHeroSection({ mobileMenuOpen, setMobileMenuOpen }) {
       style={{
         width: '100%',
         position: 'relative',
-        backgroundColor: '#fbfdf3',
+        backgroundColor: '#ffffff',
         overflow: 'hidden',
       }}
     >

@@ -16,33 +16,32 @@ const FOLDERS = [
   { 
     num: '03', 
     title: 'Data Structures', 
-    tone: 3, 
+    tone: 1, 
     images: ['https://picsum.photos/seed/ds-a/640/900', 'https://picsum.photos/seed/ds-b/640/900', 'https://picsum.photos/seed/ds-c/640/900'] 
   },
   { 
     num: '04', 
     title: 'Algorithms', 
-    tone: 1, 
+    tone: 2, 
     images: ['https://picsum.photos/seed/algo-a/640/900', 'https://picsum.photos/seed/algo-b/640/900', 'https://picsum.photos/seed/algo-c/640/900'] 
   },
   { 
     num: '05', 
     title: 'Computer Networks', 
-    tone: 2, 
+    tone: 1, 
     images: ['https://picsum.photos/seed/cn-a/640/900', 'https://picsum.photos/seed/cn-b/640/900', 'https://picsum.photos/seed/cn-c/640/900'] 
   },
   { 
     num: '06', 
     title: 'Engineering Maths', 
-    tone: 3, 
+    tone: 2, 
     images: ['https://picsum.photos/seed/math-a/640/900', 'https://picsum.photos/seed/math-b/640/900', 'https://picsum.photos/seed/math-c/640/900'] 
   }
 ];
 
 const COLORS = {
-  1: '#ffc640', // Warm yellow
-  2: '#d5d9d2', // Light grey-green
-  3: '#b0b3ad'  // Medium grey
+  1: '#ffffff', // White
+  2: '#b0b3ad', // Medium grey
 };
 
 export default function FolderArchive() {
@@ -58,7 +57,7 @@ export default function FolderArchive() {
         @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap');
 
         .fa-section {
-          background-color: #fbfdf3;
+          background-color: #f4f1ea;
           color: #0f0f0f;
           min-height: 100svh;
           display: flex;

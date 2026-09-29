@@ -286,7 +286,7 @@ export default function Orrery() {
           width: 100%;
           min-height: 100vh;
           min-height: 100svh;
-          background-color: #fbfdf3;
+          background-color: #ffffff;
           display: flex;
           flex-direction: row;
           overflow: hidden;
@@ -370,7 +370,7 @@ export default function Orrery() {
           border-radius: 50%;
           overflow: hidden;
           box-shadow: 0 20px 40px rgba(26, 24, 19, 0.15), inset 0 0 0 1px rgba(255,255,255,0.4);
-          background: #fbfdf3;
+          background: #ffffff;
           z-index: 50; 
           pointer-events: none;
         }
