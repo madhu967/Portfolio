@@ -479,11 +479,11 @@ export default function SettleDeck() {
         }
 
         .settle-kicker {
-          font-family: 'Oswald', sans-serif;
+          font-family: 'Spectral', serif;
           font-size: 13px;
           font-weight: 600;
           letter-spacing: 0.28em;
-          text-transform: uppercase;
+          text-transform: capitalize;
           color: #c2502f;
           margin-bottom: 12px;
           display: inline-flex;
@@ -502,19 +502,19 @@ export default function SettleDeck() {
         }
 
         .settle-headline {
-          font-family: 'Oswald', sans-serif;
+          font-family: 'Spectral', serif;
           font-size: clamp(34px, 6.2vw, 76px);
           font-weight: 700;
           line-height: 1.02;
           letter-spacing: -0.015em;
-          text-transform: uppercase;
+          text-transform: capitalize;
           color: #13140f;
           margin: 0;
           max-width: 980px;
         }
 
         .settle-headline-sub {
-          font-family: 'DM Sans', sans-serif;
+          font-family: 'Space Mono', monospace;
           font-size: clamp(14px, 1.8vw, 17px);
           color: #555848;
           margin-top: 14px;
@@ -570,34 +570,34 @@ export default function SettleDeck() {
 
         /* Card Typography */
         .settle-card-num {
-          font-family: 'Oswald', sans-serif;
+          font-family: 'Spectral', serif;
           font-size: 15px;
           font-weight: 600;
           letter-spacing: 0.18em;
-          text-transform: uppercase;
+          text-transform: capitalize;
         }
 
         .settle-card-title {
-          font-family: 'Oswald', sans-serif;
+          font-family: 'Spectral', serif;
           font-size: clamp(28px, 3.6vw, 36px);
           font-weight: 700;
-          text-transform: uppercase;
+          text-transform: capitalize;
           line-height: 1.05;
           letter-spacing: -0.01em;
           margin: 0;
         }
 
         .settle-card-sub {
-          font-family: 'Oswald', sans-serif;
+          font-family: 'Spectral', serif;
           font-size: 12px;
           font-weight: 600;
           letter-spacing: 0.2em;
-          text-transform: uppercase;
+          text-transform: capitalize;
           margin-top: 6px;
         }
 
         .settle-card-body {
-          font-family: 'DM Sans', sans-serif;
+          font-family: 'Space Mono', monospace;
           font-size: clamp(13px, 1.4vw, 14.5px);
           line-height: 1.55;
           margin-top: 14px;
@@ -669,7 +669,7 @@ export default function SettleDeck() {
                   fontFamily: "'Space Mono', monospace",
                   fontSize: 11,
                   letterSpacing: '0.15em',
-                  textTransform: 'uppercase',
+                  textTransform: 'capitalize',
                 }}
               >
                 <span>CORE STACK</span>

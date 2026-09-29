@@ -286,7 +286,7 @@ export default function Orrery() {
           width: 100%;
           min-height: 100vh;
           min-height: 100svh;
-          background: radial-gradient(circle at center, #fbfdf3 0%, #f7f5ef 50%, #ebeedc 100%);
+          background: #fbfdf3;
           display: flex;
           flex-direction: row;
           overflow: hidden;

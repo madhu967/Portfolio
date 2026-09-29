@@ -13,7 +13,7 @@ body {
 .kex-scroll-page {
   width: 100%;
   background: #ff4b00;
-  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-family: 'Space Mono', monospace;
 }
 
 .kex-scroll-scene {
@@ -44,11 +44,12 @@ body {
 .kex-hero-title {
   margin: 0;
   max-width: 1200px;
+  font-family: 'Spectral', serif;
   font-size: clamp(76px, 12vw, 210px);
-  font-weight: 950;
+  font-weight: 600;
   line-height: 0.86;
   letter-spacing: -0.075em;
-  text-transform: uppercase;
+  text-transform: capitalize;
 }
 
 .kex-hero-subtitle {
@@ -144,20 +145,20 @@ body {
   color: var(--card-muted);
 
   font-size: clamp(13px, 1.2vw, 22px);
-  font-weight: 850;
+  font-weight: 600;
   letter-spacing: 0.25em;
-  text-transform: uppercase;
+  text-transform: capitalize;
 }
 
 .kex-card-title {
   margin: 0;
   max-width: 1080px;
-
+  font-family: 'Spectral', serif;
   font-size: clamp(76px, 10vw, 185px);
-  font-weight: 950;
+  font-weight: 600;
   line-height: 0.84;
   letter-spacing: -0.075em;
-  text-transform: uppercase;
+  text-transform: capitalize;
 }
 
 .kex-card-description {
@@ -181,9 +182,9 @@ body {
   top: clamp(28px, 4vw, 70px);
 
   color: var(--card-number);
-
+  font-family: 'Spectral', serif;
   font-size: clamp(44px, 7vw, 120px);
-  font-weight: 950;
+  font-weight: 600;
   letter-spacing: -0.08em;
 }
 
@@ -435,11 +436,11 @@ export default function FullscreenCards() {
           <div ref={stageRef} className="kex-sticky-stage">
             <div className="kex-hero-content">
               <h1 ref={heroTitleRef} className="kex-hero-title">
-                CREATE
+                Create
                 <br />
-                WITHOUT
+                Without
                 <br />
-                LIMITS
+                Limits
               </h1>
 
               <p ref={heroSubtitleRef} className="kex-hero-subtitle">

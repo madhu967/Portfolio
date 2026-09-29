@@ -189,7 +189,7 @@ export default function FashionEditorial() {
               height: stageHeight * scale,
               position: 'relative',
               overflow: 'hidden',
-              backgroundColor: '#ebeedc',
+              backgroundColor: '#fbfdf3',
             }}
           >
             <div
@@ -201,7 +201,7 @@ export default function FashionEditorial() {
                 left: 0,
                 transform: `scale(${scale})`,
                 transformOrigin: 'top left',
-                backgroundColor: '#ebeedc',
+                backgroundColor: '#fbfdf3',
                 overflow: 'hidden',
               }}
             >
@@ -747,7 +747,7 @@ function MobileHeroSection({ mobileMenuOpen, setMobileMenuOpen }) {
       style={{
         width: '100%',
         position: 'relative',
-        backgroundColor: '#ebeedc',
+        backgroundColor: '#fbfdf3',
         overflow: 'hidden',
       }}
     >
