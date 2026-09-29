@@ -3,6 +3,7 @@ import profilePic from './profilePic';
 import SettleDeck from './SettleDeck';
 import FullscreenCards from './FullscreenCards';
 import ProcessTimeline from './ProcessTimeline';
+import FolderArchive from './FolderArchive';
 import Footer from './Footer';
 
 /**
@@ -228,6 +229,9 @@ export default function FashionEditorial() {
 
       {/* How It Works / Process Timeline */}
       <ProcessTimeline />
+
+      {/* GATE 2027 Resources / Folder Archive */}
+      <FolderArchive />
 
       {/* Footer Section */}
       <Footer />
