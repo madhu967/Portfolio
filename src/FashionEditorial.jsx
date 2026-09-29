@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useEffect, useRef, useState, useMemo } from 'react';
 import profilePic from './profilePic';
+import DriftHero from './DriftHero';
 import SettleDeck from './SettleDeck';
 import FullscreenCards from './FullscreenCards';
 import ProcessTimeline from './ProcessTimeline';
@@ -164,7 +165,7 @@ export default function FashionEditorial() {
         overflowX: 'clip',
         position: 'relative',
         backgroundColor: '#fbfdf3',
-        fontFamily: '"Playfair", Georgia, serif',
+        fontFamily: '"DM Sans", sans-serif',
       }}
     >
       <style>{cssKeyframes}</style>
@@ -179,44 +180,46 @@ export default function FashionEditorial() {
       )}
 
       {/* HERO SECTION */}
-      {isMobile ? (
-        /* MOBILE VIEW (< 860px): Fluid vertical responsive hero with transparent navbar directly on hero */
-        <MobileHeroSection
-          mobileMenuOpen={mobileMenuOpen}
-          setMobileMenuOpen={setMobileMenuOpen}
-        />
-      ) : (
-        /* DESKTOP VIEW (>= 860px): Stage-scaled responsive hero with transparent navbar directly on hero */
-        <div
-          style={{
-            width: '100%',
-            height: stageHeight * scale,
-            position: 'relative',
-            overflow: 'hidden',
-            backgroundColor: '#ebeedc',
-          }}
-        >
+      {/* 
+        Original Hero Section Code preserved as requested
+        
+        {isMobile ? (
+          <MobileHeroSection
+            mobileMenuOpen={mobileMenuOpen}
+            setMobileMenuOpen={setMobileMenuOpen}
+          />
+        ) : (
           <div
             style={{
-              width: STAGE_WIDTH,
-              height: stageHeight,
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              transform: `scale(${scale})`,
-              transformOrigin: 'top left',
-              backgroundColor: '#ebeedc',
+              width: '100%',
+              height: stageHeight * scale,
+              position: 'relative',
               overflow: 'hidden',
+              backgroundColor: '#ebeedc',
             }}
           >
-            {/* Desktop Hero Content with In-Hero Transparent Navbar */}
-            <DesktopHeroContent stageHeight={stageHeight} />
-
-            {/* Desktop Slanted Marquee Ribbon */}
-            <SlantedTickerRibbon isMobile={false} />
+            <div
+              style={{
+                width: STAGE_WIDTH,
+                height: stageHeight,
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                transform: `scale(${scale})`,
+                transformOrigin: 'top left',
+                backgroundColor: '#ebeedc',
+                overflow: 'hidden',
+              }}
+            >
+              <DesktopHeroContent stageHeight={stageHeight} />
+              <SlantedTickerRibbon isMobile={false} />
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      */}
+
+      {/* NEW DRIFT DESK HERO REPLACEMENT */}
+      <DriftHero />
 
       {/* Under Hero: Dedicated Continuous 4-Line Philosophy Section with Bouncing Scroll Down Arrow */}
       <EditorialStatementSection isMobile={isMobile} />

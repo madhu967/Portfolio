@@ -46,8 +46,14 @@ const COLORS = {
 };
 
 export default function FolderArchive() {
+  const [activeFolder, setActiveFolder] = React.useState(null);
+
+  const toggleFolder = (num) => {
+    setActiveFolder(prev => prev === num ? null : num);
+  };
+
   return (
-    <section className="fa-section">
+    <section className="fa-section" onClick={() => setActiveFolder(null)}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap');
 
@@ -106,38 +112,37 @@ export default function FolderArchive() {
         }
 
         /* Hover Mechanics */
-        @media (hover: hover) and (min-width: 1001px) {
-          .fa-folder:hover {
-            transform: translateY(-30px);
-            z-index: 40 !important;
-          }
-          
-          /* Fade un-hovered folders */
-          .fa-rows:hover .fa-folder-shape {
-            filter: grayscale(80%) brightness(0.95);
-            transition: filter 0.5s ease;
-          }
-          .fa-rows .fa-folder:hover .fa-folder-shape {
-            filter: none;
-            transition: filter 0.2s ease;
-          }
+        .fa-folder:hover, .fa-folder.is-active {
+          transform: translateY(-30px);
+          z-index: 40 !important;
+        }
+        
+        /* Fade un-hovered folders */
+        .fa-rows:hover .fa-folder-shape {
+          filter: grayscale(80%) brightness(0.95);
+          transition: filter 0.5s ease;
+        }
+        .fa-rows .fa-folder:hover .fa-folder-shape,
+        .fa-rows .fa-folder.is-active .fa-folder-shape {
+          filter: none;
+          transition: filter 0.2s ease;
+        }
 
-          /* Reveal Images */
-          .fa-folder:hover .fa-img-0 {
-            transform: translateY(-70px) rotate(-16deg);
-            opacity: 1;
-            transition-delay: 0s;
-          }
-          .fa-folder:hover .fa-img-1 {
-            transform: translateX(-50%) translateY(-90px) rotate(-2deg);
-            opacity: 1;
-            transition-delay: 0.025s;
-          }
-          .fa-folder:hover .fa-img-2 {
-            transform: translateX(-100%) translateY(-65px) rotate(14deg);
-            opacity: 1;
-            transition-delay: 0.05s;
-          }
+        /* Reveal Images */
+        .fa-folder:hover .fa-img-0, .fa-folder.is-active .fa-img-0 {
+          transform: translateY(-70px) rotate(-16deg);
+          opacity: 1;
+          transition-delay: 0s;
+        }
+        .fa-folder:hover .fa-img-1, .fa-folder.is-active .fa-img-1 {
+          transform: translateX(-50%) translateY(-90px) rotate(-2deg);
+          opacity: 1;
+          transition-delay: 0.025s;
+        }
+        .fa-folder:hover .fa-img-2, .fa-folder.is-active .fa-img-2 {
+          transform: translateX(-100%) translateY(-65px) rotate(14deg);
+          opacity: 1;
+          transition-delay: 0.05s;
         }
 
         .fa-folder-shape {
@@ -252,8 +257,12 @@ export default function FolderArchive() {
             min-height: 110px;
             padding: 20px 24px;
           }
-          .fa-images {
-            display: none;
+          .fa-img {
+            width: 6rem;
+            height: 8rem;
+          }
+          .fa-section {
+            padding-top: 80px;
           }
           .fa-body h2 {
             font-size: 32px;
@@ -272,10 +281,14 @@ export default function FolderArchive() {
           <div className="fa-row" key={rowIndex}>
             {FOLDERS.slice(rowIndex * 2, rowIndex * 2 + 2).map((folder) => (
               <article 
-                className="fa-folder" 
+                className={`fa-folder ${activeFolder === folder.num ? 'is-active' : ''}`} 
                 key={folder.num} 
                 style={{ '--f-bg': COLORS[folder.tone] }}
                 tabIndex={0}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleFolder(folder.num);
+                }}
               >
                 <div className="fa-images">
                   {folder.images.map((img, i) => (
