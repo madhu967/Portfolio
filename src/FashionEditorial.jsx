@@ -170,14 +170,8 @@ export default function FashionEditorial() {
     >
       <style>{cssKeyframes}</style>
 
-      {/* STICKY NAVBAR: Only appears after scrolling down past the hero section */}
-      {isScrolled && (
-        <StickyScrolledNavbar
-          isMobile={isMobile}
-          mobileMenuOpen={mobileMenuOpen}
-          setMobileMenuOpen={setMobileMenuOpen}
-        />
-      )}
+      {/* LUXURY NAVBAR */}
+      {isScrolled && <LuxuryNavbar isMobile={isMobile} />}
 
       {/* HERO SECTION */}
       {/* 
@@ -1897,5 +1891,130 @@ function CutoutPortrait({ src, alt, style }) {
         display: 'block',
       }}
     />
+  );
+}
+
+// ---------------------------------------------------------------------------
+// LUXURY NAVBAR
+// ---------------------------------------------------------------------------
+function LuxuryNavbar({ isMobile }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const navItems = ['Work', 'Services', 'About', 'Contact'];
+
+  return (
+    <nav style={{
+      position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 1000,
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      padding: isMobile ? '1rem 1.5rem' : '1rem 3rem',
+      background: 'rgba(244, 241, 234, 0.92)',
+      backdropFilter: 'blur(16px)',
+      WebkitBackdropFilter: 'blur(16px)',
+      borderBottom: '1px solid rgba(0,0,0,0.04)',
+      boxSizing: 'border-box',
+      animation: 'nav-slide-down 0.3s ease-out'
+    }}>
+      {/* Brand Logo & Name */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer' }}>
+        <svg
+          width={isMobile ? "22" : "26"} height={isMobile ? "24" : "28"} viewBox="0 0 31 40" fill="none"
+          xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}
+        >
+          <path
+            d="m8.75 11.3 6.75 3.884 6.75-3.885M8.75 34.58v-7.755L2 22.939m27 0-6.75 3.885v7.754M2.405 15.408 15.5 22.954l13.095-7.546M15.5 38V22.939M29 28.915V16.962a2.98 2.98 0 0 0-1.5-2.585L17 8.4a3.01 3.01 0 0 0-3 0L3.5 14.377A3 3 0 0 0 2 16.962v11.953A2.98 2.98 0 0 0 3.5 31.5L14 37.477a3.01 3.01 0 0 0 3 0L27.5 31.5a3 3 0 0 0 1.5-2.585"
+            stroke="#171717" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"
+          />
+        </svg>
+        <span style={{
+          fontFamily: '"Instrument Serif", serif', fontSize: isMobile ? '1.4rem' : '1.7rem', color: '#171717', letterSpacing: '0.01em', position: 'relative', top: '1px'
+        }}>
+          Ijji Madhu Venkat
+        </span>
+      </div>
+
+      {/* Desktop Navigation Links */}
+      {!isMobile && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '2.5rem' }}>
+          {navItems.map(item => (
+            <a
+              key={item} href={`#${item.toLowerCase()}`}
+              style={{
+                textDecoration: 'none', color: '#171717', fontSize: '0.95rem', fontWeight: 500,
+                fontFamily: '"DM Sans", sans-serif', transition: 'opacity 0.2s ease'
+              }}
+              onMouseEnter={e => e.currentTarget.style.opacity = 0.6}
+              onMouseLeave={e => e.currentTarget.style.opacity = 1}
+            >
+              {item}
+            </a>
+          ))}
+          <a
+            href="#contact"
+            style={{
+              padding: '0.65rem 1.6rem', borderRadius: '0.4rem', fontSize: '0.9rem', fontWeight: 600,
+              color: '#f4f1ea', background: '#171717', textDecoration: 'none',
+              fontFamily: '"DM Sans", sans-serif', transition: 'all 0.3s ease'
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = '#333'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = '#171717'; e.currentTarget.style.transform = 'translateY(0)'; }}
+          >
+            Let's Talk
+          </a>
+        </div>
+      )}
+
+      {/* Mobile Hamburger Button */}
+      {isMobile && (
+        <button
+          aria-label="Toggle Menu"
+          onClick={() => setMenuOpen(!menuOpen)}
+          style={{
+            background: 'none', border: 'none', padding: '0.5rem', cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center'
+          }}
+        >
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#171717" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            {menuOpen ? (
+              <><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></>
+            ) : (
+              <><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></>
+            )}
+          </svg>
+        </button>
+      )}
+
+      {/* Mobile Drawer */}
+      {isMobile && menuOpen && (
+        <div style={{
+          position: 'absolute', top: '100%', left: 0, width: '100%',
+          background: '#fbfdf3', borderTop: '1px solid rgba(0,0,0,0.05)',
+          padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem',
+          boxShadow: '0 10px 20px rgba(0,0,0,0.05)', animation: 'slide-down 0.2s ease-out'
+        }}>
+          {navItems.map(item => (
+            <a
+              key={item} href={`#${item.toLowerCase()}`}
+              onClick={() => setMenuOpen(false)}
+              style={{
+                textDecoration: 'none', color: '#171717', fontSize: '1.1rem', fontWeight: 500,
+                fontFamily: '"DM Sans", sans-serif', paddingBottom: '0.5rem', borderBottom: '1px solid rgba(0,0,0,0.05)'
+              }}
+            >
+              {item}
+            </a>
+          ))}
+          <a
+            href="#contact"
+            onClick={() => setMenuOpen(false)}
+            style={{
+              padding: '0.8rem', borderRadius: '0.4rem', fontSize: '1rem', fontWeight: 600,
+              color: '#f4f1ea', background: '#171717', textDecoration: 'none', textAlign: 'center',
+              fontFamily: '"DM Sans", sans-serif', marginTop: '0.5rem'
+            }}
+          >
+            Let's Talk
+          </a>
+        </div>
+      )}
+    </nav>
   );
 }
