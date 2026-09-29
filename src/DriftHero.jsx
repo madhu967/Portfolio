@@ -296,7 +296,7 @@ export default function DriftHero() {
         @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap');
 
         .dd-root {
-          position:relative; width:100%; height:100svh; overflow:hidden;
+          position:relative; width:100%; height:calc(100svh + 90px); overflow:hidden;
           background:#f4f1ea; color:#171717; font-family:'DM Sans',sans-serif;
         }
         .dd-desk { position:relative; width:100%; height:100svh; max-width:1400px; margin:0 auto; }
@@ -414,6 +414,70 @@ export default function DriftHero() {
           background: #333;
         }
 
+        .dd-marquee-wrapper {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 90px;
+          overflow: hidden;
+          z-index: 10;
+          pointer-events: none;
+        }
+        
+        .dd-marquee-back {
+          position: absolute;
+          top: 50%;
+          left: -5%;
+          width: 110%;
+          height: 48px;
+          background: #ffffff;
+          border-top: 2px solid #171717;
+          border-bottom: 2px solid #171717;
+          transform: translateY(-50%) rotate(-2deg);
+        }
+        
+        .dd-marquee-front {
+          position: absolute;
+          top: 50%;
+          left: 0;
+          width: 100%;
+          height: 48px;
+          background: #171717;
+          color: #f4f1ea;
+          font-weight: 600;
+          font-size: 1.1rem;
+          display: flex;
+          align-items: center;
+          transform: translateY(-50%);
+          border-top: 2px solid #171717;
+          border-bottom: 2px solid #171717;
+        }
+        
+        .dd-marquee-content {
+          display: flex;
+          gap: 2rem;
+          animation: marquee 20s linear infinite;
+          white-space: nowrap;
+        }
+        
+        .dd-marquee-item {
+          display: flex;
+          align-items: center;
+          gap: 2rem;
+        }
+        
+        .dd-marquee-item span {
+          display: flex;
+          align-items: center;
+          gap: 2rem;
+        }
+        
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+
         @media (max-width:1400px){ .dd-desk{overflow-x:hidden} }
         @media (max-width:760px){
           .dd-header{width:300px}
@@ -421,6 +485,9 @@ export default function DriftHero() {
           .dd-modes { bottom: 4svh; }
           .dd-modes button { padding: 0 0.6rem; font-size: 0.75rem; height: 2.6rem; border-radius: 0.5rem; gap: 0.3rem; }
           .dd-glyph { font-size: 0.85rem; }
+          .dd-marquee-wrapper { height: 60px; }
+          .dd-marquee-front, .dd-marquee-back { height: 36px; font-size: 0.85rem; }
+          .dd-marquee-item > span > span { font-size: 1rem !important; }
         }
       `}</style>
 
@@ -452,6 +519,19 @@ export default function DriftHero() {
                 {m.label}
               </button>
             ))}
+          </div>
+        </div>
+
+        <div className="dd-marquee-wrapper">
+          <div className="dd-marquee-back"></div>
+          <div className="dd-marquee-front">
+            <div className="dd-marquee-content">
+              {[...Array(4)].map((_, i) => (
+                <div className="dd-marquee-item" key={i}>
+                  <span>App Design <span style={{fontSize: '1.25rem', fontWeight: 400}}>✺</span> Website Design <span style={{fontSize: '1.25rem', fontWeight: 400}}>✺</span> Dashboard <span style={{fontSize: '1.25rem', fontWeight: 400}}>✺</span> Wireframe <span style={{fontSize: '1.25rem', fontWeight: 400}}>✺</span></span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
