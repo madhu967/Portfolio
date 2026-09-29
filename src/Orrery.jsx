@@ -128,15 +128,6 @@ export default function Orrery() {
     };
 
     const node = rightPaneRef.current;
-    if (node) {
-      node.addEventListener('pointerdown', handlePointerDown);
-      node.addEventListener('pointermove', handlePointerMove);
-      node.addEventListener('pointerup', handlePointerUp);
-      node.addEventListener('pointerleave', handlePointerLeave);
-      node.addEventListener('pointercancel', handlePointerUp);
-      node.addEventListener('wheel', handleWheel, { passive: true });
-    }
-
     const tick = (time) => {
       const dt = Math.min((time - lastTime) / 1000, 0.1);
       lastTime = time;
@@ -263,14 +254,6 @@ export default function Orrery() {
 
     return () => {
       cancelAnimationFrame(rafId);
-      if (node) {
-        node.removeEventListener('pointerdown', handlePointerDown);
-        node.removeEventListener('pointermove', handlePointerMove);
-        node.removeEventListener('pointerup', handlePointerUp);
-        node.removeEventListener('pointerleave', handlePointerLeave);
-        node.removeEventListener('pointercancel', handlePointerUp);
-        node.removeEventListener('wheel', handleWheel);
-      }
     };
   }, [prefersReducedMotion]);
 
@@ -310,7 +293,7 @@ export default function Orrery() {
           font-family: 'Space Mono', monospace;
           color: #1a1813;
           user-select: none;
-          touch-action: none;
+          
         }
 
         .orr-left {
@@ -346,11 +329,6 @@ export default function Orrery() {
           display: flex;
           align-items: center;
           justify-content: center;
-          cursor: grab;
-        }
-        
-        .orr-right:active {
-          cursor: grabbing;
         }
 
         .orr-stage {
@@ -422,8 +400,7 @@ export default function Orrery() {
           background-color: #d0cbc0;
           box-shadow: 0 10px 20px rgba(26, 24, 19, 0.2);
           will-change: transform, opacity;
-          cursor: pointer;
-          pointer-events: auto;
+          pointer-events: none;
         }
 
         .orr-accent {
@@ -507,7 +484,7 @@ export default function Orrery() {
           <div className="orr-chrome">
             <div className="orr-chrome-top">
               <div>Kexsio®</div>
-              <div>Drag or Scroll to spin</div>
+              <div></div>
             </div>
             <div className="orr-chrome-bottom">
               <div className="orr-title">Orrery</div>
@@ -568,7 +545,6 @@ export default function Orrery() {
                     ref={(el) => (planetsRef.current[i] = el)}
                     className="orr-planet"
                     style={{ backgroundImage: `url(${img})` }}
-                    onClick={() => handlePlanetClick(i)}
                   >
                     <div
                       className="orr-accent"

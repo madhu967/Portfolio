@@ -439,7 +439,7 @@ export default function SettleDeck() {
           height: 100svh;
           clip-path: inset(0 0 0 0);
           -webkit-clip-path: inset(0 0 0 0);
-          background: radial-gradient(ellipse at 50% 36%, #fbfdf3 0%, #ebeedc 55%, #dce0cb 100%);
+          background: #fbfdf3;
           perspective: 1400px;
           perspective-origin: 50% 50%;
           display: flex;
