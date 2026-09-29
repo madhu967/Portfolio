@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useEffect, useRef, useState, useMemo } from 're
 import profilePic from './profilePic';
 import DriftHero from './DriftHero';
 import SettleDeck from './SettleDeck';
+import Orrery from './Orrery';
 import FullscreenCards from './FullscreenCards';
 import ProcessTimeline from './ProcessTimeline';
 import FolderArchive from './FolderArchive';
@@ -220,6 +221,9 @@ export default function FashionEditorial() {
 
       {/* Settle: Pinned Scroll Deck Sequence (Services Provided) */}
       <SettleDeck />
+
+        {/* Orrery Orbital Focus Gallery */}
+        <Orrery />
 
       {/* Fullscreen Rolling Cards */}
       <FullscreenCards />
@@ -2018,3 +2022,4 @@ function LuxuryNavbar({ isMobile }) {
     </nav>
   );
 }
+
