@@ -392,6 +392,28 @@ export default function DriftHero() {
         .dd-modes button.active { background:#e0dfd7; color:#171717; }
         .dd-glyph { font-size:1rem; }
 
+        .dd-hero-btns {
+          display: flex; gap: 1rem; justify-content: center; margin-top: 0.5rem; pointer-events: auto;
+        }
+        .dd-hero-btn {
+          height: 2.8rem; padding: 0 1.5rem; font-size: 0.95rem; font-weight: 500;
+          border-radius: 0.6rem; cursor: pointer; transition: all 0.4s ease; font-family: 'DM Sans', sans-serif;
+          display: flex; align-items: center; justify-content: center; text-decoration: none;
+        }
+        .dd-hero-btn:active { transform: scale(0.92); }
+        .dd-hero-btn.view-cv {
+          background: #f4f1ea; color: #171717; border: 1px solid #e0dfd7;
+        }
+        .dd-hero-btn.view-cv:hover {
+          background: #e0dfd7;
+        }
+        .dd-hero-btn.download-cv {
+          background: #171717; color: #f4f1ea; border: 1px solid #171717;
+        }
+        .dd-hero-btn.download-cv:hover {
+          background: #333;
+        }
+
         @media (max-width:1400px){ .dd-desk{overflow-x:hidden} }
         @media (max-width:760px){
           .dd-header{width:300px}
@@ -407,6 +429,10 @@ export default function DriftHero() {
           <div className="dd-header" ref={headerRef}>
             <h1>Ijji Madhu<br />Venkat</h1>
             <p>Software Engineer crafting scalable web applications and seamless user experiences. Passionate about MERN stack, DSA, and clean code.</p>
+            <div className="dd-hero-btns">
+              <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="dd-hero-btn view-cv">View CV</a>
+              <a href="/resume.pdf" download="Ijji_Madhu_Venkat_Resume.pdf" className="dd-hero-btn download-cv">Download CV</a>
+            </div>
           </div>
 
           {Object.keys(SIZES).map((id) => (
