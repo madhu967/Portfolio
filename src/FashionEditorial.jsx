@@ -9,6 +9,7 @@ import Footer from './Footer';
 import Timeline from './Timeline';
 import Pageflip from './Pageflip';
 import CodingProfiles from './CodingProfiles';
+import Contact from './Contact';
 
 /**
  * Ijji Madhu Venkat — Luxury Editorial Developer Portfolio
@@ -241,6 +242,9 @@ export default function FashionEditorial() {
 
       {/* GATE 2027 Resources / Folder Archive */}
       <FolderArchive />
+
+      {/* Contact Section */}
+      <Contact />
 
       {/* Footer Section */}
       <Footer />

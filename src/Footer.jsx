@@ -7,7 +7,7 @@ export default function Footer() {
         .footer-container {
           background-color: #000000;
           color: #ffffff;
-          font-family: 'Inter', Arial, sans-serif;
+          font-family: 'Space Mono', monospace;
           overflow: hidden;
           position: relative;
         }
@@ -20,9 +20,10 @@ export default function Footer() {
         }
 
         .footer-brand {
-          font-size: 24px;
-          font-weight: 800;
-          letter-spacing: -0.02em;
+          font-family: 'Playfair Display', serif;
+          font-size: 32px;
+          font-weight: 600;
+          letter-spacing: -0.01em;
           text-transform: uppercase;
         }
         
@@ -33,7 +34,7 @@ export default function Footer() {
         }
 
         .footer-nav-col h4 {
-          font-size: 14px;
+          font-size: 16px;
           font-weight: 700;
           margin: 0 0 20px 0;
           text-transform: uppercase;
@@ -52,8 +53,8 @@ export default function Footer() {
         .footer-nav-col li a {
           color: #a3a3a3;
           text-decoration: none;
-          font-size: 14px;
-          font-weight: 500;
+          font-size: 15px;
+          font-weight: 400;
           transition: color 0.2s ease;
         }
 
@@ -101,8 +102,8 @@ export default function Footer() {
           align-items: center;
           padding: 30px 5vw;
           border-top: 1px solid rgba(255, 255, 255, 0.15);
-          font-size: 11px;
-          font-weight: 600;
+          font-size: 13px;
+          font-weight: 400;
           letter-spacing: 0.05em;
           text-transform: uppercase;
           color: #a3a3a3;
@@ -110,7 +111,7 @@ export default function Footer() {
 
         .footer-bottom b {
           color: #ffffff;
-          font-weight: 800;
+          font-weight: 700;
         }
 
         @media (max-width: 900px) {
