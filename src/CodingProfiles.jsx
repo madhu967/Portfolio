@@ -13,29 +13,27 @@ export default function CodingProfiles() {
   const [ghHeatmapData, setGhHeatmapData] = useState(null);
 
   useEffect(() => {
-    // Fetch real Leetcode Solved Stats
-    fetch("https://alfa-leetcode-api.onrender.com/Ijji_Madhu_venkat/solved")
-      .then(res => {
-        if (!res.ok) throw new Error("429");
-        return res.json();
-      })
-      .then(data => setLcStats(data))
-      .catch(() => setLcStats("RATE_LIMITED"));
+    // User explicitly requested statically hardcoding their real, true live data to bypass 429 errors completely.
+    // Data snapshot matching exactly their profile.
+    setLcStats({
+      totalSolved: 363,
+      easySolved: 147,
+      mediumSolved: 187,
+      hardSolved: 29
+    });
 
-    // Fetch real Leetcode Calendar Heatmap Stats
-    fetch("https://alfa-leetcode-api.onrender.com/Ijji_Madhu_venkat/calendar")
-      .then(res => {
-        if (!res.ok) throw new Error("429");
-        return res.json();
-      })
-      .then(data => setLcCalendar(data))
-      .catch(() => setLcCalendar("RATE_LIMITED"));
+    setLcCalendar({
+      streak: 69, // Manually set requested streak
+      submissionCalendar: JSON.stringify({
+        "1764806400":2,"1764892800":1,"1764979200":4,"1765238400":2,"1765324800":2,"1765584000":2,"1765670400":4,"1765756800":3,"1765929600":9,"1766016000":7,"1766102400":2,"1767312000":7,"1767398400":3,"1767484800":1,"1767744000":5,"1767916800":4,"1768003200":2,"1768089600":4,"1768435200":3,"1768521600":3,"1768608000":4,"1768694400":3,"1769385600":7,"1769472000":1,"1769644800":6,"1769817600":4,"1769904000":1,"1770076800":3,"1771977600":2,"1772841600":17,"1773100800":2,"1773187200":5,"1773964800":1,"1774396800":3,"1774569600":3,"1776988800":3,"1778025600":2,"1778284800":6,"1778457600":14,"1778544000":9,"1778630400":2,"1778716800":10,"1778976000":1,"1779062400":9,"1779148800":10,"1779235200":3,"1779321600":3,"1779408000":5,"1779494400":7,"1779580800":14,"1779667200":10,"1779753600":3,"1779840000":7,"1779926400":6,"1780012800":1,"1780099200":1,"1780185600":5,"1780272000":6,"1780358400":15,"1780444800":1,"1780531200":8,"1780617600":6,"1780704000":9,"1780790400":4,"1780876800":5,"1780963200":5,"1781049600":5,"1781136000":4,"1781222400":25,"1781308800":20,"1781395200":13,"1781481600":10,"1781568000":17,"1781654400":5,"1781740800":1,"1781827200":1,"1781913600":1,"1782000000":5,"1782086400":6,"1782172800":5,"1782259200":9,"1782345600":4,"1782432000":1,"1782518400":4,"1782604800":1,"1782691200":1,"1782777600":1,"1782864000":3,"1782950400":1,"1783036800":1,"1783123200":2,"1783209600":1,"1783296000":1,"1783382400":2,"1783468800":1,"1783555200":1,"1783641600":1,"1783728000":1,"1783814400":2,"1783900800":1,"1783987200":9,"1784073600":1,"1784160000":1,"1784246400":2,"1784332800":3,"1784419200":2,"1784505600":1,"1784592000":1,"1784678400":1,"1784764800":1,"1784851200":1,"1785888000":1,"1787356800":11,"1787616000":7,"1789948800":8}
+      )
+    });
 
-    // Fetch real GitHub Profile Stats
-    fetch("https://api.github.com/users/madhu967")
-      .then(res => res.json())
-      .then(data => setGhStats(data))
-      .catch(console.error);
+    setGhStats({
+      public_repos: 48,
+      followers: 6,
+      following: 3
+    });
   }, []);
 
   // Process LeetCode Calendar into a 52x7 matrix for the heatmap
@@ -152,9 +150,15 @@ export default function CodingProfiles() {
               <div className="cp-stats-row">
                 <div className="cp-stat-box">
                   <span className="cp-stat-val">
-                    {lcStats === "RATE_LIMITED" ? "—" : (lcStats ? lcStats.solvedProblem : "...")}
+                    {lcStats === "RATE_LIMITED" ? "—" : (lcStats ? lcStats.totalSolved : "...")}
                   </span>
                   <span className="cp-stat-label">Problems Solved</span>
+                </div>
+                <div className="cp-stat-box">
+                  <span className="cp-stat-val">
+                    {lcCalendar === "RATE_LIMITED" ? "—" : (lcCalendar ? 115 : "...")}
+                  </span>
+                  <span className="cp-stat-label">Active Days</span>
                 </div>
                 <div className="cp-stat-box">
                   <span className="cp-stat-val">
@@ -184,6 +188,15 @@ export default function CodingProfiles() {
                   total={760} 
                   color="#ff375f" delay={0.8} 
                 />
+              </div>
+            </div>
+
+            <div className="cp-badges-wrapper">
+              <span className="cp-stat-label" style={{display: 'block', marginBottom: '0.5rem'}}>Badges</span>
+              <div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap'}}>
+                <img src="https://assets.leetcode.com/static_assets/others/100_1080_1080.png" alt="100 Days Badge" width="50" height="50" title="100 Days Badge 2026" />
+                <img src="https://assets.leetcode.com/static_assets/others/50_1080_1080.png" alt="50 Days Badge" width="50" height="50" title="50 Days Badge 2026" />
+                <img src="https://assets.leetcode.com/static_assets/others/lg2550.png" alt="50 Days Badge 2025" width="50" height="50" title="50 Days Badge 2025" />
               </div>
             </div>
 
@@ -250,6 +263,24 @@ export default function CodingProfiles() {
               </div>
             </div>
 
+            {/* GitHub Streak Stats Widget (from screenshot) */}
+            <div style={{ marginTop: '1.5rem', marginBottom: '1.5rem', textAlign: 'center' }}>
+              <img 
+                src="https://github-readme-streak-stats.herokuapp.com/?user=madhu967&theme=transparent&hide_border=true&title_color=24292e&text_color=24292e&sideNums=24292e&sideLabels=24292e&ring=24292e&fire=24292e&currStreakLabel=24292e&currStreakNum=24292e" 
+                alt="GitHub Streak" 
+                style={{ maxWidth: '100%', height: 'auto', display: 'inline-block' }} 
+              />
+            </div>
+
+            <div className="cp-badges-wrapper" style={{ marginTop: '0', paddingTop: '1rem', borderTop: '1px solid rgba(23, 23, 23, 0.05)'}}>
+              <span className="cp-stat-label" style={{display: 'block', marginBottom: '0.5rem'}}>Achievements</span>
+              <div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap'}}>
+                <img src="https://github.githubassets.com/images/modules/profile/achievements/pull-shark-default.png" alt="Pull Shark" width="50" height="50" title="Pull Shark" style={{borderRadius: '50%'}} />
+                <img src="https://github.githubassets.com/images/modules/profile/achievements/arctic-code-vault-contributor-default.png" alt="Arctic Code Vault" width="50" height="50" title="Arctic Code Vault Contributor" style={{borderRadius: '50%'}} />
+                <img src="https://github.githubassets.com/images/modules/profile/achievements/yolo-default.png" alt="YOLO" width="50" height="50" title="YOLO" style={{borderRadius: '50%'}} />
+              </div>
+            </div>
+
             {/* REAL GITHUB HEATMAP IMAGE API */}
             <div className="cp-heatmap-wrapper" style={{ marginTop: '2.5rem' }}>
               <span className="cp-heatmap-label">GitHub Contributions</span>
@@ -260,7 +291,8 @@ export default function CodingProfiles() {
                   style={{ 
                     opacity: isInView ? 1 : 0, 
                     transition: 'opacity 1.5s ease 0.6s',
-                    maxWidth: '100%',
+                    width: '988px',
+                    minWidth: '988px',
                     display: 'block',
                     margin: '0 auto'
                   }} 
@@ -439,7 +471,21 @@ export default function CodingProfiles() {
           color: rgba(23, 23, 23, 0.6);
         }
 
-        /* Github Heatmap */
+        .cp-badges-wrapper {
+          margin-top: 2rem;
+          padding-top: 1rem;
+          border-top: 1px solid rgba(23, 23, 23, 0.05);
+        }
+
+        .cp-badges-wrapper img {
+          transition: transform 0.2s ease;
+        }
+
+        .cp-badges-wrapper img:hover {
+          transform: translateY(-5px);
+        }
+
+        /* Github & LeetCode Heatmap */
         .cp-heatmap-wrapper {
           margin-top: auto;
           max-width: 100%;
@@ -456,7 +502,7 @@ export default function CodingProfiles() {
 
         .cp-heatmap {
           display: flex;
-          gap: 2px;
+          gap: 5px;
           justify-content: center;
           width: 100%;
           min-width: 0;
@@ -472,13 +518,13 @@ export default function CodingProfiles() {
         .cp-hm-col {
           display: flex;
           flex-direction: column;
-          gap: 2px;
+          gap: 4px;
         }
 
         .cp-hm-cell {
-          width: 10px;
-          height: 10px;
-          border-radius: 2px;
+          width: 14px;
+          height: 14px;
+          border-radius: 2.5px;
         }
 
         .cp-heatmap-legend {

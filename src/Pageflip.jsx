@@ -422,6 +422,9 @@ export default function Pageflip() {
       const x = surfaceX(e.clientX, e.clientY);
       if (x == null) return;
       down = true; moved = false; downX = e.clientX; downY = e.clientY;
+      
+      if (window.innerWidth <= 960) return; // Skip drag logic on mobile
+      
       host.setPointerCapture?.(e.pointerId);
       const dir = x >= 0 ? 1 : -1;
       if (beginFlip(dir, true)) {
@@ -431,8 +434,12 @@ export default function Pageflip() {
       }
     };
     const onMoveP = (e) => {
-      if (!down || !flip || !flip.drag) return;
+      if (!down) return;
       if (Math.abs(e.clientX - downX) + Math.abs(e.clientY - downY) > 5) moved = true;
+      
+      if (window.innerWidth <= 960) return; // Skip drag logic on mobile
+      
+      if (!flip || !flip.drag) return;
       const x = surfaceX(e.clientX, e.clientY);
       if (x == null) return;
       flip.tv = THREE.MathUtils.clamp(xToTv(x), 0, 1);
@@ -440,6 +447,16 @@ export default function Pageflip() {
       layoutStacks(flip.base + flip.tv);
     };
     const onUp = (e) => {
+      if (window.innerWidth <= 960) {
+        if (!down) return;
+        down = false;
+        if (!moved && !flip) {
+          const x = surfaceX(e.clientX, e.clientY);
+          if (x != null) autoFlip(x >= 0 ? 1 : -1);
+        }
+        return;
+      }
+
       host.releasePointerCapture?.(e.pointerId);
       if (!down) return;
       down = false;
@@ -709,7 +726,7 @@ export default function Pageflip() {
         .kpf-stage {
           position: absolute; inset: 0; overflow: hidden;
           background: transparent; cursor: grab;
-          font-family: "DM Mono", monospace; touch-action: none;
+          font-family: "DM Mono", monospace; touch-action: pan-y;
         }
         .kpf-stage:active { cursor: grabbing; }
         .kpf-gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
