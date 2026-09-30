@@ -7,6 +7,7 @@ import FullscreenCards from './FullscreenCards';
 import FolderArchive from './FolderArchive';
 import Footer from './Footer';
 import Timeline from './Timeline';
+import Pageflip from './Pageflip';
 
 /**
  * Ijji Madhu Venkat — Luxury Editorial Developer Portfolio
@@ -222,14 +223,17 @@ export default function FashionEditorial() {
       {/* Settle: Pinned Scroll Deck Sequence (Services Provided) */}
       <SettleDeck />
 
-        {/* Orrery Orbital Focus Gallery */}
-        <Orrery />
+      {/* Orrery Orbital Focus Gallery */}
+      <Orrery />
 
       {/* Fullscreen Rolling Cards */}
       <FullscreenCards />
 
       {/* The Journey Timeline */}
       <Timeline />
+
+      {/* Realistic 3D Pageflip Magazine */}
+      <Pageflip />
 
       {/* GATE 2027 Resources / Folder Archive */}
       <FolderArchive />
