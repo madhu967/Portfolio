@@ -12,10 +12,10 @@ const IMAGES = [
   "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=800&q=80",
   "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80", 
   "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=800&q=80", 
-  "https://images.unsplash.com/photo-1512413914488-842211623910?w=800&q=80",
-  "https://images.unsplash.com/photo-1512413914488-842211623910?w=800&q=80", 
+  "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=800&q=80",
+  "https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?w=800&q=80", 
   "https://images.unsplash.com/photo-1558655146-d09347e92766?w=800&q=80", 
-  "https://images.unsplash.com/photo-1509631179647-0c1157beec08?w=800&q=80",
+  "https://images.unsplash.com/photo-1524504280063-52e564d25032?w=800&q=80",
 ];
 
 const CAPTIONS = [
@@ -65,7 +65,7 @@ export default function Pageflip() {
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.shadowMap.type = THREE.PCFShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.06;
 

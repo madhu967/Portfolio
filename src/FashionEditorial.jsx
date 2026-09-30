@@ -8,6 +8,7 @@ import FolderArchive from './FolderArchive';
 import Footer from './Footer';
 import Timeline from './Timeline';
 import Pageflip from './Pageflip';
+import CodingProfiles from './CodingProfiles';
 
 /**
  * Ijji Madhu Venkat — Luxury Editorial Developer Portfolio
@@ -226,8 +227,11 @@ export default function FashionEditorial() {
       {/* Orrery Orbital Focus Gallery */}
       <Orrery />
 
-      {/* Fullscreen Rolling Cards */}
+      {/* Fullscreen Rolling Cards (Projects) */}
       <FullscreenCards />
+
+      {/* Coding Profiles (LeetCode & GitHub) */}
+      <CodingProfiles />
 
       {/* The Journey Timeline */}
       <Timeline />
