@@ -1,10 +1,45 @@
 import React, { useRef, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useMotionValue, useTransform, useAnimation } from 'framer-motion';
 
 export default function Contact() {
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: true, margin: "-10%" });
   const [status, setStatus] = useState("idle");
+  const formRef = useRef(null);
+  const trackRef = useRef(null);
+  const dragControls = useAnimation();
+  const x = useMotionValue(0);
+
+  // Fill bar perfectly tracks the knob's center
+  const fillWidth = useTransform(x, (value) => `${value + 50}px`);
+  // Text fades out as you drag
+  const textOpacity = useTransform(x, [0, 150], [1, 0]);
+
+  const handleDragEnd = (e, info) => {
+    const trackWidth = trackRef.current ? trackRef.current.offsetWidth : 300;
+    const maxDrag = trackWidth - 50;
+
+    if (info.offset.x > trackWidth * 0.5) {
+      if (formRef.current && formRef.current.reportValidity()) {
+        formRef.current.requestSubmit();
+        dragControls.start({ x: maxDrag });
+      } else {
+        dragControls.start({ x: 0 });
+      }
+    } else {
+      dragControls.start({ x: 0 });
+    }
+  };
+
+  React.useEffect(() => {
+    if (status === 'idle' || status === 'error') {
+      dragControls.start({ x: 0 });
+    } else if (status === 'success') {
+      if (trackRef.current) {
+        dragControls.start({ x: trackRef.current.offsetWidth - 50 });
+      }
+    }
+  }, [status, dragControls]);
 
   // Social icons
   const socials = [
@@ -91,7 +126,7 @@ export default function Contact() {
             animate={isInView ? { height: 80, opacity: 1 } : {}}
             transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
           />
-          <form className="ct-form" onSubmit={async (e) => {
+          <form className="ct-form" ref={formRef} onSubmit={async (e) => {
             e.preventDefault();
             setStatus("submitting");
             const formData = new FormData(e.target);
@@ -145,21 +180,43 @@ export default function Contact() {
               <div className="ct-focus-line"></div>
             </div>
 
-            <motion.button 
-              type="submit"
-              className="ct-submit-btn"
-              whileHover={status === "submitting" ? {} : { scale: 1.02 }}
-              whileTap={status === "submitting" ? {} : { scale: 0.98 }}
-              disabled={status === "submitting"}
-              style={{ opacity: status === "submitting" ? 0.7 : 1, cursor: status === "submitting" ? 'wait' : 'pointer' }}
-            >
-              <span className="ct-btn-text">
-                {status === "submitting" ? "Sending..." : status === "success" ? "Message Sent!" : status === "error" ? "Error! Try Again" : "Send Message"}
-              </span>
-              {status !== "submitting" && status !== "success" && (
-                <svg className="ct-btn-arrow" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-              )}
-            </motion.button>
+            <div className="ct-slider-container">
+              <div className="ct-slider-track" ref={trackRef}>
+                <motion.div 
+                  className="ct-slider-fill"
+                  style={{ width: fillWidth }}
+                />
+                <motion.span 
+                  className="ct-slider-text"
+                  style={{ opacity: status === "submitting" || status === "success" ? 1 : textOpacity }}
+                >
+                  {status === "submitting" ? "Sending..." : status === "success" ? "Message Sent!" : status === "error" ? "Error! Try Again" : "Slide to Send"}
+                </motion.span>
+                <motion.div
+                  className="ct-slider-knob"
+                  drag={status === "submitting" || status === "success" ? false : "x"}
+                  dragConstraints={trackRef}
+                  dragElastic={0.05}
+                  onDragEnd={handleDragEnd}
+                  animate={dragControls}
+                  style={{ x }}
+                  whileHover={status === "submitting" || status === "success" ? {} : { scale: 1.05 }}
+                  whileTap={status === "submitting" || status === "success" ? {} : { scale: 0.95 }}
+                >
+                  {status === "submitting" ? (
+                    <motion.div 
+                      className="ct-spinner" 
+                      animate={{ rotate: 360 }} 
+                      transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                    />
+                  ) : status === "success" ? (
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="#171717" strokeWidth="2" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  ) : (
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="#171717" strokeWidth="2" fill="none"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                  )}
+                </motion.div>
+              </div>
+            </div>
           </form>
 
           <div className="ct-socials-bottom">
@@ -346,35 +403,80 @@ export default function Contact() {
           transform: scaleX(1);
         }
 
-        .ct-submit-btn {
+        .ct-slider-container {
           margin-top: 2rem;
-          background: #171717;
-          color: #fff;
-          border: none;
-          padding: 1.2rem 2.5rem;
-          font-family: 'Space Mono', monospace;
-          font-size: 1rem;
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
-          cursor: pointer;
+          width: 100%;
+          height: 60px;
+          background: #fbfbfb;
+          border: 1px solid rgba(23,23,23,0.1);
+          border-radius: 30px;
+          position: relative;
+          display: flex;
+          align-items: center;
+          padding: 0 5px;
+          overflow: hidden;
+        }
+
+        .ct-slider-track {
+          width: 100%;
+          position: relative;
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 1rem;
-          border-radius: 2px;
-          transition: background 0.3s ease;
+          height: 100%;
         }
 
-        .ct-submit-btn:hover {
+        .ct-slider-fill {
+          position: absolute;
+          left: -5px;
+          top: -5px;
+          height: 60px;
           background: #ea580c;
+          opacity: 0.1;
+          border-radius: 30px;
+          pointer-events: none;
         }
 
-        .ct-btn-arrow {
-          transition: transform 0.3s ease;
+        .ct-slider-text {
+          font-family: 'Space Mono', monospace;
+          font-size: 0.9rem;
+          color: #171717;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          pointer-events: none;
+          user-select: none;
+          z-index: 1;
         }
 
-        .ct-submit-btn:hover .ct-btn-arrow {
-          transform: translateX(5px);
+        .ct-slider-knob {
+          position: absolute;
+          left: 0;
+          width: 50px;
+          height: 50px;
+          background: #ea580c;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: grab;
+          box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
+          z-index: 2;
+        }
+
+        .ct-slider-knob:active {
+          cursor: grabbing;
+        }
+
+        .ct-slider-knob svg {
+          stroke: #ffffff;
+        }
+
+        .ct-spinner {
+          width: 20px;
+          height: 20px;
+          border: 2px solid rgba(255, 255, 255, 0.3);
+          border-top-color: #ffffff;
+          border-radius: 50%;
         }
 
         @media (max-width: 1024px) {
