@@ -185,21 +185,31 @@ body {
 .kex-card-btn {
   font-family: 'Space Mono', monospace;
   font-size: 14px;
-  font-weight: 600;
-  color: var(--card-text);
-  background: transparent;
-  border: 1px solid var(--card-muted);
+  font-weight: 700;
+  color: #13140f;
+  background: #ffffff;
+  border: 1px solid #ffffff;
   border-radius: 9999px;
-  padding: 12px 24px;
+  padding: 14px 28px;
   cursor: pointer;
   transition: all 0.3s ease;
   pointer-events: auto;
+  box-shadow: 0 4px 14px rgba(255, 255, 255, 0.25);
+  animation: btn-pulse 2s infinite cubic-bezier(0.66, 0, 0, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .kex-card-btn:hover {
-  background: var(--card-text);
-  color: var(--card-bg);
-  border-color: var(--card-text);
+  background: #f4f1ea;
+  color: #000000;
+  transform: scale(1.05);
+}
+
+@keyframes btn-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.6); }
+  70% { box-shadow: 0 0 0 15px rgba(255, 255, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
 }
 
 .kex-card-number {
