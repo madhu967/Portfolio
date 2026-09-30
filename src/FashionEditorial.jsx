@@ -6,6 +6,7 @@ import Orrery from './Orrery';
 import FullscreenCards from './FullscreenCards';
 import FolderArchive from './FolderArchive';
 import Footer from './Footer';
+import Timeline from './Timeline';
 
 /**
  * Ijji Madhu Venkat — Luxury Editorial Developer Portfolio
@@ -226,6 +227,9 @@ export default function FashionEditorial() {
 
       {/* Fullscreen Rolling Cards */}
       <FullscreenCards />
+
+      {/* The Journey Timeline */}
+      <Timeline />
 
       {/* GATE 2027 Resources / Folder Archive */}
       <FolderArchive />
