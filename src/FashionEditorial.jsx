@@ -240,7 +240,7 @@ export default function FashionEditorial() {
 // STICKY SCROLLED NAVBAR (Appears only AFTER scrolling down past the hero)
 // Clean white background with soft shadow & frosted blur
 // ---------------------------------------------------------------------------
-function StickyScrolledNavbar({ isMobile, mobileMenuOpen, setMobileMenuOpen }) {
+export function StickyScrolledNavbar({ isMobile, mobileMenuOpen, setMobileMenuOpen }) {
   return (
     <nav
       style={{
@@ -493,7 +493,7 @@ function StickyScrolledNavbar({ isMobile, mobileMenuOpen, setMobileMenuOpen }) {
 // ---------------------------------------------------------------------------
 // IN-HERO TRANSPARENT NAVBAR (Directly on Hero Canvas, No Separate Background)
 // ---------------------------------------------------------------------------
-function HeroTransparentNavbar({ isMobile, mobileMenuOpen, setMobileMenuOpen }) {
+export function HeroTransparentNavbar({ isMobile, mobileMenuOpen, setMobileMenuOpen }) {
   return (
     <nav
       style={{
@@ -1505,7 +1505,7 @@ function DesktopHeroContent({ stageHeight }) {
 // Editorial Statement Section (Under Hero Section: Exactly 4 points, continuous)
 // Flowing continuously across 4 lines with NO breaking divs
 // ---------------------------------------------------------------------------
-function EditorialStatementSection({ isMobile }) {
+export function EditorialStatementSection({ isMobile }) {
   return (
     <section
       id="editorial-statement"
@@ -1897,7 +1897,7 @@ function CutoutPortrait({ src, alt, style }) {
 // ---------------------------------------------------------------------------
 // LUXURY NAVBAR
 // ---------------------------------------------------------------------------
-function LuxuryNavbar({ isMobile }) {
+export function LuxuryNavbar({ isMobile, forceWhite }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const navItems = ['Work', 'Services', 'About', 'Contact'];
 
@@ -1906,7 +1906,7 @@ function LuxuryNavbar({ isMobile }) {
       position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 1000,
       display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       padding: isMobile ? '1rem 1.5rem' : '1rem 3rem',
-      background: 'rgba(244, 241, 234, 0.92)',
+      background: forceWhite ? 'rgba(255, 255, 255, 0.98)' : 'rgba(244, 241, 234, 0.92)',
       backdropFilter: 'blur(16px)',
       WebkitBackdropFilter: 'blur(16px)',
       borderBottom: '1px solid rgba(0,0,0,0.04)',

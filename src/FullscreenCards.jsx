@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import ProjectGallery from './ProjectGallery';
 
 const CSS = `
 * {
@@ -161,19 +162,44 @@ body {
   text-transform: capitalize;
 }
 
-.kex-card-description {
+.kex-card-bottom-right {
   position: absolute;
   right: clamp(30px, 6vw, 100px);
   bottom: clamp(36px, 5vw, 80px);
-
   max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+  pointer-events: auto;
+}
+
+.kex-card-description {
   margin: 0;
-
   color: var(--card-muted);
-
   font-size: clamp(18px, 1.6vw, 28px);
   line-height: 1.35;
   letter-spacing: -0.035em;
+}
+
+.kex-card-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--card-text);
+  background: transparent;
+  border: 1px solid var(--card-muted);
+  border-radius: 9999px;
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  pointer-events: auto;
+}
+
+.kex-card-btn:hover {
+  background: var(--card-text);
+  color: var(--card-bg);
+  border-color: var(--card-text);
 }
 
 .kex-card-number {
@@ -210,11 +236,14 @@ body {
     font-size: clamp(58px, 17vw, 108px);
   }
 
-  .kex-card-description {
+  .kex-card-bottom-right {
     left: clamp(38px, 4vw, 72px);
     right: auto;
     bottom: 42px;
     max-width: 80%;
+  }
+
+  .kex-card-description {
     font-size: 18px;
   }
 }
@@ -296,6 +325,8 @@ export default function FullscreenCards() {
   const currentProgress = useRef(0);
   const targetProgress = useRef(0);
   const frameRef = useRef(null);
+
+  const [selectedGalleryIndex, setSelectedGalleryIndex] = useState(null);
 
   useEffect(() => {
     const updateTargetProgress = () => {
@@ -473,9 +504,17 @@ export default function FullscreenCards() {
 
                       <h2 className="kex-card-title">{card.title}</h2>
 
-                      <p className="kex-card-description">
-                        {card.description}
-                      </p>
+                      <div className="kex-card-bottom-right">
+                        <p className="kex-card-description">
+                          {card.description}
+                        </p>
+                        <button 
+                          className="kex-card-btn"
+                          onClick={() => window.location.hash = `#/gallery/${index}`}
+                        >
+                          View Project
+                        </button>
+                      </div>
                     </div>
                   </article>
                 );
