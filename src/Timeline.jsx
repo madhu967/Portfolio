@@ -1,10 +1,10 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
-import imgYubhian from 'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790845785592.png';
-import imgIISDPR from 'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790845844986.png';
-import imgVishnu from 'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790845909054.png';
-import imgLetsUpgrade from 'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790845872313.png';
+const imgYubhian = '/certificates/cert5.png';
+const imgIISDPR = '/certificates/cert6.png';
+const imgVishnu = '/certificates/cert7.png';
+const imgLetsUpgrade = '/certificates/cert8.png';
 
 const timelineData = [
   {
