@@ -28,9 +28,9 @@ const BACK_CARDS_DATA = [
   {
     id: 'clay',
     number: '01',
-    title: 'Locked In',
-    subtitle: 'DISTRIBUTED ARCHITECTURE',
-    body: 'Resilient cloud backends, ACID relational performance, and microservice meshes engineered for absolute fault-tolerance.',
+    title: 'Web Application Development',
+    subtitle: 'ENTERPRISE GRADE',
+    body: 'High-performance, scalable web platforms architected for mission-critical operations using modern reactive stacks.',
     bg: '#c2502f',
     textColor: '#ebeedc',
     subColor: 'rgba(251, 253, 243, 0.72)',
@@ -44,9 +44,8 @@ const BACK_CARDS_DATA = [
     dismissX: -30,
     baseZ: 48,
     zIndex: 40,
-    windowStart: 0.54,
-    windowEnd: 0.66,
-    // Geometric Lock SVG
+    windowStart: 0.55,
+    windowEnd: 0.64,
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
@@ -59,9 +58,9 @@ const BACK_CARDS_DATA = [
   {
     id: 'bone',
     number: '02',
-    title: 'Layered Time',
-    subtitle: 'AUTONOMOUS AGENTS & AI',
-    body: 'State-graph cognitive agents, real-time streaming LLM pipelines, and contextual memory engines built for mission-critical tasks.',
+    title: 'Mobile App Development',
+    subtitle: 'NATIVE & HYBRID',
+    body: 'Seamless, intuitive mobile experiences built with modern frameworks, ensuring flawless performance across iOS and Android ecosystems.',
     bg: '#e9e3d6',
     textColor: '#13140f',
     subColor: '#5c5c52',
@@ -75,25 +74,21 @@ const BACK_CARDS_DATA = [
     dismissX: 30,
     baseZ: 36,
     zIndex: 30,
-    windowStart: 0.66,
-    windowEnd: 0.78,
-    // Layered Hourglass / Clock SVG
+    windowStart: 0.64,
+    windowEnd: 0.73,
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M5 22h14" />
-        <path d="M5 2h14" />
-        <path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22" />
-        <path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2" />
-        <circle cx="12" cy="12" r="1" fill="currentColor" />
+        <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+        <path d="M12 18h.01" />
       </svg>
     ),
   },
   {
     id: 'forest',
     number: '03',
-    title: 'Weight & Flow',
-    subtitle: 'REACTIVE PLATFORMS',
-    body: 'High-speed React & Next.js client systems with sub-50ms latency, zero layout shift, and silky 60fps view transitions.',
+    title: 'E-Commerce Development',
+    subtitle: 'CONVERSION OPTIMIZED',
+    body: 'Custom headless commerce solutions engineered to drive unparalleled sales, integrate complex inventories, and boost user retention.',
     bg: '#1f6f5c',
     textColor: '#ebeedc',
     subColor: 'rgba(251, 253, 243, 0.75)',
@@ -107,26 +102,22 @@ const BACK_CARDS_DATA = [
     dismissX: -28,
     baseZ: 24,
     zIndex: 20,
-    windowStart: 0.78,
-    windowEnd: 0.90,
-    // Balance Waveform / Fluid Flow SVG
+    windowStart: 0.73,
+    windowEnd: 0.82,
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M2 12h20" />
-        <path d="M6 12v6a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-6" />
-        <path d="M12 2v10" />
-        <path d="m4.93 4.93 4.24 4.24" />
-        <path d="m14.83 9.17 4.24-4.24" />
-        <circle cx="12" cy="2" r="1.5" fill="currentColor" />
+        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+        <path d="M3 6h18" />
+        <path d="M16 10a4 4 0 0 1-8 0" />
       </svg>
     ),
   },
   {
     id: 'ochre',
     number: '04',
-    title: 'Soft Motion',
-    subtitle: 'KINETIC CRAFT & UI',
-    body: 'Tactile editorial layouts, GPU-accelerated spatial micro-interactions, and precision typography engineered with soul.',
+    title: 'AI-Powered Apps',
+    subtitle: 'INTELLIGENT SYSTEMS',
+    body: 'Next-gen applications supercharged with LLMs, autonomous agents, and predictive machine learning models for deep intelligence.',
     bg: '#d9a441',
     textColor: '#13140f',
     subColor: '#453513',
@@ -140,14 +131,48 @@ const BACK_CARDS_DATA = [
     dismissX: 32,
     baseZ: 12,
     zIndex: 10,
-    windowStart: 0.90,
-    windowEnd: 1.0,
-    // Kinetic Spring / Ripple SVG
+    windowStart: 0.82,
+    windowEnd: 0.91,
     icon: (
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
-        <path d="M12 12v9" />
-        <path d="m8 17 4 4 4-4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="M5 9.5 3.5 8" />
+        <path d="M20.5 16 19 14.5" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="M5 14.5 3.5 16" />
+        <path d="M20.5 8 19 9.5" />
+        <circle cx="12" cy="12" r="5" />
+      </svg>
+    ),
+  },
+  {
+    id: 'slate',
+    number: '05',
+    title: 'Website Development',
+    subtitle: 'EDITORIAL & BRAND',
+    body: 'Bespoke, award-winning corporate and portfolio websites utilizing smooth animations, immersive graphics, and precise typography.',
+    bg: '#3c4a59',
+    textColor: '#ebeedc',
+    subColor: 'rgba(251, 253, 243, 0.7)',
+    badgeBg: 'rgba(251, 253, 243, 0.15)',
+    badgeBorder: 'rgba(251, 253, 243, 0.25)',
+    iconColor: '#ebeedc',
+    settleTilt: -6.5,
+    settleX: -18,
+    settleY: 16,
+    dismissTilt: -24,
+    dismissX: -36,
+    baseZ: 0,
+    zIndex: 0,
+    windowStart: 0.91,
+    windowEnd: 1.0,
+    icon: (
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+        <line x1="3" y1="9" x2="21" y2="9" />
+        <line x1="9" y1="21" x2="9" y2="9" />
       </svg>
     ),
   },
@@ -579,7 +604,7 @@ export default function SettleDeck() {
 
         .settle-card-title {
           font-family: 'Spectral', serif;
-          font-size: clamp(28px, 3.6vw, 36px);
+          font-size: clamp(32px, 4.2vw, 42px);
           font-weight: 700;
           text-transform: capitalize;
           line-height: 1.05;
@@ -633,16 +658,16 @@ export default function SettleDeck() {
 
         {/* GIANT CENTRED HEADLINE */}
         <div ref={headlineRef} className="settle-headline-wrap">
-          <div className="settle-kicker">SERVICES & DISCIPLINES</div>
+          <div className="settle-kicker">SERVICES & OFFERINGS</div>
           <h2 className="settle-headline">
             Scroll, and the deck settles into order
           </h2>
           <p className="settle-headline-sub">
-            Four specialized disciplines engineered into unified digital systems. Scroll to release the deck and uncover each pillar.
+            Five specialized services engineered into unified digital systems. Scroll to release the deck and uncover each offering.
           </p>
         </div>
 
-        {/* 3D CENTERED DECK (Cover Card + 4 Back Cards) */}
+        {/* 3D CENTERED DECK (Cover Card + 5 Back Cards) */}
         <div ref={deckRef} className="settle-deck-container">
           {/* 1. COVER CARD (Flips over at p: 0.10 -> 0.26) */}
           <div ref={coverCardRef} className="settle-card settle-cover-card">
@@ -654,7 +679,7 @@ export default function SettleDeck() {
             {/* Top Bar */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span className="settle-card-num" style={{ color: '#d9a441' }}>
-                DISCIPLINES // 04
+                SERVICES // 05
               </span>
               <div
                 style={{
@@ -672,7 +697,7 @@ export default function SettleDeck() {
                   textTransform: 'capitalize',
                 }}
               >
-                <span>CORE STACK</span>
+                <span>MY SERVICES</span>
               </div>
             </div>
 
@@ -708,16 +733,16 @@ export default function SettleDeck() {
               </div>
 
               <h3 className="settle-card-title" style={{ textAlign: 'center', color: '#ebeedc' }}>
-                Disciplines
+                Services
               </h3>
               <div className="settle-card-sub" style={{ color: '#d9a441' }}>
-                Four Core Pillars
+                Five Core Offerings
               </div>
               <p
                 className="settle-card-body"
                 style={{ textAlign: 'center', color: 'rgba(251, 253, 243, 0.72)', maxWidth: 280 }}
               >
-                A tactile four-tier stack engineered for modern scalable intelligent systems. Scroll downward to uncover each pillar.
+                A tactile five-tier stack of premium development services. Scroll downward to uncover each offering.
               </p>
             </div>
 
@@ -732,7 +757,7 @@ export default function SettleDeck() {
               }}
             >
               <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, letterSpacing: '0.2em', color: 'rgba(251, 253, 243, 0.5)' }}>
-                ARCHITECTURE & AI
+                DEVELOPMENT & DESIGN
               </span>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#d9a441' }}>
                 <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, letterSpacing: '0.15em' }}>SCROLL TO UNLOCK</span>
@@ -764,7 +789,7 @@ export default function SettleDeck() {
               {/* Card Header */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span className="settle-card-num" style={{ color: card.textColor }}>
-                  DISCIPLINE {card.number} // 04
+                  SERVICE {card.number} // 05
                 </span>
                 <div
                   style={{
@@ -827,7 +852,7 @@ export default function SettleDeck() {
                   IJJI MADHU VENKAT
                 </span>
                 <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, letterSpacing: '0.15em', fontWeight: 600 }}>
-                  CORE DISCIPLINE
+                  CORE SERVICE
                 </span>
               </div>
             </div>

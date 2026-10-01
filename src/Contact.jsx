@@ -77,12 +77,12 @@ export default function Contact() {
           <div className="ct-heading-wrapper">
             <span className="ct-kicker">06 // COLLABORATE</span>
             <h2 className="ct-title">
-              Let's build<br/>
+              Let&apos;s build<br/>
               <span className="ct-italic">the future</span>
             </h2>
             <p className="ct-desc">
               Open for opportunities, creative collaborations, or just a chat about code and design. 
-              Reach out and let's craft something exceptional together.
+              Reach out and let&apos;s craft something exceptional together.
             </p>
           </div>
 

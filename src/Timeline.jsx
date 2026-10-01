@@ -1,34 +1,39 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+
+import imgYubhian from 'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790845785592.png';
+import imgIISDPR from 'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790845844986.png';
+import imgVishnu from 'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790845909054.png';
+import imgLetsUpgrade from 'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790845872313.png';
 
 const timelineData = [
   {
-    year: '2023',
-    title: 'The Inception',
-    subtitle: 'Foundation of the Vision',
-    description: 'Began exploring the intersection of digital design and cinematic motion, creating the first series of experimental UI prototypes that challenged conventional web layouts.',
-    image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000&auto=format&fit=crop'
-  },
-  {
-    year: '2024',
-    title: 'Creative Expansion',
-    subtitle: 'Pushing the Boundaries',
-    description: 'Expanded into 3D web environments and complex WebGL shaders, integrating fashion photography with fluid interactive elements to create immersive digital experiences.',
-    image: 'https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=2000&auto=format&fit=crop'
+    year: '2026',
+    title: 'Full Stack Developer Intern',
+    subtitle: 'Yubhian Technologies | Remote',
+    description: 'Engineered 3 full-stack MERN applications with JWT authentication, reducing API latency by 20% through optimized data validation. Accelerated frontend load times by 30% using React lazy loading and code-splitting.',
+    image: imgYubhian
   },
   {
     year: '2025',
-    title: 'The Breakthrough',
-    subtitle: 'Redefining the Standard',
-    description: 'Launched the award-winning "Night Culture" project, a revolutionary scrolling documentary that perfectly synchronized audio, video, and typography in the browser.',
-    image: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2000&auto=format&fit=crop'
+    title: 'Frontend Developer Intern',
+    subtitle: 'IISPPR | Remote',
+    description: 'Architected modular UI components using React.js and Tailwind, enhancing cross-device responsiveness and accessibility. Debugged production UI inconsistencies during Agile sprints, reducing bug volume by 15%.',
+    image: imgIISDPR
   },
   {
-    year: '2026',
-    title: 'Global Recognition',
-    subtitle: 'The New Paradigm',
-    description: 'Established a new standard for luxury portfolio design, partnering with top-tier fashion houses and creative agencies to build bespoke digital flagship experiences.',
-    image: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=2000&auto=format&fit=crop'
+    year: '2025',
+    title: 'Teaching Assistant (Full Stack)',
+    subtitle: 'Vishnu Institute of Technology',
+    description: 'Mentored 60+ students in full-stack architecture through code reviews, improving project completion rates by 25%.',
+    image: imgVishnu
+  },
+  {
+    year: '2025',
+    title: 'Student Ambassador (Web Dev)',
+    subtitle: 'LetsUpgrade',
+    description: 'Delivered workshops on React.js, Next.js, and TypeScript to 50+ students.',
+    image: imgLetsUpgrade
   }
 ];
 
@@ -95,7 +100,6 @@ const TimelineItem = ({ item, index }) => {
               src={item.image} 
               alt={item.title} 
               className="tl-image"
-              style={{ y: imgY, scale: imgScale }}
             />
             <div className="tl-image-overlay" />
           </div>
@@ -307,18 +311,15 @@ export default function Timeline() {
 
         .tl-image {
           width: 100%;
-          height: 120%;
-          object-fit: cover;
+          height: 100%;
+          object-fit: contain;
           position: absolute;
-          top: -10%;
+          top: 0;
           left: 0;
         }
 
         .tl-image-overlay {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(180deg, transparent 60%, rgba(23, 23, 23, 0.4) 100%);
-          pointer-events: none;
+          display: none;
         }
 
         @media (max-width: 860px) {
