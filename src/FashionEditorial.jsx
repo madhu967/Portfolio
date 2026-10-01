@@ -1680,7 +1680,7 @@ export function EditorialStatementSection({ isMobile }) {
         }}
       >
         {/* Left Column: Content */}
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: isMobile ? 'center' : 'flex-start' }}>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '100%' }}>
           <div style={{
             display: 'flex',
             alignItems: 'center',
@@ -1712,42 +1712,63 @@ export function EditorialStatementSection({ isMobile }) {
               WebkitLineClamp: 5,
               WebkitBoxOrient: 'vertical',
               overflow: 'hidden',
-              textAlign: isMobile ? 'center' : 'left',
+              textAlign: 'left',
             }}
           >
             I’m a Software Developer and Computer Science Engineering student with strong problem-solving and DSA skills. I specialize in MERN Stack development, building modern and scalable full-stack web applications. I enjoy solving complex problems and turning ideas into practical, user-focused software solutions. Passionate about continuous learning, clean development, and building impactful real-world applications.
           </h3>
           
-          <div
-            onClick={() => {
-              const el = document.getElementById('services');
-              if (el) el.scrollIntoView({ behavior: 'smooth' });
-            }}
-            style={{
-              marginTop: 40,
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 16,
-              cursor: 'pointer',
-              borderBottom: '1px solid #181e4b',
-              paddingBottom: 6,
-              transition: 'opacity 0.2s',
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.opacity = 0.7}
-            onMouseLeave={(e) => e.currentTarget.style.opacity = 1}
-          >
-            <span style={{
-              fontFamily: "'Space Mono', monospace",
-              fontSize: 14,
-              fontWeight: 700,
-              letterSpacing: 1,
+          {/* Education Details - Editorial Typography */}
+          <div style={{
+            marginTop: 48,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 8,
+            width: '100%',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 4 }}>
+              <span style={{
+                fontFamily: "'Space Mono', monospace",
+                fontSize: 13,
+                fontWeight: 700,
+                letterSpacing: 2,
+                color: '#ea580c',
+                textTransform: 'uppercase'
+              }}>Education</span>
+              <div style={{ flex: 1, height: 1, backgroundColor: 'rgba(24, 30, 75, 0.1)', maxWidth: 120 }} />
+            </div>
+
+            <h4 style={{
+              fontFamily: "'Spectral', serif",
+              fontSize: 'clamp(17px, 4.5vw, 22px)',
+              fontWeight: 600,
               color: '#181e4b',
-              textTransform: 'uppercase'
-            }}>View Services</span>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#181e4b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
+              margin: 0,
+            }}>
+              B.Tech in Computer Science & Engineering
+            </h4>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+              <span style={{
+                fontFamily: "'Poppins', sans-serif",
+                fontSize: 'clamp(13px, 3.5vw, 15px)',
+                fontWeight: 400,
+                color: '#5e6282',
+              }}>
+                Vishnu Institute of Technology
+              </span>
+              
+              <div style={{ width: 4, height: 4, borderRadius: '50%', backgroundColor: '#ea580c', opacity: 0.8 }} />
+              
+              <span style={{
+                fontFamily: "'Space Mono', monospace",
+                fontSize: 'clamp(11.5px, 3vw, 13px)',
+                fontWeight: 700,
+                color: '#181e4b',
+              }}>
+                CGPA 9.21
+              </span>
+            </div>
           </div>
         </div>
 

@@ -389,7 +389,7 @@ export default function DriftHero() {
           cursor:pointer; transition:all .4s ease; font-family:'DM Sans',sans-serif;
         }
         .dd-modes button:active { transform:scale(.92); }
-        .dd-modes button.active { background:#e0dfd7; color:#171717; }
+        .dd-modes button.active { background:#171717; color:#ffffff; border-color:#171717; }
         .dd-glyph { font-size:1rem; }
 
         .dd-hero-btns {
