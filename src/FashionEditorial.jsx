@@ -8,6 +8,7 @@ import FolderArchive from './FolderArchive';
 import Footer from './Footer';
 import TerminalSection from './TerminalSection';
 import Timeline from './Timeline';
+import CinematicTestimonials from './CinematicTestimonials';
 import Pageflip from './Pageflip';
 import CodingProfiles from './CodingProfiles';
 import Contact from './Contact';
@@ -345,9 +346,16 @@ export default function FashionEditorial() {
       </ScrollReveal> */}
 
       {/* GATE 2027 Resources / Folder Archive */}
-      <div id="folder-archive">
+      {/* <div id="folder-archive">
         <ScrollReveal>
           <FolderArchive />
+        </ScrollReveal>
+      </div> */}
+
+      {/* Cinematic Testimonial Card Stack */}
+      <div id="testimonials">
+        <ScrollReveal>
+          <CinematicTestimonials />
         </ScrollReveal>
       </div>
 
@@ -2056,7 +2064,7 @@ const NAV_LINKS = [
       { label: 'Skills', href: '#skills' },
       { label: 'Experience', href: '#timeline' },
       { label: 'Education', href: '#timeline' },
-      { label: 'Certification', href: '#folder-archive' }
+      { label: 'Testimonials', href: '#testimonials' }
     ]
   },
   { label: 'Footer', href: '#footer' }
