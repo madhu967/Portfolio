@@ -1,33 +1,28 @@
 import React from 'react';
-import cert1 from 'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790847635663.png';
-import cert2 from 'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790847719622.png';
-import cert3 from 'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790847864213.pdf';
-import cert4 from 'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790847868504.pdf';
-
 const FOLDERS = [
   { 
     num: '01', 
     title: 'IISPPPR Internship', 
     tone: 1, 
-    images: [cert1] 
+    images: ['/certificates/cert1.png'] 
   },
   { 
     num: '02', 
     title: 'Full Stack Node.js', 
     tone: 2, 
-    images: [cert2] 
+    images: ['/certificates/cert2.png'] 
   },
   { 
     num: '03', 
     title: 'NPTEL Python', 
     tone: 2, 
-    images: [cert3] 
+    images: ['/certificates/cert3.jpg'] 
   },
   { 
     num: '04', 
     title: 'NPTEL ML', 
     tone: 1, 
-    images: [cert4] 
+    images: ['/certificates/cert4.jpg'] 
   }
 ];
 
@@ -362,24 +357,14 @@ export default function FolderArchive() {
                 }}
               >
                 <div className="fa-images">
-                  {folder.images.map((img, i) => {
-                    const isPdf = img.toLowerCase().endsWith('.pdf');
-                    return isPdf ? (
-                      <embed 
-                        key={i} 
-                        src={`${img}#toolbar=0&navpanes=0&scrollbar=0`} 
-                        type="application/pdf"
-                        className={`fa-img fa-img-${i}`} 
-                      />
-                    ) : (
-                      <img 
-                        key={i} 
-                        src={img} 
-                        alt="" 
-                        className={`fa-img fa-img-${i}`} 
-                      />
-                    );
-                  })}
+                  {folder.images.map((img, i) => (
+                    <img 
+                      key={i} 
+                      src={img} 
+                      alt="" 
+                      className={`fa-img fa-img-${i}`} 
+                    />
+                  ))}
                 </div>
                 
                 <div className="fa-folder-shape">
@@ -413,19 +398,11 @@ export default function FolderArchive() {
             <button className="fa-modal-close" onClick={() => setModalImage(null)}>
               CLOSE [X]
             </button>
-            {modalImage.toLowerCase().endsWith('.pdf') ? (
-              <embed 
-                src={`${modalImage}#toolbar=0&navpanes=0&scrollbar=0`} 
-                type="application/pdf"
-                style={{ width: '100%', height: '100%', borderRadius: '8px' }}
-              />
-            ) : (
-              <img 
-                src={modalImage} 
-                alt="Certificate Full View" 
-                style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: '8px' }}
-              />
-            )}
+            <img 
+              src={modalImage} 
+              alt="Certificate Full View" 
+              style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: '8px' }}
+            />
           </div>
         </div>
       )}

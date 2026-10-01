@@ -31,6 +31,26 @@ try {
   console.error('[vite.config.js] Profile image sync error:', err)
 }
 
+// Copy certificates to public/certificates
+try {
+  const localCerts = [
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790847635663.png',
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790847719622.png',
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790850882550.jpg',
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790850884962.jpg'
+  ];
+  const certsDir = path.resolve(__dirname, 'public/certificates');
+  if (!fs.existsSync(certsDir)) fs.mkdirSync(certsDir, { recursive: true });
+  localCerts.forEach((certPath, i) => {
+    if (fs.existsSync(certPath)) {
+      const ext = path.extname(certPath);
+      fs.copyFileSync(certPath, path.resolve(certsDir, `cert${i + 1}${ext}`));
+    }
+  });
+} catch (err) {
+  console.error('[vite.config.js] Certs sync error:', err);
+}
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
