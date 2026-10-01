@@ -1,9 +1,14 @@
 import React, { useRef, useEffect, useState } from 'react';
 
 const SKILLS_DATA = [
+  { img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", title: "Python", desc: "Versatile programming language for backend development, machine learning, and scripting." },
   { img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", title: "JavaScript", desc: "The versatile language powering the modern web and dynamic client-side logic." },
   { img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg", title: "Java", desc: "Robust object-oriented programming for scalable enterprise-grade backend systems." },
   { img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", title: "React.js", desc: "Component-driven frontend architecture for building highly reactive user interfaces." },
+  { img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", title: "React Native", desc: "Cross-platform mobile application development using React paradigms." },
+  { img: "https://ui-avatars.com/api/?name=MERN&background=111&color=ea580c&size=256", title: "MERN Stack", desc: "Full-stack development using MongoDB, Express.js, React.js, and Node.js." },
+  { img: "https://avatars.githubusercontent.com/u/126733545?v=4", title: "LangChain", desc: "Framework for developing applications powered by large language models." },
+  { img: "https://avatars.githubusercontent.com/u/126733545?v=4", title: "LangGraph", desc: "Building stateful, multi-actor applications with LLMs." },
   { img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg", title: "HTML5", desc: "The foundational semantic markup laying the structure for modern web applications." },
   { img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg", title: "CSS3", desc: "Fluid, responsive styling techniques that breathe life and layout into raw markup." },
   { img: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg", title: "Tailwind CSS", desc: "Utility-first styling for rapid UI development and granular design control." },
@@ -143,8 +148,8 @@ export default function Orrery() {
       const planeRect = planeRef.current.getBoundingClientRect();
       const planeW = planeRect.width;
       const planeH = planeRect.height;
-      const Rx = planeW * 0.4;
-      const Ry = planeH * 0.33;
+      const Rx = planeW * 0.44;
+      const Ry = planeH * 0.38;
 
       let currentRot = stateRef.current.rotation;
 
@@ -416,8 +421,8 @@ export default function Orrery() {
           position: absolute;
           top: 50%;
           left: 50%;
-          width: min(10vw, 80px);
-          height: min(10vw, 80px);
+          width: min(7.5vw, 60px);
+          height: min(7.5vw, 60px);
           border-radius: 50%;
           background-size: 60%;
           background-repeat: no-repeat;

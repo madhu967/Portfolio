@@ -27,7 +27,7 @@ const TESTIMONIALS = [
     role: "The Joy of Computing",
     company: "IIT Madras",
     quote: "“Elite certification awarded for successfully completing the 12-week course 'The Joy of Computing Using Python' with a consolidated score of 77%.”",
-    image: "/certificates/cert3.jpg",
+    image: "/certificates/cert3.png",
     objectPosition: "50% 50%",
   },
   {
@@ -36,7 +36,7 @@ const TESTIMONIALS = [
     role: "Mathematics for Machine Learning",
     company: "IIT Kharagpur",
     quote: "“Elite certification awarded for successfully completing the 12-week course 'Mathematics for Machine Learning' with a consolidated score of 84%.”",
-    image: "/certificates/cert4.jpg",
+    image: "/certificates/cert4.png",
     objectPosition: "50% 50%",
   }
 ];
