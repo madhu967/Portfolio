@@ -1689,7 +1689,7 @@ export function EditorialStatementSection({ isMobile }) {
             textAlign: 'center',
           }}
         >
-          Architecting high-performance distributed systems with scalable full-stack engineering. Crafting reactive cloud-native platforms powered by modern React, Next.js, and Node.js. Pioneering autonomous Generative AI workflows and context-aware intelligent agents. Obsessed with clean algorithmic logic, ACID relational performance, and exceptional UX.
+          I’m a Software Developer and Computer Science Engineering student with strong problem-solving and DSA skills. I specialize in MERN Stack development, building modern and scalable full-stack web applications. I enjoy solving complex problems and turning ideas into practical, user-focused software solutions. Passionate about continuous learning, clean development, and building impactful real-world applications.
         </h3>
 
         {/* Scroll Down Arrow Indicator directly below the 4 lines */}
