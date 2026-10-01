@@ -1,41 +1,33 @@
 import React from 'react';
+import cert1 from 'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790847635663.png';
+import cert2 from 'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790847719622.png';
+import cert3 from 'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790847864213.pdf';
+import cert4 from 'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790847868504.pdf';
 
 const FOLDERS = [
   { 
     num: '01', 
-    title: 'Operating Systems', 
+    title: 'IISPPPR Internship', 
     tone: 1, 
-    images: ['https://picsum.photos/seed/os-a/640/900', 'https://picsum.photos/seed/os-b/640/900', 'https://picsum.photos/seed/os-c/640/900'] 
+    images: [cert1] 
   },
   { 
     num: '02', 
-    title: 'Theory of Computation', 
+    title: 'Full Stack Node.js', 
     tone: 2, 
-    images: ['https://picsum.photos/seed/toc-a/640/900', 'https://picsum.photos/seed/toc-b/640/900', 'https://picsum.photos/seed/toc-c/640/900'] 
+    images: [cert2] 
   },
   { 
     num: '03', 
-    title: 'Data Structures', 
+    title: 'NPTEL Python', 
     tone: 2, 
-    images: ['https://picsum.photos/seed/ds-a/640/900', 'https://picsum.photos/seed/ds-b/640/900', 'https://picsum.photos/seed/ds-c/640/900'] 
+    images: [cert3] 
   },
   { 
     num: '04', 
-    title: 'Algorithms', 
+    title: 'NPTEL ML', 
     tone: 1, 
-    images: ['https://picsum.photos/seed/algo-a/640/900', 'https://picsum.photos/seed/algo-b/640/900', 'https://picsum.photos/seed/algo-c/640/900'] 
-  },
-  { 
-    num: '05', 
-    title: 'Computer Networks', 
-    tone: 1, 
-    images: ['https://picsum.photos/seed/cn-a/640/900', 'https://picsum.photos/seed/cn-b/640/900', 'https://picsum.photos/seed/cn-c/640/900'] 
-  },
-  { 
-    num: '06', 
-    title: 'Engineering Maths', 
-    tone: 2, 
-    images: ['https://picsum.photos/seed/math-a/640/900', 'https://picsum.photos/seed/math-b/640/900', 'https://picsum.photos/seed/math-c/640/900'] 
+    images: [cert4] 
   }
 ];
 
@@ -46,6 +38,7 @@ const COLORS = {
 
 export default function FolderArchive() {
   const [activeFolder, setActiveFolder] = React.useState(null);
+  const [modalImage, setModalImage] = React.useState(null);
 
   const toggleFolder = (num) => {
     setActiveFolder(prev => prev === num ? null : num);
@@ -113,7 +106,7 @@ export default function FolderArchive() {
         /* Hover Mechanics */
         .fa-folder:hover, .fa-folder.is-active {
           transform: translateY(-30px);
-          z-index: 40 !important;
+          z-index: 60 !important;
         }
         
         /* Fade un-hovered folders */
@@ -129,25 +122,56 @@ export default function FolderArchive() {
 
         /* Reveal Images */
         .fa-folder:hover .fa-img-0, .fa-folder.is-active .fa-img-0 {
-          transform: translateY(-70px) rotate(-16deg);
+          transform: translateX(-50%) translateY(-90px) rotate(0deg);
           opacity: 1;
           transition-delay: 0s;
         }
-        .fa-folder:hover .fa-img-1, .fa-folder.is-active .fa-img-1 {
-          transform: translateX(-50%) translateY(-90px) rotate(-2deg);
-          opacity: 1;
-          transition-delay: 0.025s;
-        }
-        .fa-folder:hover .fa-img-2, .fa-folder.is-active .fa-img-2 {
-          transform: translateX(-100%) translateY(-65px) rotate(14deg);
-          opacity: 1;
-          transition-delay: 0.05s;
+
+        @media (max-width: 1000px) {
+          .fa-folder:hover .fa-img-0, .fa-folder.is-active .fa-img-0 {
+            transform: translateX(-50%) translateY(-75px) rotate(0deg);
+          }
         }
 
         .fa-folder-shape {
           position: relative;
           z-index: 2;
           transition: filter 0.4s ease;
+        }
+
+        .fa-badge {
+          position: absolute;
+          top: 16px;
+          right: 20px;
+          background: #000000;
+          color: #ffffff;
+          font-family: 'DM Mono', monospace;
+          font-size: 0.75rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          padding: 6px 14px;
+          border-radius: 20px;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+          pointer-events: auto; /* Enable clicking on the button */
+          cursor: pointer;
+          opacity: 1;
+          transition: transform 0.2s ease;
+          animation: badge-pulse 2s infinite ease-in-out;
+        }
+
+        .fa-badge:hover {
+          transform: scale(1.05);
+        }
+
+        .text-desktop-hover, .text-mobile { display: none; }
+        .text-desktop-idle { display: inline; }
+
+        .fa-folder:hover .text-desktop-idle, .fa-folder.is-active .text-desktop-idle { display: none; }
+        .fa-folder:hover .text-desktop-hover, .fa-folder.is-active .text-desktop-hover { display: inline; }
+
+        @keyframes badge-pulse {
+          0%, 100% { box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
+          50% { box-shadow: 0 8px 25px rgba(0,0,0,0.6); }
         }
 
         /* Tab Shape */
@@ -195,42 +219,80 @@ export default function FolderArchive() {
 
         .fa-img {
           position: absolute;
-          bottom: 0;
-          width: 8rem;
-          height: 11rem;
-          object-fit: cover;
-          border-radius: 6px;
-          box-shadow: 0 15px 30px rgba(0,0,0,0.15), 0 4px 10px rgba(0,0,0,0.1);
+          bottom: -10px;
+          width: 26rem;
+          height: 18.5rem;
+          object-fit: contain;
           opacity: 0;
           pointer-events: none;
           will-change: transform, opacity;
           /* Return transition */
           transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+          background: transparent;
+          box-shadow: none;
+          border: none;
+        }
+
+        /* Modal Styles */
+        .fa-modal-overlay {
+          position: fixed;
+          top: 0; left: 0; width: 100vw; height: 100vh;
+          background: rgba(0,0,0,0.85);
+          backdrop-filter: blur(10px);
+          z-index: 9999;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          animation: modal-fade-in 0.3s forwards;
+          padding: 20px;
+          box-sizing: border-box;
+        }
+        @keyframes modal-fade-in { to { opacity: 1; } }
+        
+        .fa-modal-content {
+          position: relative;
+          width: 75vw;
+          height: 75vh;
+          max-width: 900px;
+          background: transparent;
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .fa-modal-close {
+          position: absolute;
+          top: -40px;
+          right: 0;
+          color: white;
+          font-family: 'DM Mono', monospace;
+          font-size: 16px;
+          background: none;
+          border: none;
+          cursor: pointer;
         }
 
         /* Initial hidden positions */
         .fa-img-0 { 
-          left: 15%; 
-          transform-origin: bottom left; 
-          transform: translateY(100%) rotate(0deg); 
-          transition-delay: 0.1s; 
-        }
-        .fa-img-1 { 
           left: 50%; 
           transform-origin: bottom center; 
           transform: translateX(-50%) translateY(100%) rotate(0deg); 
-          transition-delay: 0.05s; 
+          transition-delay: 0.1s; 
           z-index: 2;
-        }
-        .fa-img-2 { 
-          left: 85%; 
-          transform-origin: bottom right; 
-          transform: translateX(-100%) translateY(100%) rotate(0deg); 
-          transition-delay: 0s; 
         }
 
         /* Mobile Adjustments */
         @media (max-width: 1000px) {
+          .text-desktop-idle, .text-desktop-hover { display: none !important; }
+          .text-mobile { display: inline !important; }
+          
+          .fa-modal-content {
+            width: 95vw;
+            height: auto;
+            max-height: 80vh;
+          }
+
           .fa-section {
             height: auto;
             min-height: auto;
@@ -257,11 +319,11 @@ export default function FolderArchive() {
             padding: 20px 24px;
           }
           .fa-img {
-            width: 6rem;
-            height: 8rem;
+            width: 85vw;
+            height: 60vw;
           }
           .fa-section {
-            padding-top: 80px;
+            padding-top: 20px;
           }
           .fa-body h2 {
             font-size: 32px;
@@ -269,14 +331,24 @@ export default function FolderArchive() {
         }
       `}</style>
 
-      <nav className="fa-nav">
-        <div>IJJI MADHU VENKAT</div>
-        <div>GATE 2027 RESOURCES</div>
+      <nav className="fa-nav" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '8px', padding: '60px 4vw 40px' }}>
+        <h1 style={{ 
+          fontFamily: "'Spectral', serif", 
+          fontSize: 'clamp(2.4rem, 5vw, 3.5rem)', 
+          margin: 0, 
+          color: '#181e4b',
+          textTransform: 'none',
+          letterSpacing: '-0.02em',
+          fontWeight: 700 
+        }}>
+          Professional Certificates
+        </h1>
+        <div style={{ color: '#ea580c', fontWeight: 600, fontSize: '0.9rem', letterSpacing: '0.15em' }}>IJJI MADHU VENKAT</div>
       </nav>
 
       <div className="fa-rows">
         {/* Helper to chunk folders into rows of 2 */}
-        {[0, 1, 2].map(rowIndex => (
+        {[0, 1].map(rowIndex => (
           <div className="fa-row" key={rowIndex}>
             {FOLDERS.slice(rowIndex * 2, rowIndex * 2 + 2).map((folder) => (
               <article 
@@ -290,17 +362,38 @@ export default function FolderArchive() {
                 }}
               >
                 <div className="fa-images">
-                  {folder.images.map((img, i) => (
-                    <img 
-                      key={i} 
-                      src={img} 
-                      alt="" 
-                      className={`fa-img fa-img-${i}`} 
-                    />
-                  ))}
+                  {folder.images.map((img, i) => {
+                    const isPdf = img.toLowerCase().endsWith('.pdf');
+                    return isPdf ? (
+                      <embed 
+                        key={i} 
+                        src={`${img}#toolbar=0&navpanes=0&scrollbar=0`} 
+                        type="application/pdf"
+                        className={`fa-img fa-img-${i}`} 
+                      />
+                    ) : (
+                      <img 
+                        key={i} 
+                        src={img} 
+                        alt="" 
+                        className={`fa-img fa-img-${i}`} 
+                      />
+                    );
+                  })}
                 </div>
                 
                 <div className="fa-folder-shape">
+                  <div 
+                    className="fa-badge"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setModalImage(folder.images[0]);
+                    }}
+                  >
+                    <span className="text-desktop-idle">Hover on folder</span>
+                    <span className="text-desktop-hover">Click to open full certificate</span>
+                    <span className="text-mobile">Tap to open</span>
+                  </div>
                   <div className="fa-tab">
                     <span>{folder.num}</span>
                   </div>
@@ -313,6 +406,29 @@ export default function FolderArchive() {
           </div>
         ))}
       </div>
+
+      {modalImage && (
+        <div className="fa-modal-overlay" onClick={() => setModalImage(null)}>
+          <div className="fa-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="fa-modal-close" onClick={() => setModalImage(null)}>
+              CLOSE [X]
+            </button>
+            {modalImage.toLowerCase().endsWith('.pdf') ? (
+              <embed 
+                src={`${modalImage}#toolbar=0&navpanes=0&scrollbar=0`} 
+                type="application/pdf"
+                style={{ width: '100%', height: '100%', borderRadius: '8px' }}
+              />
+            ) : (
+              <img 
+                src={modalImage} 
+                alt="Certificate Full View" 
+                style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: '8px' }}
+              />
+            )}
+          </div>
+        </div>
+      )}
     </section>
   );
 }

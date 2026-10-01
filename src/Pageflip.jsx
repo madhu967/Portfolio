@@ -3,20 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 
-const IMAGES = [
-  "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&q=80", 
-  "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=800&q=80", 
-  "https://images.unsplash.com/photo-1520045892732-304bc3ac5d8e?w=800&q=80",
-  "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&q=80", 
-  "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80", 
-  "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=800&q=80",
-  "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80", 
-  "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=800&q=80", 
-  "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=800&q=80",
-  "https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?w=800&q=80", 
-  "https://images.unsplash.com/photo-1558655146-d09347e92766?w=800&q=80", 
-  "https://images.unsplash.com/photo-1524504280063-52e564d25032?w=800&q=80",
-];
+const IMAGES = Array.from({ length: 12 }, (_, i) => `https://picsum.photos/seed/editorial${i + 1}/800/1000`);
 
 const CAPTIONS = [
   "EMBER", "AURELIA", "NOCTURNE", "GILDED", "INDIGO HOUR", "MONOCHROME",
