@@ -16,13 +16,13 @@ const FOLDERS = [
   { 
     num: '03', 
     title: 'Data Structures', 
-    tone: 1, 
+    tone: 2, 
     images: ['https://picsum.photos/seed/ds-a/640/900', 'https://picsum.photos/seed/ds-b/640/900', 'https://picsum.photos/seed/ds-c/640/900'] 
   },
   { 
     num: '04', 
     title: 'Algorithms', 
-    tone: 2, 
+    tone: 1, 
     images: ['https://picsum.photos/seed/algo-a/640/900', 'https://picsum.photos/seed/algo-b/640/900', 'https://picsum.photos/seed/algo-c/640/900'] 
   },
   { 
@@ -40,8 +40,8 @@ const FOLDERS = [
 ];
 
 const COLORS = {
-  1: '#ffffff', // White
-  2: '#b0b3ad', // Medium grey
+  1: '#fbb700', // Premium Golden Yellow
+  2: '#8b8a87', // Sophisticated Warm Grey
 };
 
 export default function FolderArchive() {

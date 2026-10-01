@@ -30,6 +30,31 @@ import Contact from './Contact';
 
 const STAGE_WIDTH = 1200;
 
+function ScrollReveal({ children }) {
+  const ref = useRef(null);
+  
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+    
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} className="reveal-section">
+      {children}
+    </div>
+  );
+}
+
 // Dimensions calculation for instant mount with zero black reload gap
 const getInitialDimensions = () => {
   if (typeof window !== 'undefined') {
@@ -150,6 +175,62 @@ export default function FashionEditorial() {
           transform: translateY(5px);
         }
       }
+      
+      /* DROPDOWN NAVBAR STYLES */
+      .nav-item {
+        position: relative;
+        display: inline-block;
+      }
+      .nav-dropdown {
+        position: absolute;
+        top: 100%;
+        left: -20px;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(16px);
+        padding: 12px 0;
+        border-radius: 8px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        min-width: 180px;
+        display: flex;
+        flex-direction: column;
+        z-index: 1000;
+        border: 1px solid rgba(0,0,0,0.05);
+      }
+      .nav-item:hover .nav-dropdown {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+      .nav-dropdown a {
+        padding: 10px 24px;
+        color: #171717;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        font-family: 'Space Mono', monospace;
+        transition: all 0.2s ease;
+        display: block;
+      }
+      .nav-dropdown a:hover {
+        background: rgba(234, 88, 12, 0.08);
+        color: #ea580c;
+        padding-left: 28px;
+      }
+
+      /* SCROLL REVEAL ANIMATIONS */
+      .reveal-section {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal-section.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
 
       @media (prefers-reduced-motion: reduce) {
         *, ::before, ::after {
@@ -221,37 +302,73 @@ export default function FashionEditorial() {
       <DriftHero />
 
       {/* Under Hero: Dedicated Continuous 4-Line Philosophy Section with Bouncing Scroll Down Arrow */}
-      <EditorialStatementSection isMobile={isMobile} />
+      <div id="editorial-statement">
+        <ScrollReveal>
+          <EditorialStatementSection isMobile={isMobile} />
+        </ScrollReveal>
+      </div>
 
       {/* Settle: Pinned Scroll Deck Sequence (Services Provided) */}
-      <SettleDeck />
+      <div id="services">
+        <SettleDeck />
+      </div>
 
       {/* Orrery Orbital Focus Gallery */}
-      <Orrery />
+      <div id="skills">
+        <ScrollReveal>
+          <Orrery />
+        </ScrollReveal>
+      </div>
 
       {/* Fullscreen Rolling Cards (Projects) */}
-      <FullscreenCards />
+      <div id="projects">
+        <FullscreenCards />
+      </div>
 
       {/* Coding Profiles (LeetCode & GitHub) */}
-      <CodingProfiles />
+      <div id="coding-profiles">
+        <ScrollReveal>
+          <CodingProfiles />
+        </ScrollReveal>
+      </div>
 
       {/* The Journey Timeline */}
-      <Timeline />
+      <div id="timeline">
+        <ScrollReveal>
+          <Timeline />
+        </ScrollReveal>
+      </div>
 
       {/* Realistic 3D Pageflip Magazine */}
-      <Pageflip />
+      <ScrollReveal>
+        <Pageflip />
+      </ScrollReveal>
 
       {/* GATE 2027 Resources / Folder Archive */}
-      <FolderArchive />
+      <div id="folder-archive">
+        <ScrollReveal>
+          <FolderArchive />
+        </ScrollReveal>
+      </div>
 
       {/* Fake Terminal Section */}
-      <TerminalSection />
+      <div id="terminal">
+        <ScrollReveal>
+          <TerminalSection />
+        </ScrollReveal>
+      </div>
 
       {/* Contact Section */}
-      <Contact />
+      <div id="contact">
+        <ScrollReveal>
+          <Contact />
+        </ScrollReveal>
+      </div>
 
       {/* Footer Section */}
-      <Footer />
+      <div id="footer">
+        <Footer />
+      </div>
     </div>
   );
 }
@@ -584,12 +701,12 @@ export function HeroTransparentNavbar({ isMobile, mobileMenuOpen, setMobileMenuO
             padding: 0,
           }}
         >
-          {['Home', 'Services', 'Portfolio', 'Pricing'].map((item, idx) => (
-            <li key={item}>
+          {NAV_LINKS.map((item, idx) => (
+            <li key={idx} className={item.dropdown ? "nav-item" : ""}>
               <a
-                href={item === 'Home' ? '#' : `#${item.toLowerCase()}`}
+                href={item.href}
                 style={{
-                  fontFamily: "'Spectral', serif",
+                  fontFamily: "'Space Mono', monospace",
                   fontSize: 15,
                   fontWeight: idx === 0 ? 700 : 600,
                   color: idx === 0 ? '#ea580c' : '#181e4b',
@@ -597,29 +714,33 @@ export function HeroTransparentNavbar({ isMobile, mobileMenuOpen, setMobileMenuO
                   transition: 'color 0.2s ease',
                   padding: '4px 0',
                   borderBottom: idx === 0 ? '2px solid #ea580c' : 'none',
+                  cursor: 'pointer'
                 }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = '#ea580c')}
                 onMouseLeave={(e) => {
                   if (idx !== 0) e.currentTarget.style.color = '#181e4b';
                 }}
               >
-                {item}
+                {item.label}
               </a>
+              {item.dropdown && (
+                <div className="nav-dropdown">
+                  {item.dropdown.map(drop => (
+                    <a key={drop.label} href={drop.href}>{drop.label}</a>
+                  ))}
+                </div>
+              )}
             </li>
           ))}
         </ul>
       )}
 
-      {/* Desktop "Get started" Pill Button */}
+      {/* Desktop "Contact Me" Pill Button */}
       {!isMobile && (
-        <button
-          type="button"
-          onClick={() => {
-            const el = document.getElementById('editorial-statement');
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
-          }}
+        <a
+          href="#contact"
           style={{
-            fontFamily: "'Spectral', serif",
+            fontFamily: "'Space Mono', monospace",
             fontSize: 14,
             fontWeight: 600,
             color: '#181e4b',
@@ -635,6 +756,7 @@ export function HeroTransparentNavbar({ isMobile, mobileMenuOpen, setMobileMenuO
             justifyContent: 'center',
             boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
             backdropFilter: 'blur(6px)',
+            textDecoration: 'none'
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.backgroundColor = '#ea580c';
@@ -649,8 +771,8 @@ export function HeroTransparentNavbar({ isMobile, mobileMenuOpen, setMobileMenuO
             e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.05)';
           }}
         >
-          Get started
-        </button>
+          Contact Me
+        </a>
       )}
 
       {/* Mobile Menu Button Toggle */}
@@ -693,6 +815,8 @@ export function HeroTransparentNavbar({ isMobile, mobileMenuOpen, setMobileMenuO
             gap: 16,
             zIndex: 45,
             animation: 'slide-down 0.2s ease-out',
+            maxHeight: 'calc(100vh - 70px)',
+            overflowY: 'auto'
           }}
         >
           <ul
@@ -705,13 +829,13 @@ export function HeroTransparentNavbar({ isMobile, mobileMenuOpen, setMobileMenuO
               gap: 14,
             }}
           >
-            {['Home', 'Services', 'Portfolio', 'Pricing'].map((item, idx) => (
-              <li key={item}>
+            {NAV_LINKS.flatMap(item => item.dropdown ? [...item.dropdown] : [item]).map((item, idx) => (
+              <li key={item.label}>
                 <a
-                  href={item === 'Home' ? '#' : `#${item.toLowerCase()}`}
+                  href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
                   style={{
-                    fontFamily: "'Spectral', serif",
+                    fontFamily: "'Space Mono', monospace",
                     fontSize: 15,
                     fontWeight: idx === 0 ? 700 : 500,
                     color: idx === 0 ? '#ea580c' : '#374151',
@@ -720,26 +844,22 @@ export function HeroTransparentNavbar({ isMobile, mobileMenuOpen, setMobileMenuO
                     padding: '6px 0',
                   }}
                 >
-                  {item}
+                  {item.label}
                 </a>
               </li>
             ))}
           </ul>
 
-          <button
-            type="button"
-            onClick={() => {
-              setMobileMenuOpen(false);
-              const el = document.getElementById('editorial-statement');
-              if (el) el.scrollIntoView({ behavior: 'smooth' });
-            }}
+          <a
+            href="#contact"
+            onClick={() => setMobileMenuOpen(false)}
             style={{
-              fontFamily: "'Spectral', serif",
+              fontFamily: "'Space Mono', monospace",
               fontSize: 14,
               fontWeight: 600,
-              color: '#4b5563',
-              backgroundColor: '#ffffff',
-              border: '1px solid #d1d5db',
+              color: '#ffffff',
+              backgroundColor: '#ea580c',
+              border: 'none',
               borderRadius: 9999,
               width: 160,
               height: 44,
@@ -748,10 +868,11 @@ export function HeroTransparentNavbar({ isMobile, mobileMenuOpen, setMobileMenuO
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
+              textDecoration: 'none'
             }}
           >
-            Get started
-          </button>
+            Contact Me
+          </a>
         </div>
       )}
     </nav>
@@ -1917,9 +2038,32 @@ function CutoutPortrait({ src, alt, style }) {
 // ---------------------------------------------------------------------------
 // LUXURY NAVBAR
 // ---------------------------------------------------------------------------
+const NAV_LINKS = [
+  { label: 'Home', href: '#' },
+  { label: 'About', href: '#editorial-statement' },
+  { label: 'Services', href: '#services' },
+  {
+    label: 'Work ▾',
+    dropdown: [
+      { label: 'Projects', href: '#projects' },
+      { label: 'Coding Profiles', href: '#coding-profiles' },
+      { label: 'Terminal', href: '#terminal' }
+    ]
+  },
+  {
+    label: 'Resume ▾',
+    dropdown: [
+      { label: 'Skills', href: '#skills' },
+      { label: 'Experience', href: '#timeline' },
+      { label: 'Education', href: '#timeline' },
+      { label: 'Certification', href: '#folder-archive' }
+    ]
+  },
+  { label: 'Footer', href: '#footer' }
+];
+
 export function LuxuryNavbar({ isMobile, forceWhite }) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const navItems = ['Work', 'Services', 'About', 'Contact'];
 
   return (
     <nav style={{
@@ -1934,7 +2078,7 @@ export function LuxuryNavbar({ isMobile, forceWhite }) {
       animation: 'nav-slide-down 0.3s ease-out'
     }}>
       {/* Brand Logo & Name */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer' }} onClick={() => window.scrollTo(0,0)}>
         <svg
           width={isMobile ? "22" : "26"} height={isMobile ? "24" : "28"} viewBox="0 0 31 40" fill="none"
           xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}
@@ -1953,31 +2097,40 @@ export function LuxuryNavbar({ isMobile, forceWhite }) {
 
       {/* Desktop Navigation Links */}
       {!isMobile && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '2.5rem' }}>
-          {navItems.map(item => (
-            <a
-              key={item} href={`#${item.toLowerCase()}`}
-              style={{
-                textDecoration: 'none', color: '#171717', fontSize: '0.95rem', fontWeight: 500,
-                fontFamily: "'Space Mono', monospace", transition: 'opacity 0.2s ease'
-              }}
-              onMouseEnter={e => e.currentTarget.style.opacity = 0.6}
-              onMouseLeave={e => e.currentTarget.style.opacity = 1}
-            >
-              {item}
-            </a>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+          {NAV_LINKS.map((item, idx) => (
+            <div key={idx} className={item.dropdown ? "nav-item" : ""}>
+              <a
+                href={item.href}
+                style={{
+                  textDecoration: 'none', color: '#171717', fontSize: '0.95rem', fontWeight: 500,
+                  fontFamily: "'Space Mono', monospace", transition: 'opacity 0.2s ease', cursor: 'pointer'
+                }}
+                onMouseEnter={e => e.currentTarget.style.opacity = 0.6}
+                onMouseLeave={e => e.currentTarget.style.opacity = 1}
+              >
+                {item.label}
+              </a>
+              {item.dropdown && (
+                <div className="nav-dropdown">
+                  {item.dropdown.map(drop => (
+                    <a key={drop.label} href={drop.href}>{drop.label}</a>
+                  ))}
+                </div>
+              )}
+            </div>
           ))}
           <a
             href="#contact"
             style={{
               padding: '0.65rem 1.6rem', borderRadius: '0.4rem', fontSize: '0.9rem', fontWeight: 600,
-              color: '#f4f1ea', background: '#171717', textDecoration: 'none',
-              fontFamily: "'Space Mono', monospace", transition: 'all 0.3s ease'
+              color: '#f4f1ea', background: '#ea580c', textDecoration: 'none',
+              fontFamily: "'Space Mono', monospace", transition: 'all 0.3s ease', marginLeft: '0.5rem'
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = '#333'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
-            onMouseLeave={e => { e.currentTarget.style.background = '#171717'; e.currentTarget.style.transform = 'translateY(0)'; }}
+            onMouseEnter={e => { e.currentTarget.style.background = '#d04906'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = '#ea580c'; e.currentTarget.style.transform = 'translateY(0)'; }}
           >
-            Let's Talk
+            Contact Me
           </a>
         </div>
       )}
@@ -2008,18 +2161,23 @@ export function LuxuryNavbar({ isMobile, forceWhite }) {
           position: 'absolute', top: '100%', left: 0, width: '100%',
           background: '#fbfdf3', borderTop: '1px solid rgba(0,0,0,0.05)',
           padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem',
-          boxShadow: '0 10px 20px rgba(0,0,0,0.05)', animation: 'slide-down 0.2s ease-out'
+          boxShadow: '0 10px 20px rgba(0,0,0,0.05)', animation: 'slide-down 0.2s ease-out',
+          maxHeight: 'calc(100vh - 70px)', overflowY: 'auto'
         }}>
-          {navItems.map(item => (
+          {NAV_LINKS.flatMap(item => 
+            item.dropdown 
+              ? [...item.dropdown]
+              : [item]
+          ).map(item => (
             <a
-              key={item} href={`#${item.toLowerCase()}`}
+              key={item.label} href={item.href}
               onClick={() => setMenuOpen(false)}
               style={{
                 textDecoration: 'none', color: '#171717', fontSize: '1.1rem', fontWeight: 500,
                 fontFamily: "'Space Mono', monospace", paddingBottom: '0.5rem', borderBottom: '1px solid rgba(0,0,0,0.05)'
               }}
             >
-              {item}
+              {item.label}
             </a>
           ))}
           <a
@@ -2027,11 +2185,11 @@ export function LuxuryNavbar({ isMobile, forceWhite }) {
             onClick={() => setMenuOpen(false)}
             style={{
               padding: '0.8rem', borderRadius: '0.4rem', fontSize: '1rem', fontWeight: 600,
-              color: '#f4f1ea', background: '#171717', textDecoration: 'none', textAlign: 'center',
+              color: '#ffffff', background: '#ea580c', textDecoration: 'none', textAlign: 'center',
               fontFamily: "'Space Mono', monospace", marginTop: '0.5rem'
             }}
           >
-            Let's Talk
+            Contact Me
           </a>
         </div>
       )}
