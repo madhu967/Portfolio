@@ -2124,11 +2124,11 @@ export function LuxuryNavbar({ isMobile, forceWhite }) {
             href="#contact"
             style={{
               padding: '0.65rem 1.6rem', borderRadius: '0.4rem', fontSize: '0.9rem', fontWeight: 600,
-              color: '#f4f1ea', background: '#ea580c', textDecoration: 'none',
+              color: '#ffffff', background: '#000000', textDecoration: 'none',
               fontFamily: "'Space Mono', monospace", transition: 'all 0.3s ease', marginLeft: '0.5rem'
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = '#d04906'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
-            onMouseLeave={e => { e.currentTarget.style.background = '#ea580c'; e.currentTarget.style.transform = 'translateY(0)'; }}
+            onMouseEnter={e => { e.currentTarget.style.background = '#222222'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = '#000000'; e.currentTarget.style.transform = 'translateY(0)'; }}
           >
             Contact Me
           </a>
