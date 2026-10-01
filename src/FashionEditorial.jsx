@@ -309,14 +309,21 @@ export default function FashionEditorial() {
       </div>
 
       {/* Settle: Pinned Scroll Deck Sequence (Services Provided) */}
-      <div id="services">
+      {/* <div id="services">
         <SettleDeck />
-      </div>
+      </div> */}
 
       {/* Orrery Orbital Focus Gallery */}
       <div id="skills">
         <ScrollReveal>
           <Orrery />
+        </ScrollReveal>
+      </div>
+
+      {/* The Journey Timeline */}
+      <div id="timeline">
+        <ScrollReveal>
+          <Timeline />
         </ScrollReveal>
       </div>
 
@@ -332,17 +339,10 @@ export default function FashionEditorial() {
         </ScrollReveal>
       </div>
 
-      {/* The Journey Timeline */}
-      <div id="timeline">
-        <ScrollReveal>
-          <Timeline />
-        </ScrollReveal>
-      </div>
-
       {/* Realistic 3D Pageflip Magazine */}
-      <ScrollReveal>
+      {/* <ScrollReveal>
         <Pageflip />
-      </ScrollReveal>
+      </ScrollReveal> */}
 
       {/* GATE 2027 Resources / Folder Archive */}
       <div id="folder-archive">
