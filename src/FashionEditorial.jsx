@@ -6,6 +6,7 @@ import Orrery from './Orrery';
 import FullscreenCards from './FullscreenCards';
 import FolderArchive from './FolderArchive';
 import Footer from './Footer';
+import TerminalSection from './TerminalSection';
 import Timeline from './Timeline';
 import Pageflip from './Pageflip';
 import CodingProfiles from './CodingProfiles';
@@ -242,6 +243,9 @@ export default function FashionEditorial() {
 
       {/* GATE 2027 Resources / Folder Archive */}
       <FolderArchive />
+
+      {/* Fake Terminal Section */}
+      <TerminalSection />
 
       {/* Contact Section */}
       <Contact />
