@@ -1,25 +1,26 @@
 import React, { useRef, useEffect, useState } from 'react';
 
-const NUM_PLANETS = 15;
-const IMAGES = Array.from({ length: NUM_PLANETS }, (_, i) => `https://picsum.photos/seed/orrery${i + 10}/800/800`);
-
-const TEXTS = [
-  { title: "Celestial Mechanics", desc: "Observing the intricate ballet of orbital bodies and gravitational fields." },
-  { title: "Quantum Horizons", desc: "Beyond the visible spectrum of classical physics into the unknown." },
-  { title: "Stellar Cartography", desc: "Mapping the uncharted territories of deep space networks." },
-  { title: "Temporal Drifts", desc: "How massive objects warp the fabric of space and time." },
-  { title: "Solar Flares", desc: "Eruptions of magnetic energy shaping planetary climates." },
-  { title: "Nebula Cores", desc: "The vibrant stellar nurseries where new stars are born." },
-  { title: "Event Horizon", desc: "The boundary where the velocity of escape exceeds light." },
-  { title: "Dark Matter", desc: "The invisible scaffolding holding the universe together." },
-  { title: "Lunar Tides", desc: "Gravitational interactions between planetary masses." },
-  { title: "Asteroid Belts", desc: "Rocky remnants from the early days of solar system formation." },
-  { title: "Galactic Center", desc: "The supermassive anchor point of our milky way galaxy." },
-  { title: "Supernova Remnants", desc: "The beautiful, chaotic aftermath of stellar death." },
-  { title: "Exoplanet Transits", desc: "Detecting distant worlds as they eclipse their parent stars." },
-  { title: "Cosmic Microwave", desc: "The residual thermal footprint of the Big Bang itself." },
-  { title: "Orbital Resonance", desc: "When orbiting bodies exert regular, periodic gravitational influence." },
+const SKILLS_DATA = [
+  { img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", title: "JavaScript", desc: "The versatile language powering the modern web and dynamic client-side logic." },
+  { img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg", title: "Java", desc: "Robust object-oriented programming for scalable enterprise-grade backend systems." },
+  { img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", title: "React.js", desc: "Component-driven frontend architecture for building highly reactive user interfaces." },
+  { img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg", title: "HTML5", desc: "The foundational semantic markup laying the structure for modern web applications." },
+  { img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg", title: "CSS3", desc: "Fluid, responsive styling techniques that breathe life and layout into raw markup." },
+  { img: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg", title: "Tailwind CSS", desc: "Utility-first styling for rapid UI development and granular design control." },
+  { img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg", title: "Bootstrap", desc: "Reliable mobile-first component library for accelerated responsive prototyping." },
+  { img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", title: "Node.js", desc: "Asynchronous, event-driven JavaScript runtime for high-performance network applications." },
+  { img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg", title: "Express.js", desc: "Minimalist web framework for building lightning-fast RESTful Node.js backends." },
+  { img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg", title: "MongoDB", desc: "NoSQL document database optimized for massive scalability and flexible data models." },
+  { img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg", title: "Firebase", desc: "Real-time cloud infrastructure for rapid authentication and serverless data sync." },
+  { img: "https://ui-avatars.com/api/?name=DSA&background=111&color=ea580c&size=256", title: "Data Structures & Algorithms", desc: "" },
+  { img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg", title: "Git", desc: "Distributed version control for seamless team collaboration and code governance." },
+  { img: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg", title: "Postman", desc: "Comprehensive API development platform for testing, mocking, and documentation." },
+  { img: "https://ui-avatars.com/api/?name=CS&background=111&color=ea580c&size=256", title: "Core Subjects", desc: "Deep understanding of operating systems, networks, and database management." },
 ];
+
+const NUM_PLANETS = SKILLS_DATA.length;
+const IMAGES = SKILLS_DATA.map(s => s.img);
+const TEXTS = SKILLS_DATA.map(s => ({ title: s.title, desc: s.desc }));
 
 export default function Orrery() {
   const containerRef = useRef(null);
@@ -28,6 +29,8 @@ export default function Orrery() {
   const planetsRef = useRef([]);
   const lensBaseRef = useRef(null);
   const lensIrisRef = useRef(null);
+  const lensBaseTextRef = useRef(null);
+  const lensIrisTextRef = useRef(null);
   const readoutRef = useRef(null);
   const accentRefs = useRef([]);
   
@@ -188,8 +191,13 @@ export default function Orrery() {
         activeIndex = nearestIndex;
         if (lensBaseRef.current && lensIrisRef.current) {
           lensBaseRef.current.style.backgroundImage = `url(${IMAGES[irisActiveIndex]})`;
+          if (lensBaseTextRef.current) lensBaseTextRef.current.innerText = TEXTS[irisActiveIndex].title;
+          
           irisActiveIndex = activeIndex;
+          
           lensIrisRef.current.style.backgroundImage = `url(${IMAGES[irisActiveIndex]})`;
+          if (lensIrisTextRef.current) lensIrisTextRef.current.innerText = TEXTS[irisActiveIndex].title;
+          
           irisProgress = 0;
         }
         
@@ -378,9 +386,25 @@ export default function Orrery() {
         .orr-lens-base, .orr-lens-iris {
           position: absolute;
           inset: 0;
-          background-size: cover;
-          background-position: center;
+          background-size: 50%;
+          background-repeat: no-repeat;
+          background-position: center 35%;
+          background-color: #f4f1ea;
           border-radius: 50%;
+        }
+        
+        .orr-lens-text {
+          position: absolute;
+          bottom: 18%;
+          left: 0;
+          width: 100%;
+          text-align: center;
+          font-family: 'Space Mono', monospace;
+          font-size: clamp(0.6rem, 2vw, 0.95rem);
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          color: #111111;
+          text-transform: uppercase;
         }
         
         .orr-lens-iris {
@@ -395,9 +419,10 @@ export default function Orrery() {
           width: min(10vw, 80px);
           height: min(10vw, 80px);
           border-radius: 50%;
-          background-size: cover;
+          background-size: 60%;
+          background-repeat: no-repeat;
           background-position: center;
-          background-color: #d0cbc0;
+          background-color: #f4f1ea;
           box-shadow: 0 10px 20px rgba(26, 24, 19, 0.2);
           will-change: transform, opacity;
           pointer-events: none;
@@ -468,26 +493,37 @@ export default function Orrery() {
           .orr-text-desc { font-size: 1rem; max-width: 100%; }
           .orr-right { width: 100%; flex: 1; min-height: 60vh; }
           .orr-chrome { padding: 1.5rem; }
-          .orr-lens-container { width: 55vw; height: 55vw; }
-          .orr-planet { width: 16vw; height: 16vw; }
+          .orr-lens-container { width: 62vw; height: 62vw; }
+          .orr-planet { width: 15vw; height: 15vw; }
           .orr-ellipse { width: 90%; height: 75%; }
         }
       `}</style>
 
       <section className="orr-root" ref={containerRef}>
         <div className="orr-left">
-          <div className="orr-text-title" ref={textTitleRef}>Loading...</div>
-          <div className="orr-text-desc" ref={textDescRef}></div>
+          <div style={{ marginBottom: 'auto', width: '100%' }}>
+            <h4 style={{ fontSize: '0.85rem', color: '#ea580c', letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 700, margin: '0 0 0.5rem 0' }}>
+              Core Expertise
+            </h4>
+            <h2 style={{ fontFamily: "'Spectral', serif", fontSize: 'clamp(2rem, 3vw, 2.5rem)', margin: 0, fontWeight: 700, letterSpacing: '-0.02em', color: '#1a1813' }}>
+              Technical Skills
+            </h2>
+          </div>
+          <div style={{ margin: 'auto 0', width: '100%' }}>
+            <div className="orr-text-title" ref={textTitleRef}>Loading...</div>
+            <div className="orr-text-desc" ref={textDescRef}></div>
+          </div>
+          <div style={{ marginTop: 'auto' }}></div>
         </div>
 
         <div className="orr-right" ref={rightPaneRef}>
           <div className="orr-chrome">
             <div className="orr-chrome-top">
-              <div>Kexsio®</div>
+              <div>TECHNICAL ARSENAL</div>
               <div></div>
             </div>
             <div className="orr-chrome-bottom">
-              <div className="orr-title">Orrery</div>
+              <div className="orr-title">Skills Directory</div>
               <div className="orr-readout" ref={readoutRef}>
                 <span className="orr-accent-text">01</span> / 15 · 090&deg;
               </div>
@@ -507,12 +543,16 @@ export default function Orrery() {
                   className="orr-lens-base"
                   ref={lensBaseRef}
                   style={{ backgroundImage: `url(${IMAGES[0]})` }}
-                ></div>
+                >
+                  <div className="orr-lens-text" ref={lensBaseTextRef}>{TEXTS[0].title}</div>
+                </div>
                 <div
                   className="orr-lens-iris"
                   ref={lensIrisRef}
                   style={{ backgroundImage: `url(${IMAGES[0]})` }}
-                ></div>
+                >
+                  <div className="orr-lens-text" ref={lensIrisTextRef}>{TEXTS[0].title}</div>
+                </div>
               </div>
 
               {IMAGES.map((img, i) => {
