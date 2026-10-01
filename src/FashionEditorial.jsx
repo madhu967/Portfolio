@@ -1661,115 +1661,181 @@ export function EditorialStatementSection({ isMobile }) {
       style={{
         width: '100%',
         backgroundColor: '#ffffff',
-        padding: isMobile ? '64px 20px 80px 20px' : '110px 40px 130px 40px',
+        padding: isMobile ? '80px 24px' : '140px 60px',
         boxSizing: 'border-box',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderTop: '1px solid rgba(234, 88, 12, 0.1)',
         position: 'relative',
         zIndex: 5,
+        overflow: 'hidden',
+        borderTop: '1px solid rgba(234, 88, 12, 0.1)',
       }}
     >
       <div
         style={{
-          maxWidth: 1040,
-          textAlign: 'center',
+          maxWidth: 1240,
           margin: '0 auto',
-          width: '100%',
           display: 'flex',
-          flexDirection: 'column',
+          flexDirection: isMobile ? 'column' : 'row',
           alignItems: 'center',
+          gap: isMobile ? '60px' : '100px',
         }}
       >
-        {/* Exactly 4 Points Flowing Continuously with No Line-Breaking Divs */}
-        <h3
-          style={{
-            fontFamily: "'Spectral', serif",
-            fontSize: isMobile ? 'clamp(18px, 4.4vw, 24px)' : 30,
-            fontWeight: 600,
-            lineHeight: 1.74,
-            color: '#181e4b',
-            letterSpacing: -0.2,
-            margin: 0,
-            maxWidth: 1020,
-            textAlign: 'center',
-          }}
-        >
-          I’m a Software Developer and Computer Science Engineering student with strong problem-solving and DSA skills. I specialize in MERN Stack development, building modern and scalable full-stack web applications. I enjoy solving complex problems and turning ideas into practical, user-focused software solutions. Passionate about continuous learning, clean development, and building impactful real-world applications.
-        </h3>
-
-        {/* Scroll Down Arrow Indicator directly below the 4 lines */}
-        <div
-          onClick={() => {
-            const el = document.getElementById('services');
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
-            else window.scrollBy({ top: 550, behavior: 'smooth' });
-          }}
-          style={{
-            marginTop: isMobile ? 36 : 54,
-            display: 'inline-flex',
-            flexDirection: 'column',
+        {/* Left Column: Content */}
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: isMobile ? 'center' : 'flex-start' }}>
+          <div style={{
+            display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            animation: 'bounce-scroll 2.2s infinite ease-in-out',
-            gap: 10,
-          }}
-        >
-          <div
-            style={{
-              width: isMobile ? 44 : 50,
-              height: isMobile ? 44 : 50,
-              borderRadius: '50%',
-              backgroundColor: '#ffffff',
-              border: '2px solid #ea580c',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 8px 24px rgba(234, 88, 12, 0.22)',
-              transition: 'transform 0.2s ease, background-color 0.2s ease',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = '#ea580c';
-              const svg = e.currentTarget.querySelector('svg');
-              if (svg) svg.style.stroke = '#ffffff';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = '#ffffff';
-              const svg = e.currentTarget.querySelector('svg');
-              if (svg) svg.style.stroke = '#ea580c';
-            }}
-          >
-            <svg
-              width={isMobile ? "20" : "22"}
-              height={isMobile ? "20" : "22"}
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#ea580c"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              style={{ transition: 'stroke 0.2s ease' }}
-            >
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </div>
-          <span
-            style={{
-              fontFamily: "'Spectral', serif",
-              fontSize: 12,
+            gap: 12,
+            marginBottom: 24,
+          }}>
+            <div style={{ width: 40, height: 2, backgroundColor: '#ea580c' }} />
+            <span style={{
+              fontFamily: "'Space Mono', monospace",
+              fontSize: 13,
               fontWeight: 700,
               letterSpacing: 2,
               color: '#ea580c',
-              textTransform: 'uppercase',
+              textTransform: 'uppercase'
+            }}>About Me</span>
+          </div>
+
+          <h3
+            style={{
+              fontFamily: "'Spectral', serif",
+              fontSize: isMobile ? 'clamp(18px, 4.4vw, 22px)' : 'clamp(21px, 2.2vw, 27px)',
+              fontWeight: 500,
+              lineHeight: 1.6,
+              color: '#181e4b',
+              letterSpacing: -0.2,
+              margin: 0,
+              maxWidth: '100%',
+              display: '-webkit-box',
+              WebkitLineClamp: 5,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+              textAlign: isMobile ? 'center' : 'left',
             }}
           >
-            Scroll Down
-          </span>
+            I’m a Software Developer and Computer Science Engineering student with strong problem-solving and DSA skills. I specialize in MERN Stack development, building modern and scalable full-stack web applications. I enjoy solving complex problems and turning ideas into practical, user-focused software solutions. Passionate about continuous learning, clean development, and building impactful real-world applications.
+          </h3>
+          
+          <div
+            onClick={() => {
+              const el = document.getElementById('services');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }}
+            style={{
+              marginTop: 40,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 16,
+              cursor: 'pointer',
+              borderBottom: '1px solid #181e4b',
+              paddingBottom: 6,
+              transition: 'opacity 0.2s',
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.opacity = 0.7}
+            onMouseLeave={(e) => e.currentTarget.style.opacity = 1}
+          >
+            <span style={{
+              fontFamily: "'Space Mono', monospace",
+              fontSize: 14,
+              fontWeight: 700,
+              letterSpacing: 1,
+              color: '#181e4b',
+              textTransform: 'uppercase'
+            }}>View Services</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#181e4b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+        </div>
+
+        {/* Right Column: Premium Animated Image Background */}
+        <div style={{ 
+          flex: 1, 
+          width: '100%',
+          display: 'flex', 
+          justifyContent: isMobile ? 'center' : 'flex-end',
+          position: 'relative',
+        }}>
+          <div style={{
+            position: 'relative',
+            width: isMobile ? '280px' : '420px',
+            height: isMobile ? '350px' : '520px',
+          }}>
+            {/* Background Blob 1 */}
+            <div style={{
+              position: 'absolute',
+              top: '-10%',
+              right: '-10%',
+              width: '80%',
+              height: '80%',
+              backgroundColor: 'rgba(234, 88, 12, 0.2)',
+              borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
+              zIndex: 1,
+              animation: 'blob-spin 15s infinite linear'
+            }} />
+            
+            {/* Background Blob 2 */}
+            <div style={{
+              position: 'absolute',
+              bottom: '-5%',
+              left: '-15%',
+              width: '70%',
+              height: '70%',
+              backgroundColor: 'rgba(24, 30, 75, 0.15)',
+              borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%',
+              zIndex: 1,
+              animation: 'blob-spin-reverse 18s infinite linear'
+            }} />
+
+            {/* Geometric SVG Accents */}
+            <svg style={{ position: 'absolute', top: -30, right: -20, zIndex: 3, opacity: 0.7 }} width="80" height="80" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="48" fill="none" stroke="#ea580c" strokeWidth="1" strokeDasharray="4 6" />
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#181e4b" strokeWidth="0.5" />
+            </svg>
+            
+            {/* Plus Icon Accent */}
+            <svg style={{ position: 'absolute', bottom: 20, right: -30, zIndex: 3, opacity: 0.6 }} width="40" height="40" viewBox="0 0 24 24">
+              <path d="M12 2v20M2 12h20" stroke="#ea580c" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+
+            {/* The Image */}
+            <div style={{
+              position: 'relative',
+              width: '100%',
+              height: '100%',
+              zIndex: 2,
+            }}>
+              <img 
+                src="/about-portrait.png" 
+                alt="Ijji Madhu Venkat" 
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'contain',
+                  objectPosition: 'bottom center',
+                  filter: 'drop-shadow(0 15px 25px rgba(24, 30, 75, 0.2))'
+                }}
+              />
+            </div>
+          </div>
         </div>
       </div>
+      
+      <style>{`
+        @keyframes blob-spin {
+          0% { transform: rotate(0deg) scale(1); }
+          50% { transform: rotate(180deg) scale(1.05); }
+          100% { transform: rotate(360deg) scale(1); }
+        }
+        @keyframes blob-spin-reverse {
+          0% { transform: rotate(360deg) scale(1); }
+          50% { transform: rotate(180deg) scale(0.95); }
+          100% { transform: rotate(0deg) scale(1); }
+        }
+      `}</style>
     </section>
   );
 }

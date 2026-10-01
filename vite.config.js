@@ -31,6 +31,16 @@ try {
   console.error('[vite.config.js] Profile image sync error:', err)
 }
 
+// Copy about portrait image
+try {
+  const aboutImgSource = 'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790861924093.png';
+  if (fs.existsSync(aboutImgSource)) {
+    fs.copyFileSync(aboutImgSource, path.resolve(__dirname, 'public/about-portrait.png'));
+  }
+} catch (err) {
+  console.error('[vite.config.js] About image sync error:', err);
+}
+
 // Copy certificates to public/certificates
 try {
   const localCerts = [
