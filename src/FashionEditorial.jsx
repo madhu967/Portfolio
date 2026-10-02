@@ -1701,21 +1701,17 @@ export function EditorialStatementSection({ isMobile }) {
           <h3
             style={{
               fontFamily: "'Spectral', serif",
-              fontSize: isMobile ? 'clamp(18px, 4.4vw, 22px)' : 'clamp(21px, 2.2vw, 27px)',
+              fontSize: isMobile ? 'clamp(16px, 4vw, 20px)' : 'clamp(19px, 1.8vw, 24px)',
               fontWeight: 500,
               lineHeight: 1.6,
               color: '#181e4b',
               letterSpacing: -0.2,
               margin: 0,
               maxWidth: '100%',
-              display: '-webkit-box',
-              WebkitLineClamp: 5,
-              WebkitBoxOrient: 'vertical',
-              overflow: 'hidden',
               textAlign: 'left',
             }}
           >
-            I’m a Software Developer and Computer Science Engineering student with strong problem-solving and DSA skills. I specialize in MERN Stack development, building modern and scalable full-stack web applications. I enjoy solving complex problems and turning ideas into practical, user-focused software solutions. Passionate about continuous learning, clean development, and building impactful real-world applications.
+            I am a Software Engineer specializing in MERN Stack Development and full-stack web application development. I have a strong foundation in Data Structures and Algorithms (DSA) using Java and problem-solving. I have hands-on experience building AI-powered applications, REST APIs, and scalable web solutions. I am passionate about creating efficient, reliable, and user-friendly software that solves real-world problems.
           </h3>
           
           {/* Education Details - Editorial Typography */}
