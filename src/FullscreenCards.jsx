@@ -288,6 +288,7 @@ const cards = [
     number: "01",
     isProject: true,
     kicker: "Featured Project",
+    logo: <svg style={{ height: '48px', width: 'auto', marginBottom: '1.5rem', display: 'block', marginInline: 'auto' }} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M54 0c5.523 0 10 4.477 10 10v44c0 5.523-4.477 10-10 10H37.871C35.368 46.753 41.8 29.002 55.437 17.423a52 52 0 0 0-8.057 3.847C31.593 30.553 22.59 46.956 22.043 64H10c-1.127 0-2.21-.19-3.222-.533-.18-3.525.037-7.127.692-10.75 4.105-22.71 23.963-38.605 46.276-38.46a47 47 0 0 0-7.84-2.128C27.81 8.858 10.266 16.473 0 30.304V10C0 4.477 4.477 0 10 0z" fill="currentColor"/></svg>,
     title: "SmartCity Civic Intelligence Platform",
     github: "https://github.com/madhu967/SmartCity-Civic-Intelligence-Platform",
     demo: "https://smart-city-civic-intelligence-platf-kohl.vercel.app/",
@@ -300,6 +301,7 @@ const cards = [
     number: "02",
     isProject: true,
     kicker: "Featured Project",
+    logo: <svg style={{ height: '52px', width: 'auto', marginBottom: '1.5rem', display: 'block', marginInline: 'auto' }} viewBox="0 0 63 70" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M33.817 52.382c0-15.988 12.96-28.948 28.948-28.948v17.585c0 15.987-12.96 28.948-28.948 28.948zm-4.869 0c0-15.988-12.96-28.948-28.948-28.948v17.585c0 15.987 12.96 28.948 28.948 28.948z" fill="currentColor"/><g clipPath="url(#a)"><path d="M31.487 0c0 8.764 7.049 15.881 15.786 15.992l.207.001-.207.001c-8.737.11-15.786 7.228-15.786 15.992 0-8.833-7.16-15.993-15.993-15.993 8.833 0 15.993-7.16 15.993-15.993" fill="currentColor"/></g><defs><clipPath id="a"><path fill="#fff" d="M15.494 0H47.48v31.986H15.494z"/></clipPath></defs></svg>,
     title: "Prescripto - Hospital Booking App",
     github: "https://github.com/madhu967/hospital-booking-app",
     demo: "https://hospital-booking-app-one.vercel.app/",
@@ -312,6 +314,7 @@ const cards = [
     number: "03",
     isProject: true,
     kicker: "Featured Project",
+    logo: <svg style={{ height: '42px', width: 'auto', marginBottom: '1.5rem', display: 'block', marginInline: 'auto' }} viewBox="0 0 60 51" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M34.71 0c13.828 0 25.038 11.21 25.039 25.038 0 13.828-11.211 25.038-25.04 25.038-1.488 0-2.606-1.264-2.606-2.752V2.782C32.103 1.284 33.212 0 34.709 0M25.04 0C11.21 0 0 11.21 0 25.038s11.21 25.038 25.04 25.038c1.487 0 2.605-1.264 2.605-2.752V2.782C27.646 1.284 26.537 0 25.04 0" fill="currentColor"/><circle cx="30.253" cy="25.312" r="8.026" fill="#e9e3d6"/></svg>,
     title: "QuickBlog - AI Integrated Blog Platform",
     github: "https://github.com/madhu967/blog-app",
     demo: "https://blog-app-six-olive.vercel.app/",
@@ -324,6 +327,7 @@ const cards = [
     number: "04",
     isProject: true,
     kicker: "Featured Project",
+    logo: <svg style={{ height: '44px', width: 'auto', marginBottom: '1.5rem', display: 'block', marginInline: 'auto' }} viewBox="0 0 31 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="m8.75 11.3 6.75 3.884 6.75-3.885M8.75 34.58v-7.755L2 22.939m27 0-6.75 3.885v7.754M2.405 15.408 15.5 22.954l13.095-7.546M15.5 38V22.939M29 28.915V16.962a2.98 2.98 0 0 0-1.5-2.585L17 8.4a3.01 3.01 0 0 0-3 0L3.5 14.377A3 3 0 0 0 2 16.962v11.953A2.98 2.98 0 0 0 3.5 31.5L14 37.477a3.01 3.01 0 0 0 3 0L27.5 31.5a3 3 0 0 0 1.5-2.585" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"/></svg>,
     title: "Interactive Developer Portfolio",
     github: "https://github.com/madhu967/Portfolio",
     demo: "https://portfolio-ashen-rho-52.vercel.app",
@@ -534,6 +538,7 @@ export default function FullscreenCards() {
                           <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, fontWeight: 700, color: card.muted, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>
                             {card.kicker}
                           </p>
+                          {card.logo}
                           <h2 style={{ fontFamily: "'Spectral', serif", fontSize: 'clamp(28px, 6vw, 76px)', fontWeight: 600, color: card.text, margin: '0 0 32px 0', lineHeight: 1.15, letterSpacing: '-0.02em', maxWidth: 900 }}>
                             {card.title}
                           </h2>
