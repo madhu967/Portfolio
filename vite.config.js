@@ -65,6 +65,16 @@ try {
   console.error('[vite.config.js] Certs sync error:', err);
 }
 
+// Copy newly uploaded resume to public/resume.pdf
+try {
+  const resumeSource = 'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790925137773.pdf';
+  if (fs.existsSync(resumeSource)) {
+    fs.copyFileSync(resumeSource, path.resolve(__dirname, 'public/resume.pdf'));
+  }
+} catch (err) {
+  console.error('[vite.config.js] Resume sync error:', err);
+}
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
