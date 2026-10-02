@@ -661,11 +661,11 @@ export default function VerdelyFooterPage() {
 
       {/* MAIN HEADLINE AREA */}
       <div className="v-headline-area">
-        <div className="v-eyebrow">Built for tomorrow</div>
+        <div className="v-eyebrow">Available for Opportunities</div>
         <h2 className="v-heading">
-          <span>Small ideas can</span>
-          <span>grow into something</span>
-          <span>extraordinary.</span>
+          <span>Let's engineer</span>
+          <span>something bold</span>
+          <span>together.</span>
         </h2>
       </div>
 
@@ -684,30 +684,30 @@ export default function VerdelyFooterPage() {
             </div>
             <div className="v-copyright">
               <div className="v-copy-main">Copyright © 2026</div>
-              <div className="v-copy-sub">Make space for better ideas.</div>
+              <div className="v-copy-sub">Engineering cinematic digital experiences.</div>
             </div>
           </div>
 
           <div className="v-nav-col">
             <div className="v-nav-group">
-              <a href="#" className="v-nav-link">Overview</a>
-              <a href="#" className="v-nav-link">Our approach</a>
+              <a href="#editorial-statement" className="v-nav-link">About Me</a>
+              <a href="#projects" className="v-nav-link">Projects</a>
             </div>
             <div className="v-nav-group">
-              <a href="#" className="v-nav-link">Field journal</a>
-              <a href="#" className="v-nav-link">Privacy</a>
+              <a href="#skills" className="v-nav-link">Skills</a>
+              <a href="#timeline" className="v-nav-link">Experience</a>
             </div>
             <div className="v-nav-group">
-              <a href="#" className="v-nav-link">Community</a>
-              <a href="#" className="v-nav-link">Resources</a>
+              <a href="#coding-profiles" className="v-nav-link">Profiles</a>
+              <a href="#testimonials" className="v-nav-link">Certificates</a>
             </div>
           </div>
 
           <div className="v-btn-col">
-            <button className="v-contact-btn">
+            <button className="v-contact-btn" onClick={() => window.location.hash = '#contact'}>
               <div className="v-btn-glow"></div>
               <span>
-                START A PROJECT 
+                CONTACT ME
                 <span className="v-btn-arrow">↗</span>
               </span>
             </button>
@@ -718,13 +718,9 @@ export default function VerdelyFooterPage() {
         <div className="v-bottom-row">
           <div className="v-divider-line"></div>
           <div className="v-socials">
-            <a href="#" className="v-social-link">X</a>
-            <a href="#" className="v-social-link">
-              <svg viewBox="0 0 24 24">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-              </svg>
-            </a>
-            <a href="#" className="v-social-link">LinkedIn</a>
+            <a href="https://github.com/madhu967" target="_blank" rel="noopener noreferrer" className="v-social-link">GitHub</a>
+            <a href="https://leetcode.com/madhu967" target="_blank" rel="noopener noreferrer" className="v-social-link">LeetCode</a>
+            <a href="https://www.linkedin.com/in/ijji-madhu-venkat" target="_blank" rel="noopener noreferrer" className="v-social-link">LinkedIn</a>
           </div>
         </div>
       </div>
