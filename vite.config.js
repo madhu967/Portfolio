@@ -134,6 +134,25 @@ try {
   console.error('[vite.config.js] Portfolio sync error:', err);
 }
 
+// Copy QuickBlog project images
+try {
+  const quickBlogImages = [
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790954366898.png',
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790954397164.png',
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790954425682.png',
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790954468077.png'
+  ];
+  const qbDir = path.resolve(__dirname, 'public/quickblog');
+  if (!fs.existsSync(qbDir)) fs.mkdirSync(qbDir, { recursive: true });
+  quickBlogImages.forEach((img, i) => {
+    if (fs.existsSync(img)) {
+      fs.copyFileSync(img, path.resolve(qbDir, `slide${i + 1}.png`));
+    }
+  });
+} catch (err) {
+  console.error('[vite.config.js] QuickBlog sync error:', err);
+}
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [

@@ -13,6 +13,8 @@ const PROJECT_DATA = [
     category: "AI & Full-Stack",
     creativeLead: "Ijji Madhu Venkat",
     visualArtist: "React, Node, Gemini AI",
+    github: "https://github.com/madhu967/SmartCity-Civic-Intelligence-Platform",
+    demo: "https://smart-city-civic-intelligence-platf-kohl.vercel.app/",
     details: [
       "Integrated Gemini AI for dynamic image analysis and duplicate detection, reducing manual ticket creation by 30%.",
       "Engineered role-based admin workflows with optimized assignment algorithms to streamline worker dispatch.",
@@ -52,6 +54,8 @@ const PROJECT_DATA = [
     category: "Healthcare SaaS",
     creativeLead: "Ijji Madhu Venkat",
     visualArtist: "React, Node, Stripe",
+    github: "https://github.com/madhu967/hospital-booking-app",
+    demo: "https://hospital-booking-app-one.vercel.app/",
     details: [
       "Integrated Stripe webhooks for secure payments and utilized Cloudinary CDN, decreasing image load times by 40%.",
       "Implemented MongoDB database transaction locks to eliminate double-booking conflicts and maintain consistency.",
@@ -91,6 +95,8 @@ const PROJECT_DATA = [
     category: "AI Integrated CMS",
     creativeLead: "Ijji Madhu Venkat",
     visualArtist: "React, AI Integration",
+    github: "https://github.com/madhu967/AI_Integrated_blog_Platform",
+    demo: "https://ai-integrated-blog-platform.vercel.app/",
     details: [
       "Built a comprehensive Markdown-supported editor with real-time preview and AI-assisted writing prompts.",
       "Engineered a scalable backend capable of handling high-traffic content delivery.",
@@ -99,24 +105,24 @@ const PROJECT_DATA = [
     tech: "React.js, Node.js, AI APIs, Tailwind CSS",
     slides: [
       {
-        image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1800&q=88",
-        label: "Content Editor",
-        description: "An AI-powered modern blogging platform offering seamless content creation and generation tools."
+        image: "/quickblog/slide1.png",
+        label: "Landing Page",
+        description: "A premier AI-enhanced editorial platform offering seamless content creation and generation tools."
       },
       {
-        image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1800&q=88",
-        label: "Architecture",
-        description: "Engineered a scalable backend capable of handling high-traffic content delivery and instant search."
+        image: "/quickblog/slide2.png",
+        label: "Login Page",
+        description: "Secure authentication portal providing access for both regular users and platform administrators."
       },
       {
-        image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1800&q=88",
-        label: "AI Generation",
-        description: "Built-in AI integration assists authors with drafting, summarizing, and optimizing articles."
+        image: "/quickblog/slide3.png",
+        label: "Admin Dashboard",
+        description: "Centralized management console for administrators to oversee total essays, discussions, and drafts."
       },
       {
-        image: "https://images.unsplash.com/photo-1476275466078-4007374efac4?auto=format&fit=crop&w=1800&q=88",
-        label: "Reader Experience",
-        description: "Minimalist reading interface designed for long-form content consumption without distractions."
+        image: "/quickblog/slide4.png",
+        label: "User Dashboard",
+        description: "Dedicated workspace for writers to track their publications and manage content submissions."
       }
     ]
   },
@@ -125,6 +131,8 @@ const PROJECT_DATA = [
     category: "Creative Engineering",
     creativeLead: "Ijji Madhu Venkat",
     visualArtist: "Framer Motion, React",
+    github: "https://github.com/madhu967/Portfolio",
+    demo: "https://portfolio-ashen-rho-52.vercel.app",
     details: [
       "Architected a custom sticky scroll-jacking gallery without relying on heavy third-party scroll libraries.",
       "Implemented seamless view transitions and dynamic layout shifting using Framer Motion.",
@@ -535,11 +543,11 @@ export default function ProjectGallery({ initialIndex = 0, onClose }) {
                 </p>
                 
                 <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                  <a href="https://github.com/madhu967" target="_blank" rel="noopener noreferrer" style={{ padding: '0.8rem 1.5rem', background: '#13140f', color: '#fff', textDecoration: 'none', fontFamily: "'Space Mono', monospace", fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'inline-flex', alignItems: 'center', gap: '8px', transition: 'background 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.background = '#ea580c'} onMouseLeave={(e) => e.currentTarget.style.background = '#13140f'}>
+                  <a href={project.github} target="_blank" rel="noopener noreferrer" style={{ padding: '0.8rem 1.5rem', background: '#13140f', color: '#fff', textDecoration: 'none', fontFamily: "'Space Mono', monospace", fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'inline-flex', alignItems: 'center', gap: '8px', transition: 'background 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.background = '#ea580c'} onMouseLeave={(e) => e.currentTarget.style.background = '#13140f'}>
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.113.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
                     Source Code
                   </a>
-                  <a href="#" style={{ padding: '0.8rem 1.5rem', background: 'transparent', border: '1px solid rgba(19,20,15,0.2)', color: '#13140f', textDecoration: 'none', fontFamily: "'Space Mono', monospace", fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'inline-flex', alignItems: 'center', gap: '8px', transition: 'border-color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.borderColor = '#13140f'} onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(19,20,15,0.2)'}>
+                  <a href={project.demo} target="_blank" rel="noopener noreferrer" style={{ padding: '0.8rem 1.5rem', background: 'transparent', border: '1px solid rgba(19,20,15,0.2)', color: '#13140f', textDecoration: 'none', fontFamily: "'Space Mono', monospace", fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'inline-flex', alignItems: 'center', gap: '8px', transition: 'border-color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.borderColor = '#13140f'} onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(19,20,15,0.2)'}>
                     Live Demo ↗
                   </a>
                 </div>
