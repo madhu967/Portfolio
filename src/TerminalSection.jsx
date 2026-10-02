@@ -43,42 +43,58 @@ export default function TerminalSection() {
         break;
       case "whoami":
         output = [
-          "Madhu Venkat",
-          "Senior Developer & UI/UX Engineer",
-          "Specializing in high-performance distributed systems and generative AI."
+          "Ijji Madhu Venkat",
+          "Software Engineer",
+          "Specializing in MERN Stack Development, AI-powered applications, and scalable web solutions."
         ];
         break;
       case "skills":
         output = [
           "Technical Proficiencies:",
           "------------------------",
-          "* React / Next.js / TypeScript",
-          "* Node.js / Express / NestJS",
-          "* Java / Spring Boot",
-          "* PostgreSQL / MongoDB / Redis",
-          "* AWS / Docker / CI/CD",
-          "* UI/UX Design / Figma"
+          "* React.js / Node.js / Express.js",
+          "* MongoDB / SQL / Firebase",
+          "* Java / Data Structures & Algorithms",
+          "* Bootstrap / Tailwind CSS / Framer Motion",
+          "* Git / GitHub / Vercel"
         ];
         break;
       case "projects":
         output = [
           "Featured Projects:",
           "------------------------",
-          "[1] Civic Tracker",
-          "    - A scalable platform for civic engagement.",
-          "    - Tech: Next.js, Node.js, PostgreSQL",
+          "[1] SmartCity Civic Intelligence Platform",
+          "    - AI-powered civic reporting system.",
+          "    - Tech: React.js, Node.js, Gemini AI",
           "",
-          "[2] AI Blog",
-          "    - Generative AI automated blogging system.",
-          "    - Tech: React, Python, OpenAI API"
+          "[2] Prescripto - Hospital Booking App",
+          "    - Medical scheduling system with Stripe payments.",
+          "    - Tech: React.js, MongoDB, Stripe",
+          "",
+          "[3] QuickBlog - AI Integrated Blog Platform",
+          "    - Markdown editor with AI-assisted writing.",
+          "    - Tech: React.js, Node.js, AI APIs",
+          "",
+          "[4] Interactive Developer Portfolio",
+          "    - Premium scroll-jacking gallery.",
+          "    - Tech: React.js, Framer Motion"
         ];
         break;
       case "experience":
         output = [
           "Professional Experience:",
           "------------------------",
-          "Over 10 years of experience crafting resilient cloud microservices,",
-          "reactive frontends, and beautiful editorial interfaces."
+          "[2026] Full Stack Developer Intern",
+          "       Yubhian Technologies | Remote",
+          "",
+          "[2025] Frontend Developer Intern",
+          "       IISPPR | Remote",
+          "",
+          "[2025] Teaching Assistant (Full Stack)",
+          "       Vishnu Institute of Technology",
+          "",
+          "[2025] Student Ambassador (Web Dev)",
+          "       LetsUpgrade"
         ];
         break;
       case "clear":
