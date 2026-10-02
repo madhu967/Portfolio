@@ -7,69 +7,150 @@ const easeOut = [0.16, 1, 0.3, 1];
 const easeIn = [0.7, 0, 0.84, 0];
 const easeInOut = [0.45, 0, 0.55, 1];
 
-const DEFAULT_PROJECTS = [
+const PROJECT_DATA = [
   {
-    title: "Create Without Fear",
-    category: "The Belief",
-    description: "A bold space for ideas to rise, move, and become visible without waiting for permission.",
+    title: "SmartCity Civic Intelligence",
+    category: "AI & Full-Stack",
     creativeLead: "Ijji Madhu Venkat",
-    visualArtist: "Editorial Studio",
-    image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1800&q=88"
+    visualArtist: "React, Node, Gemini AI",
+    details: [
+      "Integrated Gemini AI for dynamic image analysis and duplicate detection, reducing manual ticket creation by 30%.",
+      "Engineered role-based admin workflows with optimized assignment algorithms to streamline worker dispatch.",
+      "Established CI/CD pipelines on Vercel with REST API testing for reliable updates."
+    ],
+    tech: "React.js, Node.js, Express.js, MongoDB, Gemini AI, Geolocation",
+    slides: [
+      {
+        image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1800&q=88",
+        label: "Dashboard View",
+        description: "An AI-powered civic reporting system supporting 6+ categories, validated with 100+ mock localized reports."
+      },
+      {
+        image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1800&q=88",
+        label: "AI Integration",
+        description: "Gemini AI analyzes user-submitted images in real-time to detect duplicates and categorize issues."
+      },
+      {
+        image: "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&w=1800&q=88",
+        label: "Analytics Hub",
+        description: "Comprehensive data visualization for city administrators to track resolution metrics and issue hotspots."
+      },
+      {
+        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1800&q=88",
+        label: "Mobile Responsive",
+        description: "Fully responsive interfaces ensuring seamless reporting from any mobile device in the field."
+      }
+    ]
   },
   {
-    title: "Art First Always",
-    category: "The Mission",
-    description: "Every card arrives like a statement, cutting through the page with strong motion and clean contrast.",
+    title: "Prescripto Hospital Booking",
+    category: "Healthcare SaaS",
     creativeLead: "Ijji Madhu Venkat",
-    visualArtist: "Kexsio®",
-    image: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1800&q=88"
+    visualArtist: "React, Node, Stripe",
+    details: [
+      "Integrated Stripe webhooks for secure payments and utilized Cloudinary CDN, decreasing image load times by 40%.",
+      "Implemented MongoDB database transaction locks to eliminate double-booking conflicts and maintain consistency.",
+      "Authored unit and integration tests using Jest, achieving 75% test coverage to minimize bugs."
+    ],
+    tech: "React.js, Node.js, Express.js, MongoDB, Stripe, Cloudinary",
+    slides: [
+      {
+        image: "https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=1800&q=88",
+        label: "Patient Portal",
+        description: "A full-stack medical scheduling system with role-based access, handling 50+ concurrent mock bookings."
+      },
+      {
+        image: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=1800&q=88",
+        label: "Doctor Dashboard",
+        description: "Real-time calendar synchronization for medical professionals to manage availability."
+      },
+      {
+        image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?auto=format&fit=crop&w=1800&q=88",
+        label: "Scheduling Engine",
+        description: "MongoDB transaction locks eliminate double-booking conflicts and maintain data consistency."
+      },
+      {
+        image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1800&q=88",
+        label: "Secure Payments",
+        description: "Integrated Stripe webhooks for secure, immediate payment processing."
+      }
+    ]
   },
   {
-    title: "Build Loud Ideas",
-    category: "The Method",
-    description: "Smooth scroll movement, cinematic angles, and bold typography make each section feel alive.",
+    title: "QuickBlog Platform",
+    category: "AI Integrated CMS",
     creativeLead: "Ijji Madhu Venkat",
-    visualArtist: "Kinetic Lab",
-    image: "https://images.unsplash.com/photo-1520045892732-304bc3ac5d8e?auto=format&fit=crop&w=1800&q=88"
+    visualArtist: "React, AI Integration",
+    details: [
+      "Built a comprehensive Markdown-supported editor with real-time preview and AI-assisted writing prompts.",
+      "Engineered a scalable backend capable of handling high-traffic content delivery.",
+      "Optimized database queries for instant search and seamless article categorization."
+    ],
+    tech: "React.js, Node.js, AI APIs, Tailwind CSS",
+    slides: [
+      {
+        image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1800&q=88",
+        label: "Content Editor",
+        description: "An AI-powered modern blogging platform offering seamless content creation and generation tools."
+      },
+      {
+        image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1800&q=88",
+        label: "Architecture",
+        description: "Engineered a scalable backend capable of handling high-traffic content delivery and instant search."
+      },
+      {
+        image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1800&q=88",
+        label: "AI Generation",
+        description: "Built-in AI integration assists authors with drafting, summarizing, and optimizing articles."
+      },
+      {
+        image: "https://images.unsplash.com/photo-1476275466078-4007374efac4?auto=format&fit=crop&w=1800&q=88",
+        label: "Reader Experience",
+        description: "Minimalist reading interface designed for long-form content consumption without distractions."
+      }
+    ]
   },
   {
-    title: "No More Limits",
-    category: "The Future",
-    description: "A premium scroll experience designed for portfolios, agencies, artists, and experimental landing pages.",
+    title: "Interactive Portfolio",
+    category: "Creative Engineering",
     creativeLead: "Ijji Madhu Venkat",
-    visualArtist: "Vision Code",
-    image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1800&q=88"
-  },
-  {
-    title: "After Midnight",
-    category: "Night Culture",
-    description: "A visual diary following creators, dancers and outsiders who transform the city after everyone else goes home.",
-    creativeLead: "Aisha Ray",
-    visualArtist: "Neon Lens",
-    image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1800&q=88"
-  },
-  {
-    title: "Off The Grid",
-    category: "Streetwear",
-    description: "An experimental fashion story using oversized silhouettes, unexpected textures and rule-breaking personal style.",
-    creativeLead: "Marcus Jin",
-    visualArtist: "Urban Frame",
-    image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=88"
-  },
-  {
-    title: "Concrete Playground",
-    category: "Skate Film",
-    description: "Young skaters reclaim forgotten parts of the city and turn ordinary concrete into a creative playground.",
-    creativeLead: "Elena Soto",
-    visualArtist: "Grit Media",
-    image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1800&q=88"
+    visualArtist: "Framer Motion, React",
+    details: [
+      "Architected a custom sticky scroll-jacking gallery without relying on heavy third-party scroll libraries.",
+      "Implemented seamless view transitions and dynamic layout shifting using Framer Motion.",
+      "Built highly responsive components ensuring flawless performance across mobile and desktop devices."
+    ],
+    tech: "React.js, Framer Motion, CSS Grid/Flexbox",
+    slides: [
+      {
+        image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1800&q=88",
+        label: "Editorial Design",
+        description: "A premium scroll experience designed with editorial aesthetics, cinematic motion, and fluid layout."
+      },
+      {
+        image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1800&q=88",
+        label: "Cinematic Motion",
+        description: "Implemented seamless view transitions and dynamic layout shifting using Framer Motion."
+      },
+      {
+        image: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=1800&q=88",
+        label: "Custom Logic",
+        description: "Architected a custom sticky scroll-jacking gallery without relying on heavy third-party scroll libraries."
+      },
+      {
+        image: "https://images.unsplash.com/photo-1607799279861-4dd99b8f2d52?auto=format&fit=crop&w=1800&q=88",
+        label: "Responsive UI",
+        description: "Built highly responsive components ensuring flawless performance across mobile and desktop devices."
+      }
+    ]
   }
 ];
 
 export default function ProjectGallery({ initialIndex = 0, onClose }) {
-  const [activeIndex, setActiveIndex] = useState(initialIndex);
+  const project = PROJECT_DATA[initialIndex] || PROJECT_DATA[0];
+  const [activeSlide, setActiveSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [bgIndex, setBgIndex] = useState(initialIndex);
+  const [bgIndex, setBgIndex] = useState(0);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
 
   useEffect(() => {
@@ -82,35 +163,35 @@ export default function ProjectGallery({ initialIndex = 0, onClose }) {
 
   // Preload next/prev images
   useEffect(() => {
-    const nextIdx = (activeIndex + 1) % DEFAULT_PROJECTS.length;
-    const prevIdx = (activeIndex - 1 + DEFAULT_PROJECTS.length) % DEFAULT_PROJECTS.length;
-    [DEFAULT_PROJECTS[nextIdx].image, DEFAULT_PROJECTS[prevIdx].image].forEach(src => {
+    const nextIdx = (activeSlide + 1) % project.slides.length;
+    const prevIdx = (activeSlide - 1 + project.slides.length) % project.slides.length;
+    [project.slides[nextIdx].image, project.slides[prevIdx].image].forEach(src => {
       const img = new Image();
       img.src = src;
     });
-  }, [activeIndex]);
+  }, [activeSlide, project]);
 
   const handleNav = (dir) => {
     if (isTransitioning) return;
     setIsTransitioning(true);
-    let newIndex = activeIndex + dir;
-    if (newIndex < 0) newIndex = DEFAULT_PROJECTS.length - 1;
-    if (newIndex >= DEFAULT_PROJECTS.length) newIndex = 0;
+    let newIndex = activeSlide + dir;
+    if (newIndex < 0) newIndex = project.slides.length - 1;
+    if (newIndex >= project.slides.length) newIndex = 0;
     
     setBgIndex(newIndex);
     
     setTimeout(() => {
-      setActiveIndex(newIndex);
+      setActiveSlide(newIndex);
       setTimeout(() => setIsTransitioning(false), 900);
     }, 500);
   };
 
   const handleSelect = (index) => {
-    if (isTransitioning || index === activeIndex) return;
+    if (isTransitioning || index === activeSlide) return;
     setIsTransitioning(true);
     setBgIndex(index);
     setTimeout(() => {
-      setActiveIndex(index);
+      setActiveSlide(index);
       setTimeout(() => setIsTransitioning(false), 900);
     }, 500);
   };
@@ -124,9 +205,9 @@ export default function ProjectGallery({ initialIndex = 0, onClose }) {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [activeIndex, isTransitioning, onClose]);
+  }, [activeSlide, isTransitioning, onClose]);
 
-  const project = DEFAULT_PROJECTS[activeIndex];
+  const slide = project.slides[activeSlide];
   const accentColor = "#ea580c";
 
   return (
@@ -188,7 +269,7 @@ export default function ProjectGallery({ initialIndex = 0, onClose }) {
         
         .pg-img-labels { position: absolute; bottom: 1.5rem; left: 1.5rem; right: 1.5rem; display: flex; justify-content: space-between; align-items: flex-end; z-index: 10; pointer-events: none; }
         .pg-badge { background: ${accentColor}; color: #ffffff; padding: 0.4rem 0.8rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 4px; pointer-events: auto; }
-        .pg-year { font-family: 'Spectral', serif; font-size: 1.2rem; font-style: italic; color: #13140f; pointer-events: auto; }
+        .pg-year { font-family: 'Spectral', serif; font-size: 1.2rem; font-style: italic; color: #ffffff; pointer-events: auto; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
         
         .pg-controls { position: absolute; bottom: 1.5rem; right: 1.5rem; display: flex; gap: 1rem; z-index: 20; }
         .pg-btn { width: 50px; height: 50px; border-radius: 50%; border: 1px solid rgba(19,20,15,0.2); background: rgba(255,255,255,0.4); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; cursor: pointer; color: #13140f; transition: all 0.3s; }
@@ -245,7 +326,7 @@ export default function ProjectGallery({ initialIndex = 0, onClose }) {
         <main className="pg-main">
           <AnimatePresence mode="wait">
             <motion.div 
-              key={activeIndex}
+              key={activeSlide}
               initial="hidden"
               animate="visible"
               exit="exit"
@@ -261,7 +342,7 @@ export default function ProjectGallery({ initialIndex = 0, onClose }) {
                   {project.category}
                 </motion.div>
                 <motion.div variants={{ hidden: { y: 20, opacity: 0 }, visible: { y: 0, opacity: 1, transition: { duration: 0.8, ease: easeOut } }, exit: { y: -20, opacity: 0, transition: { duration: 0.4, ease: easeIn } } }} className="pg-meta-count">
-                  {(activeIndex + 1).toString().padStart(2, '0')} / {DEFAULT_PROJECTS.length.toString().padStart(2, '0')}
+                  {(activeSlide + 1).toString().padStart(2, '0')} / {project.slides.length.toString().padStart(2, '0')}
                 </motion.div>
               </div>
 
@@ -270,7 +351,7 @@ export default function ProjectGallery({ initialIndex = 0, onClose }) {
               </motion.h1>
               
               <motion.p variants={{ hidden: { y: 20, opacity: 0 }, visible: { y: 0, opacity: 1, transition: { duration: 0.8, ease: easeOut } }, exit: { y: -20, opacity: 0, transition: { duration: 0.4, ease: easeIn } } }} className="pg-desc">
-                {project.description}
+                {slide.description}
               </motion.p>
               
               <motion.div variants={{ hidden: { scaleX: 0, opacity: 0 }, visible: { scaleX: 1, opacity: 1, transition: { duration: 0.8, ease: easeOut } }, exit: { scaleX: 0, opacity: 0, transition: { duration: 0.4, ease: easeIn } } }} style={{ transformOrigin: 'left' }} className="pg-divider" />
@@ -281,7 +362,7 @@ export default function ProjectGallery({ initialIndex = 0, onClose }) {
                   <div className="pg-credit-name">{project.creativeLead}</div>
                 </div>
                 <div>
-                  <div className="pg-credit-role">Visual Artist</div>
+                  <div className="pg-credit-role">Tech Stack</div>
                   <div className="pg-credit-name">{project.visualArtist}</div>
                 </div>
               </motion.div>
@@ -295,9 +376,9 @@ export default function ProjectGallery({ initialIndex = 0, onClose }) {
                     exit: { y: 40, scale: 0.75, opacity: 0, transition: { duration: 0.6, ease: easeIn } }
                   }}
                 >
-                  <img src={project.image} alt={project.title} className="pg-featured-img" />
+                  <img src={slide.image} alt={slide.label} className="pg-featured-img" />
                   <div className="pg-img-labels">
-                    <div className="pg-badge">Selected Story</div>
+                    <div className="pg-badge">{slide.label}</div>
                     <div className="pg-year">2026</div>
                   </div>
                   
@@ -317,15 +398,15 @@ export default function ProjectGallery({ initialIndex = 0, onClose }) {
           {isMobile && (
             <AnimatePresence mode="wait">
               <motion.div 
-                key={activeIndex + "mob"}
+                key={activeSlide + "mob"}
                 className="pg-featured-wrap"
                 initial={{ y: 40, scale: 0.8, opacity: 0 }}
                 animate={{ y: 0, scale: 1, opacity: 1, transition: { duration: 0.8, ease: easeOut } }}
                 exit={{ y: 20, scale: 0.8, opacity: 0, transition: { duration: 0.4, ease: easeIn } }}
               >
-                <img src={project.image} alt={project.title} className="pg-featured-img" />
+                <img src={slide.image} alt={slide.label} className="pg-featured-img" />
                 <div className="pg-img-labels">
-                  <div className="pg-badge">Story</div>
+                  <div className="pg-badge">{slide.label}</div>
                   <div className="pg-year">2026</div>
                 </div>
                 
@@ -343,22 +424,49 @@ export default function ProjectGallery({ initialIndex = 0, onClose }) {
         </main>
 
         <aside className="pg-rail">
-          {DEFAULT_PROJECTS.map((proj, i) => (
+          {project.slides.map((s, i) => (
             <div 
               key={i} 
-              className={`pg-rail-item ${activeIndex === i ? 'is-active' : ''}`}
+              className={`pg-rail-item ${activeSlide === i ? 'is-active' : ''}`}
               onClick={() => handleSelect(i)}
             >
-              <img src={proj.image} alt="" className="pg-rail-img" />
+              <img src={s.image} alt="" className="pg-rail-img" />
               <div className="pg-rail-num">{(i + 1).toString().padStart(2, '0')}</div>
               <div className="pg-rail-line" />
             </div>
           ))}
         </aside>
       </div>
-      
-      {/* 4-Line Philosophy Statement Appended Below Gallery */}
-      <EditorialStatementSection isMobile={isMobile} />
+      {/* Project Insights Section Appended Below Gallery */}
+      <div style={{ padding: isMobile ? '4rem 1.5rem' : '6rem 4rem', background: '#f4f1ea', borderTop: '1px solid rgba(19,20,15,0.1)' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+          <h2 style={{ fontFamily: "'Spectral', serif", fontSize: isMobile ? '2rem' : '3rem', fontWeight: 300, marginBottom: '2rem', color: '#13140f' }}>
+            Project Insights
+          </h2>
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '3rem' }}>
+            {project.details.map((detail, idx) => (
+              <div key={idx} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                <div style={{ color: '#ea580c', fontFamily: "'Space Mono', monospace", fontWeight: 700, marginTop: '4px' }}>
+                  {(idx + 1).toString().padStart(2, '0')}
+                </div>
+                <p style={{ fontSize: isMobile ? '1rem' : '1.15rem', lineHeight: 1.6, color: 'rgba(19,20,15,0.8)', margin: 0 }}>
+                  {detail}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div>
+            <h3 style={{ fontFamily: "'Space Mono', monospace", fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'rgba(19,20,15,0.5)', marginBottom: '1rem' }}>
+              Core Technologies
+            </h3>
+            <p style={{ fontFamily: "'Spectral', serif", fontSize: isMobile ? '1.2rem' : '1.5rem', fontStyle: 'italic', color: '#13140f', margin: 0 }}>
+              {project.tech}
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
