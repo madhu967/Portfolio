@@ -75,6 +75,65 @@ try {
   console.error('[vite.config.js] Resume sync error:', err);
 }
 
+// Copy SmartCity project images
+try {
+  const smartCityImages = [
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790945349468.png',
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790945377469.png',
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790945482790.png',
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790945514386.png',
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790945542583.png'
+  ];
+  const scDir = path.resolve(__dirname, 'public/smartcity');
+  if (!fs.existsSync(scDir)) fs.mkdirSync(scDir, { recursive: true });
+  smartCityImages.forEach((img, i) => {
+    if (fs.existsSync(img)) {
+      fs.copyFileSync(img, path.resolve(scDir, `slide${i + 1}.png`));
+    }
+  });
+} catch (err) {
+  console.error('[vite.config.js] SmartCity sync error:', err);
+}
+
+// Copy Prescripto project images
+try {
+  const prescriptoImages = [
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790945916946.png',
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790945948340.png',
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790945997179.png',
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790946017996.png',
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790946052707.png'
+  ];
+  const pDir = path.resolve(__dirname, 'public/prescripto');
+  if (!fs.existsSync(pDir)) fs.mkdirSync(pDir, { recursive: true });
+  prescriptoImages.forEach((img, i) => {
+    if (fs.existsSync(img)) {
+      fs.copyFileSync(img, path.resolve(pDir, `slide${i + 1}.png`));
+    }
+  });
+} catch (err) {
+  console.error('[vite.config.js] Prescripto sync error:', err);
+}
+
+// Copy Portfolio project images
+try {
+  const portfolioImages = [
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790946255820.png',
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790946277929.png',
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790946311875.png',
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790946334166.png'
+  ];
+  const portDir = path.resolve(__dirname, 'public/portfolio');
+  if (!fs.existsSync(portDir)) fs.mkdirSync(portDir, { recursive: true });
+  portfolioImages.forEach((img, i) => {
+    if (fs.existsSync(img)) {
+      fs.copyFileSync(img, path.resolve(portDir, `slide${i + 1}.png`));
+    }
+  });
+} catch (err) {
+  console.error('[vite.config.js] Portfolio sync error:', err);
+}
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
