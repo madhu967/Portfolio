@@ -40,29 +40,45 @@ body {
   z-index: 1;
   padding: clamp(24px, 4vw, 72px);
   color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .kex-hero-title {
   margin: 0;
-  max-width: 1200px;
   font-family: 'Spectral', serif;
-  font-size: clamp(76px, 12vw, 210px);
-  font-weight: 600;
-  line-height: 0.86;
-  letter-spacing: -0.075em;
+  font-size: clamp(48px, 10vw, 160px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
   text-transform: capitalize;
+  text-align: center;
 }
 
-.kex-hero-subtitle {
+.kex-scroll-indicator {
   position: absolute;
-  left: clamp(24px, 4vw, 72px);
-  bottom: clamp(26px, 5vw, 72px);
-  max-width: 980px;
-  margin: 0;
-  font-size: clamp(22px, 2.5vw, 44px);
-  font-weight: 400;
-  line-height: 1.35;
-  letter-spacing: -0.035em;
+  bottom: clamp(40px, 6vh, 80px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  animation: bounce-scroll 2s infinite ease-in-out;
+  opacity: 0.8;
+}
+
+.kex-scroll-indicator span {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+@keyframes bounce-scroll {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(12px); }
 }
 
 /* CARD LAYER */
@@ -270,21 +286,23 @@ body {
 const cards = [
   {
     number: "01",
-    kicker: "01 — The Belief",
-    title: "Create Without Fear",
-    description:
-      "A bold space for ideas to rise, move, and become visible without waiting for permission.",
+    isProject: true,
+    kicker: "Featured Project",
+    title: "SmartCity Civic Intelligence Platform",
+    github: "https://github.com/madhu967/SmartCity-Civic-Intelligence-Platform",
+    demo: "https://smart-city-civic-intelligence-platf-kohl.vercel.app/",
     bg: "#181e4b",
     text: "#fbfdf3",
     muted: "rgba(251,253,243,0.72)",
-    numberColor: "rgba(251,253,243,0.15)",
+    numberColor: "rgba(251,253,243,0.08)",
   },
   {
     number: "02",
-    kicker: "02 — The Mission",
-    title: "Art First Always",
-    description:
-      "Every card arrives like a statement, cutting through the page with strong motion and clean contrast.",
+    isProject: true,
+    kicker: "Featured Project",
+    title: "Prescripto - Hospital Booking App",
+    github: "https://github.com/madhu967/hospital-booking-app/tree/main",
+    demo: "https://prescripto-snqa.vercel.app/",
     bg: "#1f6f5c",
     text: "#ebeedc",
     muted: "rgba(235,238,220,0.76)",
@@ -292,10 +310,11 @@ const cards = [
   },
   {
     number: "03",
-    kicker: "03 — The Method",
-    title: "Build Loud Ideas",
-    description:
-      "Smooth scroll movement, cinematic angles, and bold typography make each section feel alive.",
+    isProject: true,
+    kicker: "Featured Project",
+    title: "QuickBlog - AI Integrated Blog Platform",
+    github: "https://github.com/madhu967/blog-app",
+    demo: "https://blog-app-six-olive.vercel.app/",
     bg: "#e9e3d6",
     text: "#13140f",
     muted: "rgba(19,20,15,0.65)",
@@ -303,10 +322,11 @@ const cards = [
   },
   {
     number: "04",
-    kicker: "04 — The Future",
-    title: "No More Limits",
-    description:
-      "A premium scroll experience designed for portfolios, agencies, artists, and experimental landing pages.",
+    isProject: true,
+    kicker: "Featured Project",
+    title: "Interactive Developer Portfolio",
+    github: "https://github.com/madhu967/Portfolio",
+    demo: "https://portfolio-ashen-rho-52.vercel.app",
     bg: "#c2502f",
     text: "#ebeedc",
     muted: "rgba(235,238,220,0.76)",
@@ -477,16 +497,15 @@ export default function FullscreenCards() {
           <div ref={stageRef} className="kex-sticky-stage">
             <div className="kex-hero-content">
               <h1 ref={heroTitleRef} className="kex-hero-title">
-                Create
-                <br />
-                Without
-                <br />
-                Limits
+                Projects
               </h1>
 
-              <p ref={heroSubtitleRef} className="kex-hero-subtitle">
-                “We believe every artist deserves a platform that puts creativity, courage, and expression first.”
-              </p>
+              <div ref={heroSubtitleRef} className="kex-scroll-indicator">
+                <span>Scroll Down</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 5v14M19 12l-7 7-7-7" />
+                </svg>
+              </div>
             </div>
 
             <div className="kex-card-layer">
@@ -510,21 +529,61 @@ export default function FullscreenCards() {
                     <div className="kex-card-inner">
                       <div className="kex-card-number">{card.number}</div>
 
-                      <p className="kex-card-kicker">{card.kicker}</p>
+                      {card.isProject ? (
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', textAlign: 'center' }}>
+                          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, fontWeight: 700, color: card.muted, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 16 }}>
+                            {card.kicker}
+                          </p>
+                          <h2 style={{ fontFamily: "'Spectral', serif", fontSize: 'clamp(28px, 6vw, 76px)', fontWeight: 600, color: card.text, margin: '0 0 32px 0', lineHeight: 1.15, letterSpacing: '-0.02em', maxWidth: 900 }}>
+                            {card.title}
+                          </h2>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap', justifyContent: 'center', pointerEvents: 'auto' }}>
+                            <button 
+                              className="kex-card-btn"
+                              onClick={() => window.location.hash = `#/gallery/${index}`}
+                            >
+                              View Detailed Project
+                            </button>
+                            <a 
+                              href={card.demo} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              style={{ padding: '14px 28px', border: `1px solid ${card.muted}`, borderRadius: 9999, color: card.text, textDecoration: 'none', fontFamily: "'Space Mono', monospace", fontSize: 13, fontWeight: 700, textTransform: 'uppercase', transition: 'all 0.3s' }}
+                              onMouseEnter={(e) => { e.currentTarget.style.background = card.text; e.currentTarget.style.color = card.bg; }}
+                              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = card.text; }}
+                            >
+                              Live Demo
+                            </a>
+                            <a 
+                              href={card.github} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              style={{ padding: '14px 28px', border: `1px solid ${card.muted}`, borderRadius: 9999, color: card.text, textDecoration: 'none', fontFamily: "'Space Mono', monospace", fontSize: 13, fontWeight: 700, textTransform: 'uppercase', transition: 'all 0.3s' }}
+                              onMouseEnter={(e) => { e.currentTarget.style.background = card.text; e.currentTarget.style.color = card.bg; }}
+                              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = card.text; }}
+                            >
+                              GitHub
+                            </a>
+                          </div>
+                        </div>
+                      ) : (
+                        <>
+                          <p className="kex-card-kicker">{card.kicker}</p>
+                          <h2 className="kex-card-title">{card.title}</h2>
 
-                      <h2 className="kex-card-title">{card.title}</h2>
-
-                      <div className="kex-card-bottom-right">
-                        <p className="kex-card-description">
-                          {card.description}
-                        </p>
-                        <button 
-                          className="kex-card-btn"
-                          onClick={() => window.location.hash = `#/gallery/${index}`}
-                        >
-                          View Project
-                        </button>
-                      </div>
+                          <div className="kex-card-bottom-right">
+                            <p className="kex-card-description">
+                              {card.description}
+                            </p>
+                            <button 
+                              className="kex-card-btn"
+                              onClick={() => window.location.hash = `#/gallery/${index}`}
+                            >
+                              View Project
+                            </button>
+                          </div>
+                        </>
+                      )}
                     </div>
                   </article>
                 );
