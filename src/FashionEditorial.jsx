@@ -2136,7 +2136,6 @@ function CutoutPortrait({ src, alt, style }) {
 const NAV_LINKS = [
   { label: 'Home', href: '#' },
   { label: 'About', href: '#editorial-statement' },
-  { label: 'Services', href: '#services' },
   {
     label: 'Work ▾',
     dropdown: [
@@ -2150,17 +2149,65 @@ const NAV_LINKS = [
     dropdown: [
       { label: 'Skills', href: '#skills' },
       { label: 'Experience', href: '#timeline' },
-      { label: 'Education', href: '#timeline' },
-      { label: 'Testimonials', href: '#testimonials' }
+      { label: 'Certifications', href: '#testimonials' }
     ]
-  },
-  { label: 'Footer', href: '#footer' }
+  }
 ];
 
 export function LuxuryNavbar({ isMobile, forceWhite }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
+    <>
+      <style>{`
+        .nav-item {
+          position: relative;
+          display: inline-block;
+        }
+        .nav-dropdown {
+          position: absolute;
+          top: 100%;
+          left: -20px;
+          background: rgba(255, 255, 255, 0.98);
+          backdrop-filter: blur(16px);
+          padding: 12px 0;
+          border-radius: 8px;
+          box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+          opacity: 0;
+          visibility: hidden;
+          transform: translateY(10px);
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          min-width: 180px;
+          display: flex;
+          flex-direction: column;
+          z-index: 1000;
+          border: 1px solid rgba(0,0,0,0.05);
+        }
+        .nav-item:hover .nav-dropdown {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(0);
+        }
+        .nav-dropdown a {
+          padding: 10px 24px;
+          color: #171717;
+          text-decoration: none;
+          font-size: 14px;
+          font-weight: 500;
+          font-family: 'Space Mono', monospace;
+          transition: all 0.2s ease;
+          display: block;
+        }
+        .nav-dropdown a:hover {
+          background: rgba(234, 88, 12, 0.08);
+          color: #ea580c;
+          padding-left: 28px;
+        }
+        @keyframes nav-slide-down {
+          from { opacity: 0; transform: translateY(-100%); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     <nav style={{
       position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 1000,
       display: 'flex', alignItems: 'center', justifyContent: 'space-between',
@@ -2173,7 +2220,12 @@ export function LuxuryNavbar({ isMobile, forceWhite }) {
       animation: 'nav-slide-down 0.3s ease-out'
     }}>
       {/* Brand Logo & Name */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer' }} onClick={() => window.scrollTo(0,0)}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer' }} onClick={() => {
+        if (window.location.hash.startsWith('#/gallery')) {
+          window.location.hash = '';
+        }
+        window.scrollTo(0,0);
+      }}>
         <svg
           width={isMobile ? "22" : "26"} height={isMobile ? "24" : "28"} viewBox="0 0 31 40" fill="none"
           xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}
@@ -2289,6 +2341,7 @@ export function LuxuryNavbar({ isMobile, forceWhite }) {
         </div>
       )}
     </nav>
+    </>
   );
 }
 
