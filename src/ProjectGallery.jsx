@@ -497,7 +497,7 @@ export default function ProjectGallery({ initialIndex = 0, onClose }) {
                   {project.details.map((detail, idx) => (
                     <div key={idx} style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
                       <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#ea580c', marginTop: '10px', flexShrink: 0 }} />
-                      <p style={{ fontFamily: "'Poppins', sans-serif", fontSize: '0.95rem', lineHeight: 1.6, color: 'rgba(19,20,15,0.7)', margin: 0 }}>
+                      <p style={{ fontFamily: "'Spectral', serif", fontSize: '1.2rem', lineHeight: 1.7, color: 'rgba(19,20,15,0.8)', margin: 0 }}>
                         {detail}
                       </p>
                     </div>
@@ -518,7 +518,7 @@ export default function ProjectGallery({ initialIndex = 0, onClose }) {
                 <p style={{ fontFamily: "'Spectral', serif", fontSize: '1.3rem', fontStyle: 'italic', color: '#13140f', margin: '0 0 1rem 0' }}>
                   {project.tech}
                 </p>
-                <p style={{ fontFamily: "'Poppins', sans-serif", fontSize: '0.95rem', lineHeight: 1.6, color: 'rgba(19,20,15,0.7)', margin: 0 }}>
+                <p style={{ fontFamily: "'Spectral', serif", fontSize: '1.2rem', lineHeight: 1.7, color: 'rgba(19,20,15,0.8)', margin: 0 }}>
                   Built upon a robust foundation, the architecture leverages these core technologies to ensure high availability, secure data transmission, and a seamless client-side rendering experience. Performance bottlenecks were systematically eliminated through targeted caching and optimized database queries.
                 </p>
               </div>
@@ -528,7 +528,7 @@ export default function ProjectGallery({ initialIndex = 0, onClose }) {
                 <h3 style={{ fontFamily: "'Space Mono', monospace", fontSize: '1rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#13140f', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <span style={{ color: '#ea580c' }}>04.</span> Challenges & Solutions
                 </h3>
-                <p style={{ fontFamily: "'Poppins', sans-serif", fontSize: '0.95rem', lineHeight: 1.6, color: 'rgba(19,20,15,0.7)', margin: 0 }}>
+                <p style={{ fontFamily: "'Spectral', serif", fontSize: '1.2rem', lineHeight: 1.7, color: 'rgba(19,20,15,0.8)', margin: 0 }}>
                   During development, ensuring state consistency across multiple concurrent sessions posed a significant hurdle. This was resolved by implementing optimistic UI updates on the frontend coupled with stringent transaction locks and real-time socket events on the backend server.
                 </p>
               </div>
@@ -538,7 +538,7 @@ export default function ProjectGallery({ initialIndex = 0, onClose }) {
                 <h3 style={{ fontFamily: "'Space Mono', monospace", fontSize: '1rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#13140f', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <span style={{ color: '#ea580c' }}>05.</span> Results & Access
                 </h3>
-                <p style={{ fontFamily: "'Poppins', sans-serif", fontSize: '0.95rem', lineHeight: 1.6, color: 'rgba(19,20,15,0.7)', margin: '0 0 1.5rem 0' }}>
+                <p style={{ fontFamily: "'Spectral', serif", fontSize: '1.2rem', lineHeight: 1.7, color: 'rgba(19,20,15,0.8)', margin: '0 0 1.5rem 0' }}>
                   The final deployment drastically reduced user friction, demonstrating a 40% improvement in load times and zero reported race conditions during peak traffic simulation.
                 </p>
                 
