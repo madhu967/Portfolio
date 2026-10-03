@@ -8,7 +8,7 @@ const FOLDERS = [
   },
   { 
     num: '02', 
-    title: 'Full Stack Node.js', 
+    title: 'Full Stack Web Application Development with Node.js', 
     tone: 2, 
     images: ['/certificates/cert2.png'] 
   },
@@ -18,12 +18,6 @@ const FOLDERS = [
     tone: 2, 
     images: ['/certificates/cert3.jpg'] 
   },
-  { 
-    num: '04', 
-    title: 'NPTEL ML', 
-    tone: 1, 
-    images: ['/certificates/cert4.jpg'] 
-  }
 ];
 
 const COLORS = {

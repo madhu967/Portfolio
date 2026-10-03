@@ -14,7 +14,7 @@ const TESTIMONIALS = [
   },
   {
     id: 2,
-    name: "Full Stack Node.js",
+    name: "Full Stack Web Application Development with Node.js",
     role: "Specialization Course",
     company: "Vishnu Institute of Technology",
     quote: "“Awarded for successfully completing the Specialization Course 'Full Stack Web Application Development with Node.js' during November 2025.”",
@@ -30,15 +30,6 @@ const TESTIMONIALS = [
     image: "/certificates/cert3.png",
     objectPosition: "50% 50%",
   },
-  {
-    id: 4,
-    name: "NPTEL ML",
-    role: "Mathematics for Machine Learning",
-    company: "IIT Kharagpur",
-    quote: "“Elite certification awarded for successfully completing the 12-week course 'Mathematics for Machine Learning' with a consolidated score of 84%.”",
-    image: "/certificates/cert4.png",
-    objectPosition: "50% 50%",
-  }
 ];
 
 export default function CinematicTestimonials() {
