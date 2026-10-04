@@ -327,15 +327,16 @@ const cards = [
     number: "04",
     isProject: true,
     kicker: "Featured Project",
-    logo: <span style={{ fontFamily: "'Prata', serif", fontSize: "1.875rem", lineHeight: "2.25rem", fontWeight: "700", letterSpacing: "-0.05em", color: "#111827", display: "block", marginInline: "auto", marginBottom: "1.5rem", textAlign: "center" }}>OAK<span style={{ color: "#D92525" }}>&</span>IRON</span>,
+    logo: <span style={{ fontFamily: "'Prata', serif", fontSize: "1.875rem", lineHeight: "2.25rem", fontWeight: "700", letterSpacing: "-0.05em", color: "#f9f6f0", display: "block", marginInline: "auto", marginBottom: "1.5rem", textAlign: "center" }}>OAK<span style={{ color: "#ff9fb2" }}>&</span>IRON</span>,
     title: "QuickBlog - AI Integrated Blog Platform",
     github: "https://github.com/madhu967/AI_Integrated_blog_Platform",
     demo: "https://ai-integrated-blog-platform.vercel.app/",
-    bg: "#e9e3d6",
-    text: "#13140f",
-    muted: "rgba(19,20,15,0.65)",
-    numberColor: "rgba(19,20,15,0.13)",
+    bg: "#9e152d",
+    text: "#f9f6f0",
+    muted: "rgba(249,246,240,0.7)",
+    numberColor: "rgba(249,246,240,0.15)",
   },
+  /*
   {
     number: "05",
     isProject: true,
@@ -349,6 +350,7 @@ const cards = [
     muted: "rgba(235,238,220,0.76)",
     numberColor: "rgba(235,238,220,0.24)",
   },
+  */
 ];
 
 const clamp = (value, min, max) =>

@@ -162,6 +162,7 @@ const PROJECT_DATA = [
       }
     ]
   },
+  /*
   {
     title: "Interactive Portfolio",
     category: "Creative Engineering",
@@ -198,6 +199,7 @@ const PROJECT_DATA = [
       }
     ]
   }
+  */
 ];
 
 export default function ProjectGallery({ initialIndex = 0, onClose }) {
