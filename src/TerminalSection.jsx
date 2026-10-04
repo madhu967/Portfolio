@@ -71,11 +71,15 @@ export default function TerminalSection() {
           "    - Medical scheduling system with Stripe payments.",
           "    - Tech: React.js, MongoDB, Stripe",
           "",
-          "[3] QuickBlog - AI Integrated Blog Platform",
+          "[3] Forever - E-Commerce Platform",
+          "    - Full-stack retail storefront and admin panel.",
+          "    - Tech: React.js, Node.js, MongoDB, Tailwind",
+          "",
+          "[4] QuickBlog - AI Integrated Blog Platform",
           "    - Markdown editor with AI-assisted writing.",
           "    - Tech: React.js, Node.js, AI APIs",
           "",
-          "[4] Interactive Developer Portfolio",
+          "[5] Interactive Developer Portfolio",
           "    - Premium scroll-jacking gallery.",
           "    - Tech: React.js, Framer Motion"
         ];

@@ -91,6 +91,42 @@ const PROJECT_DATA = [
     ]
   },
   {
+    title: "Forever E-Commerce",
+    category: "Full-Stack Retail",
+    creativeLead: "Ijji Madhu Venkat",
+    visualArtist: "React, Node, MongoDB",
+    github: "https://github.com/madhu967/forever",
+    demo: "https://forever-eight-delta.vercel.app/",
+    details: [
+      "Engineered a comprehensive e-commerce platform with robust product filtering and cart management.",
+      "Integrated secure payment gateways and order tracking systems for seamless user experience.",
+      "Developed a dedicated admin dashboard for inventory, order management, and product uploads."
+    ],
+    tech: "React.js, Node.js, Express.js, MongoDB, Tailwind CSS",
+    slides: [
+      {
+        image: "/forever/slide1.png",
+        label: "Landing Page",
+        description: "A modern, highly responsive storefront featuring the latest collections and bestsellers."
+      },
+      {
+        image: "/forever/slide2.png",
+        label: "Collection Page",
+        description: "Advanced product catalog with dynamic filtering, sorting, and seamless browsing."
+      },
+      {
+        image: "/forever/slide3.png",
+        label: "Order Page",
+        description: "Streamlined checkout and order tracking interface with integrated payment status."
+      },
+      {
+        image: "/forever/slide4.png",
+        label: "Admin Dashboard",
+        description: "Centralized management console for adding products, managing inventory, and tracking orders."
+      }
+    ]
+  },
+  {
     title: "QuickBlog Platform",
     category: "AI Integrated CMS",
     creativeLead: "Ijji Madhu Venkat",

@@ -153,6 +153,31 @@ try {
   console.error('[vite.config.js] QuickBlog sync error:', err);
 }
 
+// Copy Forever project images
+try {
+  const foreverImages = [
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1791137401714.png',
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1791137431343.png',
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1791137480332.png',
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1791137506398.png'
+  ];
+  const foreverDir = path.resolve(__dirname, 'public/forever');
+  if (!fs.existsSync(foreverDir)) fs.mkdirSync(foreverDir, { recursive: true });
+  
+  foreverImages.forEach((img, i) => {
+    if (fs.existsSync(img)) {
+      fs.copyFileSync(img, path.resolve(foreverDir, `slide${i + 1}.png`));
+    }
+  });
+
+  const foreverLogo = 'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1791137557933.png';
+  if (fs.existsSync(foreverLogo)) {
+    fs.copyFileSync(foreverLogo, path.resolve(foreverDir, 'logo.png'));
+  }
+} catch (err) {
+  console.error('[vite.config.js] Forever sync error:', err);
+}
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
