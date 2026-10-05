@@ -54,8 +54,8 @@ const PROJECT_DATA = [
     category: "Healthcare SaaS",
     creativeLead: "Ijji Madhu Venkat",
     visualArtist: "React, Node, Stripe",
-    github: "https://github.com/madhu967/hospital-booking-app",
-    demo: "https://hospital-booking-app-one.vercel.app/",
+    github: "https://github.com/madhu967/Prescripto",
+    demo: "https://prescripto-eight-alpha.vercel.app/",
     details: [
       "Integrated Stripe webhooks for secure payments and utilized Cloudinary CDN, decreasing image load times by 40%.",
       "Implemented MongoDB database transaction locks to eliminate double-booking conflicts and maintain consistency.",

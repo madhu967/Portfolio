@@ -361,7 +361,7 @@ export default function Timeline() {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
         >
-          The Journey
+          Experience
         </motion.div>
         <motion.h2 
           className="tl-header-title"
@@ -370,7 +370,7 @@ export default function Timeline() {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, delay: 0.1 }}
         >
-          Evolution of Design
+          Professional Journey
         </motion.h2>
       </div>
 

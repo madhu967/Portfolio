@@ -67,7 +67,7 @@ try {
 
 // Copy newly uploaded resume to public/resume.pdf
 try {
-  const resumeSource = 'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790925137773.pdf';
+  const resumeSource = 'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1791200239005.pdf';
   if (fs.existsSync(resumeSource)) {
     fs.copyFileSync(resumeSource, path.resolve(__dirname, 'public/resume.pdf'));
   }
@@ -98,7 +98,7 @@ try {
 // Copy Prescripto project images
 try {
   const prescriptoImages = [
-    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790945916946.png',
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1791200378887.png',
     'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790945948340.png',
     'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790945997179.png',
     'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1790946017996.png',
