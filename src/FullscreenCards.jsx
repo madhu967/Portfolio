@@ -19,7 +19,7 @@ body {
 
 .kex-scroll-scene {
   position: relative;
-  height: 560vh;
+  height: 800vh;
   background: #13140f;
 }
 
@@ -336,6 +336,19 @@ const cards = [
     muted: "rgba(249,246,240,0.7)",
     numberColor: "rgba(249,246,240,0.15)",
   },
+  {
+    number: "05",
+    isProject: true,
+    kicker: "Featured Mobile App",
+    logo: <svg style={{ height: '48px', width: 'auto', marginBottom: '1.5rem', display: 'block', marginInline: 'auto', color: '#c3ff00' }} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L1 9L5 11.18V17.18L12 21L19 17.18V11.18L21 10.09V17H23V9L12 3ZM18.82 9L12 12.72L5.18 9L12 5.28L18.82 9ZM17 15.99L12 18.72L7 15.99V12.27L12 15L17 12.27V15.99Z"/></svg>,
+    title: "Learnova - Smart Education Platform",
+    github: "https://github.com/madhu967/Coaching_Mobile_App_React_Native",
+    demo: "#",
+    bg: "#0f172a",
+    text: "#f8fafc",
+    muted: "rgba(248, 250, 252, 0.65)",
+    numberColor: "rgba(248, 250, 252, 0.1)",
+  },
   /*
   {
     number: "05",
@@ -453,8 +466,8 @@ export default function FullscreenCards() {
           The first card fully covers the orange hero.
           Each next card fully covers the previous card.
         */
-        const start = 0.08 + index * 0.215;
-        const end = start + 0.22;
+        const start = 0.08 + index * 0.15;
+        const end = start + 0.17;
 
         const raw = clamp((progress - start) / (end - start), 0, 1);
         const eased = easeOutCubic(raw);
@@ -576,18 +589,20 @@ export default function FullscreenCards() {
                               onMouseLeave={(e) => e.currentTarget.style.borderColor = card.muted}
                             >
                               <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.113.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-                              Source Code
+                              {card.demo === "#" ? "App Source Code" : "Source Code"}
                             </a>
-                            <a 
-                              href={card.demo} 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              style={{ padding: '0.8rem 1.5rem', background: 'transparent', border: `1px solid ${card.muted}`, color: card.text, textDecoration: 'none', fontFamily: "'Space Mono', monospace", fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'inline-flex', alignItems: 'center', gap: '8px', transition: 'border-color 0.3s' }}
-                              onMouseEnter={(e) => e.currentTarget.style.borderColor = card.text}
-                              onMouseLeave={(e) => e.currentTarget.style.borderColor = card.muted}
-                            >
-                              Live Demo ↗
-                            </a>
+                            {card.demo !== "#" && (
+                              <a 
+                                href={card.demo} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                style={{ padding: '0.8rem 1.5rem', background: 'transparent', border: `1px solid ${card.muted}`, color: card.text, textDecoration: 'none', fontFamily: "'Space Mono', monospace", fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'inline-flex', alignItems: 'center', gap: '8px', transition: 'border-color 0.3s' }}
+                                onMouseEnter={(e) => e.currentTarget.style.borderColor = card.text}
+                                onMouseLeave={(e) => e.currentTarget.style.borderColor = card.muted}
+                              >
+                                Live Demo ↗
+                              </a>
+                            )}
                           </div>
                         </div>
                       ) : (

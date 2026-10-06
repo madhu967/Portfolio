@@ -162,6 +162,47 @@ const PROJECT_DATA = [
       }
     ]
   },
+  {
+    title: "Learnova - Smart Education Platform",
+    category: "Mobile EdTech App",
+    creativeLead: "Ijji Madhu Venkat",
+    visualArtist: "React Native, Firebase",
+    github: "https://github.com/madhu967/Coaching_Mobile_App_React_Native",
+    demo: "#",
+    details: [
+      "Engineered a cross-platform mobile education app utilizing React Native for seamless performance.",
+      "Integrated Firebase for real-time data sync, secure authentication, and robust cloud storage.",
+      "Developed distinct dashboards for administrators, faculty, and students to streamline academic workflows."
+    ],
+    tech: "React Native, Expo, Firebase, UI/UX Design",
+    slides: [
+      {
+        image: "/learnova/slide1.png",
+        label: "Admin Dashboard",
+        description: "Institutional Hub for platform directors to track cohort attendance, vital metrics, and faculty management."
+      },
+      {
+        image: "/learnova/slide2.png",
+        label: "Faculty Dashboard",
+        description: "Academic Studio enabling teachers to schedule live classes, host masterclasses, and manage roll calls."
+      },
+      {
+        image: "/learnova/slide3.png",
+        label: "Create Account",
+        description: "Frictionless onboarding flow joining an active community of 50,000+ scholars."
+      },
+      {
+        image: "/learnova/slide4.png",
+        label: "Get Started Page",
+        description: "AI Personalized Course Generator tailoring the curriculum based on goals, target dates, and adaptive pacing."
+      },
+      {
+        image: "/learnova/slide5.png",
+        label: "Student Dashboard",
+        description: "Academic Hub providing students with personalized learning paths, AI course generation, and attendance tracking."
+      }
+    ]
+  },
   /*
   {
     title: "Interactive Portfolio",
@@ -522,7 +563,7 @@ export default function ProjectGallery({ initialIndex = 0, onClose }) {
                   <span style={{ color: '#ea580c' }}>01.</span> Overview
                 </h3>
                 <p style={{ fontFamily: "'Spectral', serif", fontSize: '1.2rem', lineHeight: 1.7, color: 'rgba(19,20,15,0.8)', margin: 0 }}>
-                  The {project.title} was engineered to solve complex operational bottlenecks through modern web technologies. By prioritizing intuitive user experiences and scalable backend architectures, this project represents a significant leap forward in {project.category.toLowerCase()} solutions.
+                  The {project.title} was engineered to solve complex bottlenecks through modern {project.demo === "#" ? "cross-platform mobile" : "web"} technologies. By prioritizing intuitive user experiences and scalable backend architectures, this project represents a significant leap forward in {project.category.toLowerCase()} solutions.
                 </p>
               </div>
 
@@ -557,7 +598,7 @@ export default function ProjectGallery({ initialIndex = 0, onClose }) {
                   {project.tech}
                 </p>
                 <p style={{ fontFamily: "'Spectral', serif", fontSize: '1.2rem', lineHeight: 1.7, color: 'rgba(19,20,15,0.8)', margin: 0 }}>
-                  Built upon a robust foundation, the architecture leverages these core technologies to ensure high availability, secure data transmission, and a seamless client-side rendering experience. Performance bottlenecks were systematically eliminated through targeted caching and optimized database queries.
+                  Built upon a robust foundation, the architecture leverages these core technologies to ensure high availability, secure data transmission, and a seamless {project.demo === "#" ? "mobile app" : "client-side rendering"} experience. Performance bottlenecks were systematically eliminated through targeted caching and optimized database queries.
                 </p>
               </div>
 
@@ -583,11 +624,13 @@ export default function ProjectGallery({ initialIndex = 0, onClose }) {
                 <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
                   <a href={project.github} target="_blank" rel="noopener noreferrer" style={{ padding: '0.8rem 1.5rem', background: '#13140f', color: '#fff', textDecoration: 'none', fontFamily: "'Space Mono', monospace", fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'inline-flex', alignItems: 'center', gap: '8px', transition: 'background 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.background = '#ea580c'} onMouseLeave={(e) => e.currentTarget.style.background = '#13140f'}>
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.113.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-                    Source Code
+                    {project.demo === "#" ? "App Source Code" : "Source Code"}
                   </a>
-                  <a href={project.demo} target="_blank" rel="noopener noreferrer" style={{ padding: '0.8rem 1.5rem', background: 'transparent', border: '1px solid rgba(19,20,15,0.2)', color: '#13140f', textDecoration: 'none', fontFamily: "'Space Mono', monospace", fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'inline-flex', alignItems: 'center', gap: '8px', transition: 'border-color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.borderColor = '#13140f'} onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(19,20,15,0.2)'}>
-                    Live Demo ↗
-                  </a>
+                  {project.demo !== "#" && (
+                    <a href={project.demo} target="_blank" rel="noopener noreferrer" style={{ padding: '0.8rem 1.5rem', background: 'transparent', border: '1px solid rgba(19,20,15,0.2)', color: '#13140f', textDecoration: 'none', fontFamily: "'Space Mono', monospace", fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'inline-flex', alignItems: 'center', gap: '8px', transition: 'border-color 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.borderColor = '#13140f'} onMouseLeave={(e) => e.currentTarget.style.borderColor = 'rgba(19,20,15,0.2)'}>
+                      Live Demo ↗
+                    </a>
+                  )}
                 </div>
               </div>
 

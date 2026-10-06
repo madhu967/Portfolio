@@ -178,6 +178,26 @@ try {
   console.error('[vite.config.js] Forever sync error:', err);
 }
 
+// Copy Learnova project images
+try {
+  const learnovaImages = [
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1791302802944.png',
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1791302816166.png',
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1791302831606.png',
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1791302850817.png',
+    'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1791302900384.png'
+  ];
+  const learnovaDir = path.resolve(__dirname, 'public/learnova');
+  if (!fs.existsSync(learnovaDir)) fs.mkdirSync(learnovaDir, { recursive: true });
+  
+  learnovaImages.forEach((img, i) => {
+    if (fs.existsSync(img)) {
+      fs.copyFileSync(img, path.resolve(learnovaDir, `slide${i + 1}.png`));
+    }
+  });
+} catch (err) {
+  console.error('[vite.config.js] Learnova sync error:', err);
+}
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [

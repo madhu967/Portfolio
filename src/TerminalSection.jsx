@@ -77,10 +77,14 @@ export default function TerminalSection() {
           "",
           "[4] QuickBlog - AI Integrated Blog Platform",
           "    - Markdown editor with AI-assisted writing.",
-          "    - Tech: React.js, Node.js, AI APIs"
+          "    - Tech: React.js, Node.js, AI APIs",
+          "",
+          "[5] Learnova - Smart Education Platform",
+          "    - Cross-platform mobile EdTech application.",
+          "    - Tech: React Native, Firebase, Expo"
           /*
           "",
-          "[5] Interactive Developer Portfolio",
+          "[6] Interactive Developer Portfolio",
           "    - Premium scroll-jacking gallery.",
           "    - Tech: React.js, Framer Motion"
           */
