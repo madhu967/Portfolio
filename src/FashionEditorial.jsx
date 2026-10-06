@@ -1698,6 +1698,19 @@ export function EditorialStatementSection({ isMobile }) {
             }}>About Me</span>
           </div>
 
+          <h2 style={{
+            fontFamily: "'Space Mono', monospace",
+            fontSize: 'clamp(13px, 3vw, 16px)',
+            fontWeight: 700,
+            color: '#181e4b',
+            margin: '0 0 24px 0',
+            lineHeight: 1.5,
+            textTransform: 'uppercase',
+            letterSpacing: '0.05em'
+          }}>
+            Software Engineer <span style={{ opacity: 0.4, margin: '0 8px' }}>•</span> React Native App Developer <span style={{ opacity: 0.4, margin: '0 8px' }}>•</span> MERN Developer
+          </h2>
+
           <h3
             style={{
               fontFamily: "'Spectral', serif",
