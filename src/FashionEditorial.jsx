@@ -409,7 +409,7 @@ export function StickyScrolledNavbar({ isMobile, mobileMenuOpen, setMobileMenuOp
         animation: 'nav-slide-down 0.28s ease-out',
       }}
     >
-      {/* Brand Logo: 3D Isometric Cube + "Madhu." */}
+      {/* Brand Logo */}
       <a
         href="#"
         style={{
@@ -421,19 +421,17 @@ export function StickyScrolledNavbar({ isMobile, mobileMenuOpen, setMobileMenuOp
         }}
       >
         <svg
-          width="32"
-          height="34"
-          viewBox="0 0 31 40"
+          width="38"
+          height="38"
+          viewBox="0 0 70 70"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           style={{ flexShrink: 0 }}
         >
+          <circle cx="35.003" cy="35.005" r="14.001" fill="#1e2939" />
           <path
-            d="m8.75 11.3 6.75 3.884 6.75-3.885M8.75 34.58v-7.755L2 22.939m27 0-6.75 3.885v7.754M2.405 15.408 15.5 22.954l13.095-7.546M15.5 38V22.939M29 28.915V16.962a2.98 2.98 0 0 0-1.5-2.585L17 8.4a3.01 3.01 0 0 0-3 0L3.5 14.377A3 3 0 0 0 2 16.962v11.953A2.98 2.98 0 0 0 3.5 31.5L14 37.477a3.01 3.01 0 0 0 3 0L27.5 31.5a3 3 0 0 0 1.5-2.585"
-            stroke="#ea580c"
-            strokeWidth="2.4"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+            d="M35.906.012A34.84 34.84 0 0 1 56.85 7.655c-4.245 2.367-7.243 6.7-7.765 11.766A20.93 20.93 0 0 0 35.003 14C23.403 14 14 23.403 14 35.003s9.404 21.003 21.003 21.003 21.003-9.404 21.003-21.003q-.001-.594-.034-1.18a15.2 15.2 0 0 0 8.306 2.455c2.025 0 3.957-.396 5.725-1.111l-.009.74c-.48 18.913-15.962 34.099-34.991 34.099l-.903-.012C15.486 69.523.483 54.52.012 35.906L0 35.003C0 15.67 15.671 0 35.003 0z"
+            fill="#1e2939"
           />
         </svg>
 
@@ -656,7 +654,7 @@ export function HeroTransparentNavbar({ isMobile, mobileMenuOpen, setMobileMenuO
         boxSizing: 'border-box',
       }}
     >
-      {/* Brand Logo: 3D Isometric Cube + "Madhu." */}
+      {/* Brand Logo */}
       <a
         href="#"
         style={{
@@ -668,19 +666,17 @@ export function HeroTransparentNavbar({ isMobile, mobileMenuOpen, setMobileMenuO
         }}
       >
         <svg
-          width="32"
-          height="34"
-          viewBox="0 0 31 40"
+          width="38"
+          height="38"
+          viewBox="0 0 70 70"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           style={{ flexShrink: 0 }}
         >
+          <circle cx="35.003" cy="35.005" r="14.001" fill="#1e2939" />
           <path
-            d="m8.75 11.3 6.75 3.884 6.75-3.885M8.75 34.58v-7.755L2 22.939m27 0-6.75 3.885v7.754M2.405 15.408 15.5 22.954l13.095-7.546M15.5 38V22.939M29 28.915V16.962a2.98 2.98 0 0 0-1.5-2.585L17 8.4a3.01 3.01 0 0 0-3 0L3.5 14.377A3 3 0 0 0 2 16.962v11.953A2.98 2.98 0 0 0 3.5 31.5L14 37.477a3.01 3.01 0 0 0 3 0L27.5 31.5a3 3 0 0 0 1.5-2.585"
-            stroke="#ea580c"
-            strokeWidth="2.4"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+            d="M35.906.012A34.84 34.84 0 0 1 56.85 7.655c-4.245 2.367-7.243 6.7-7.765 11.766A20.93 20.93 0 0 0 35.003 14C23.403 14 14 23.403 14 35.003s9.404 21.003 21.003 21.003 21.003-9.404 21.003-21.003q-.001-.594-.034-1.18a15.2 15.2 0 0 0 8.306 2.455c2.025 0 3.957-.396 5.725-1.111l-.009.74c-.48 18.913-15.962 34.099-34.991 34.099l-.903-.012C15.486 69.523.483 54.52.012 35.906L0 35.003C0 15.67 15.671 0 35.003 0z"
+            fill="#1e2939"
           />
         </svg>
 
@@ -2387,4 +2383,3 @@ export function LuxuryNavbar({ isMobile, forceWhite }) {
     </>
   );
 }
-

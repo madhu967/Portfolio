@@ -159,6 +159,7 @@ export default function Timeline() {
           max-width: 1200px;
           margin: 0 auto;
           position: relative;
+          isolation: isolate;
         }
 
         /* Continuous Background Line */
@@ -170,7 +171,7 @@ export default function Timeline() {
           width: 1px;
           background: rgba(23, 23, 23, 0.1);
           transform: translateX(-50%);
-          z-index: 0;
+          z-index: -1;
         }
 
         .tl-runner {
@@ -180,7 +181,7 @@ export default function Timeline() {
           width: 76px;
           height: 76px;
           transform: translate(-50%, -50%);
-          z-index: 2;
+          z-index: 1;
           pointer-events: none;
           filter: drop-shadow(0 5px 5px rgba(23, 23, 23, 0.18));
         }
@@ -207,7 +208,7 @@ export default function Timeline() {
           bottom: 0;
           width: 2px;
           transform: translateX(-50%);
-          z-index: 5;
+          z-index: 0;
         }
 
         .tl-line-fill {
@@ -250,7 +251,7 @@ export default function Timeline() {
           gap: 6rem;
           padding-top: 20vh;
           position: relative;
-          z-index: 3;
+          z-index: 10;
         }
 
         .tl-even .tl-content-wrapper {
@@ -312,6 +313,8 @@ export default function Timeline() {
           width: calc(50% - 3rem);
           display: flex;
           justify-content: center;
+          position: relative;
+          z-index: 20;
         }
 
         .tl-even .tl-image-wrapper {
@@ -329,6 +332,8 @@ export default function Timeline() {
           overflow: hidden;
           position: relative;
           border-radius: 4px;
+          background: #f4f1ea;
+          z-index: 21;
         }
 
         .tl-image {

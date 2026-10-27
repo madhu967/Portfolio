@@ -294,11 +294,7 @@ export default function VerdelyFooterPage() {
         .v-logo {
           width: 39px;
           height: 39px;
-          stroke: #ffffff;
-          fill: none;
-          stroke-width: 2.5;
-          stroke-linecap: round;
-          stroke-linejoin: round;
+          fill: #ffffff;
           transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
@@ -675,10 +671,12 @@ export default function VerdelyFooterPage() {
           
           <div className="v-brand-col">
             <div className="v-brand-wrap">
-              <svg className="v-logo" viewBox="0 0 44 44">
-                <rect x="2" y="2" width="40" height="40" rx="4" />
-                <circle cx="22" cy="22" r="8" />
-                <path d="M22,6 L22,14 M22,30 L22,38 M6,22 L14,22 M30,22 L38,22" />
+              <svg className="v-logo" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="35.003" cy="35.005" r="14.001" fill="#ffffff" />
+                <path
+                  d="M35.906.012A34.84 34.84 0 0 1 56.85 7.655c-4.245 2.367-7.243 6.7-7.765 11.766A20.93 20.93 0 0 0 35.003 14C23.403 14 14 23.403 14 35.003s9.404 21.003 21.003 21.003 21.003-9.404 21.003-21.003q-.001-.594-.034-1.18a15.2 15.2 0 0 0 8.306 2.455c2.025 0 3.957-.396 5.725-1.111l-.009.74c-.48 18.913-15.962 34.099-34.991 34.099l-.903-.012C15.486 69.523.483 54.52.012 35.906L0 35.003C0 15.67 15.671 0 35.003 0z"
+                  fill="#ffffff"
+                />
               </svg>
               <div className="v-brand-name">IJJI MADHU VENKAT</div>
             </div>
