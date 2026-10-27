@@ -100,7 +100,7 @@ export default function Timeline() {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start 50%", "end 75%"]
+    offset: ["start center", "end 80%"]
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
@@ -109,13 +109,16 @@ export default function Timeline() {
     restDelta: 0.001
   });
 
-  // Runner moves down from 0% (top) to 100% (bottom)
-  const runnerTop = useTransform(smoothProgress, [0, 1], ["0%", "100%"]);
-  // Active timeline line extends directly behind the runner from top to runner's position
-  const activeLineHeight = useTransform(smoothProgress, [0, 1], ["0%", "100%"]);
+  // Runner moves down along the timeline
+  const runnerTop = useTransform(smoothProgress, (v) => `${v * 100}%`);
+  // Active timeline line extends strictly to the BACK (trailing edge) of the runner, never in front
+  const activeLineHeight = useTransform(smoothProgress, (v) => {
+    if (v <= 0.002) return "0px";
+    return `calc(${v * 100}% - 2px)`;
+  });
 
   return (
-    <section ref={containerRef} className="tl-section">
+    <section className="tl-section">
       <style>{`
         .tl-section {
           background-color: #f4f1ea;
@@ -155,7 +158,7 @@ export default function Timeline() {
           max-width: 1200px;
           margin: 0 auto;
           position: relative;
-          padding: 2rem 0 4rem;
+          padding: 2rem 0 6rem;
         }
 
         /* Continuous Background Line */
@@ -182,6 +185,20 @@ export default function Timeline() {
           border-radius: 999px;
           z-index: 2;
           box-shadow: 0 0 14px rgba(234, 88, 12, 0.5);
+          pointer-events: none;
+        }
+
+        .tl-active-line::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: #ea580c;
+          box-shadow: 0 0 8px rgba(234, 88, 12, 0.9);
         }
 
         /* Running Character at the Tip of the Active Timeline */
@@ -189,22 +206,12 @@ export default function Timeline() {
           position: absolute;
           left: 50%;
           top: 0;
-          transform: translate(-50%, -50%);
-          z-index: 15;
+          transform: translate(-50%, 0);
+          z-index: 25;
           pointer-events: none;
           display: flex;
           align-items: center;
           justify-content: center;
-        }
-
-        .tl-runner-halo {
-          position: absolute;
-          width: 52px;
-          height: 52px;
-          border-radius: 50%;
-          background: radial-gradient(circle, rgba(234, 88, 12, 0.3) 0%, rgba(234, 88, 12, 0) 70%);
-          pointer-events: none;
-          z-index: -1;
         }
 
         .tl-runner-img {
@@ -221,7 +228,7 @@ export default function Timeline() {
             transform: translateY(0px) rotate(0deg);
           }
           100% {
-            transform: translateY(-6px) rotate(-2deg);
+            transform: translateY(4px) rotate(2deg);
           }
         }
 
@@ -381,7 +388,7 @@ export default function Timeline() {
           }
           .tl-runner {
             left: 20px;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, 0);
           }
           .tl-runner-img {
             width: 64px;
@@ -437,7 +444,7 @@ export default function Timeline() {
         </motion.h2>
       </div>
 
-      <div className="tl-container">
+      <div ref={containerRef} className="tl-container">
         {/* Continuous Inactive Background Rail */}
         <div className="tl-bg-line" />
 
@@ -453,7 +460,6 @@ export default function Timeline() {
           style={{ top: runnerTop }}
           aria-hidden="true"
         >
-          <div className="tl-runner-halo" />
           <img 
             src={timelineRunnerPic} 
             alt="Timeline Journey Runner" 
