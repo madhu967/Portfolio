@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useEffect, useRef, useState, useMemo } from "react";
+import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
+import GithubAnimatedGraph from "./GithubAnimatedGraph";
 
 export default function CodingProfiles() {
   const ref = useRef(null);
@@ -11,6 +12,7 @@ export default function CodingProfiles() {
   const [lcCalendar, setLcCalendar] = useState(null);
   const [ghStats, setGhStats] = useState(null);
   const [ghHeatmapData, setGhHeatmapData] = useState(null);
+  const lcHeatmapRef = useRef(null);
 
   useEffect(() => {
     // User explicitly requested statically hardcoding their real, true live data to bypass 429 errors completely.
@@ -30,9 +32,7 @@ export default function CodingProfiles() {
     });
 
     setGhStats({
-      public_repos: 48,
-      followers: 6,
-      following: 3
+      public_repos: 51
     });
   }, []);
 
@@ -74,13 +74,38 @@ export default function CodingProfiles() {
     }
   }, [lcCalendar]);
 
+  // On mobile / narrow screens, automatically scroll heatmap to right end (latest days first)
+  const scrollLcToRight = useCallback(() => {
+    if (lcHeatmapRef.current) {
+      const el = lcHeatmapRef.current;
+      el.scrollLeft = el.scrollWidth - el.clientWidth;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!lcHeatmapData) return;
+    scrollLcToRight();
+    const t1 = setTimeout(scrollLcToRight, 30);
+    const t2 = setTimeout(scrollLcToRight, 120);
+    const t3 = setTimeout(scrollLcToRight, 350);
+    const t4 = setTimeout(scrollLcToRight, 700);
+    window.addEventListener("resize", scrollLcToRight);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      clearTimeout(t4);
+      window.removeEventListener("resize", scrollLcToRight);
+    };
+  }, [lcHeatmapData, isInView, scrollLcToRight]);
+
   const getHeatmapColor = (level) => {
     switch (level) {
-      case 1: return "#9be9a8";
-      case 2: return "#40c463";
-      case 3: return "#30a14e";
-      case 4: return "#216e39";
-      default: return "#ebedf0"; // Empty
+      case 1: return "#3fb950";
+      case 2: return "#238636";
+      case 3: return "#196c2e";
+      case 4: return "#0d441f";
+      default: return "#c6cbd1"; // Empty
     }
   };
 
@@ -130,12 +155,74 @@ export default function CodingProfiles() {
 
         <div className="cp-grid">
           
+          {/* GITHUB CARD */}
+          <motion.div 
+            className="cp-card cp-github"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          >
+            <div className="cp-card-header">
+              <div className="cp-card-title">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="#24292e"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.113.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                <h3>GitHub</h3>
+              </div>
+              <a href="https://github.com/madhu967" target="_blank" rel="noreferrer" className="cp-card-link" style={{color: '#24292e'}}>@madhu967</a>
+            </div>
+
+            <div className="cp-card-content-split">
+              <div className="cp-stats-row">
+                <div className="cp-stat-box">
+                  <span className="cp-stat-val">
+                    {ghStats ? ghStats.public_repos : 51}
+                  </span>
+                  <span className="cp-stat-label">Public Repositories</span>
+                </div>
+              </div>
+            </div>
+
+            {/* GitHub Contributions & Total Active Days Banner (Total Days Active in middle) */}
+            <div className="cp-streak-banner">
+              <div className="cp-streak-box">
+                <span className="cp-streak-num">869</span>
+                <span className="cp-streak-lbl">Total Contributions</span>
+              </div>
+              <div className="cp-streak-sep" />
+              <div className="cp-streak-box">
+                <span className="cp-streak-num" style={{ color: '#238636' }}>188</span>
+                <span className="cp-streak-lbl">Total Days Active</span>
+              </div>
+              <div className="cp-streak-sep" />
+              <div className="cp-streak-box">
+                <span className="cp-streak-num">32<span style={{ fontSize: '1.1rem' }}>&nbsp;Days</span></span>
+                <span className="cp-streak-lbl">Longest Streak</span>
+              </div>
+            </div>
+
+            <div className="cp-badges-wrapper" style={{ marginTop: '0', paddingTop: '1rem', borderTop: '1px solid rgba(23, 23, 23, 0.05)'}}>
+              <span className="cp-stat-label" style={{display: 'block', marginBottom: '0.5rem'}}>Achievements</span>
+              <div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap'}}>
+                <img src="https://github.githubassets.com/images/modules/profile/achievements/pull-shark-default.png" alt="Pull Shark" width="50" height="50" title="Pull Shark" style={{borderRadius: '50%'}} />
+                <img src="https://github.githubassets.com/images/modules/profile/achievements/arctic-code-vault-contributor-default.png" alt="Arctic Code Vault" width="50" height="50" title="Arctic Code Vault Contributor" style={{borderRadius: '50%'}} />
+                <img src="https://github.githubassets.com/images/modules/profile/achievements/yolo-default.png" alt="YOLO" width="50" height="50" title="YOLO" style={{borderRadius: '50%'}} />
+              </div>
+            </div>
+
+            {/* INTERACTIVE ANIMATED GITHUB CONTRIBUTION CANVAS ENGINE */}
+            <div className="cp-heatmap-wrapper" style={{ marginTop: '2.5rem' }}>
+              <span className="cp-heatmap-label" style={{ marginBottom: '1.25rem', display: 'block' }}>
+                GitHub Activity Dynamics
+              </span>
+              <GithubAnimatedGraph />
+            </div>
+          </motion.div>
+
           {/* LEETCODE CARD */}
           <motion.div 
             className="cp-card cp-leetcode"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
           >
             <div className="cp-card-header">
               <div className="cp-card-title">
@@ -202,13 +289,18 @@ export default function CodingProfiles() {
 
             {/* LEETCODE HEATMAP */}
             <div className="cp-heatmap-wrapper" style={{ marginTop: '2.5rem' }}>
-              <span className="cp-heatmap-label">LeetCode Activity Matrix</span>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem', flexWrap: 'wrap', gap: '6px' }}>
+                <span className="cp-heatmap-label" style={{ margin: 0 }}>LeetCode Activity Matrix</span>
+                <span className="cp-mobile-scroll-hint" style={{ fontFamily: "'Poppins', sans-serif", fontSize: '0.75rem', color: '#ea580c', fontWeight: 600 }}>
+                  (Swipe ◂ for past activity)
+                </span>
+              </div>
               {lcCalendar === "RATE_LIMITED" ? (
                 <div style={{height: 90, display: 'flex', alignItems: 'center', opacity: 0.8}}>
                   <span className="cp-stat-label" style={{color: '#ea580c'}}>API Rate Limited (429) — Please wait a few minutes and refresh.</span>
                 </div>
               ) : lcHeatmapData ? (
-                <div className="cp-heatmap">
+                <div className="cp-heatmap" ref={lcHeatmapRef}>
                   {lcHeatmapData.map((week, wIdx) => (
                     <div key={wIdx} className="cp-hm-col">
                       {week.map((level, dIdx) => (
@@ -228,76 +320,6 @@ export default function CodingProfiles() {
                   <span className="cp-stat-label">Syncing live algorithms...</span>
                 </div>
               )}
-            </div>
-          </motion.div>
-
-          {/* GITHUB CARD */}
-          <motion.div 
-            className="cp-card cp-github"
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-          >
-            <div className="cp-card-header">
-              <div className="cp-card-title">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="#24292e"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.113.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-                <h3>GitHub</h3>
-              </div>
-              <a href="https://github.com/madhu967" target="_blank" rel="noreferrer" className="cp-card-link" style={{color: '#24292e'}}>@madhu967</a>
-            </div>
-
-            <div className="cp-card-content-split">
-              <div className="cp-stats-row">
-                <div className="cp-stat-box">
-                  <span className="cp-stat-val">
-                    {ghStats ? ghStats.followers : "..."}
-                  </span>
-                  <span className="cp-stat-label">Followers</span>
-                </div>
-                <div className="cp-stat-box">
-                  <span className="cp-stat-val">
-                    {ghStats ? ghStats.public_repos : "..."}
-                  </span>
-                  <span className="cp-stat-label">Public Repositories</span>
-                </div>
-              </div>
-            </div>
-
-            {/* GitHub Streak Stats Widget (from screenshot) */}
-            <div style={{ marginTop: '1.5rem', marginBottom: '1.5rem', textAlign: 'center' }}>
-              <img 
-                src="https://github-readme-streak-stats.herokuapp.com/?user=madhu967&theme=transparent&hide_border=true&title_color=24292e&text_color=24292e&sideNums=24292e&sideLabels=24292e&ring=24292e&fire=24292e&currStreakLabel=24292e&currStreakNum=24292e" 
-                alt="GitHub Streak" 
-                style={{ maxWidth: '100%', height: 'auto', display: 'inline-block' }} 
-              />
-            </div>
-
-            <div className="cp-badges-wrapper" style={{ marginTop: '0', paddingTop: '1rem', borderTop: '1px solid rgba(23, 23, 23, 0.05)'}}>
-              <span className="cp-stat-label" style={{display: 'block', marginBottom: '0.5rem'}}>Achievements</span>
-              <div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap'}}>
-                <img src="https://github.githubassets.com/images/modules/profile/achievements/pull-shark-default.png" alt="Pull Shark" width="50" height="50" title="Pull Shark" style={{borderRadius: '50%'}} />
-                <img src="https://github.githubassets.com/images/modules/profile/achievements/arctic-code-vault-contributor-default.png" alt="Arctic Code Vault" width="50" height="50" title="Arctic Code Vault Contributor" style={{borderRadius: '50%'}} />
-                <img src="https://github.githubassets.com/images/modules/profile/achievements/yolo-default.png" alt="YOLO" width="50" height="50" title="YOLO" style={{borderRadius: '50%'}} />
-              </div>
-            </div>
-
-            {/* REAL GITHUB HEATMAP IMAGE API */}
-            <div className="cp-heatmap-wrapper" style={{ marginTop: '2.5rem' }}>
-              <span className="cp-heatmap-label">GitHub Contributions</span>
-              <div style={{ width: '100%', overflowX: 'auto', paddingBottom: '0.5rem', textAlign: 'left' }}>
-                <img 
-                  src="https://ghchart.rshah.org/madhu967" 
-                  alt="Github Heatmap" 
-                  style={{ 
-                    opacity: isInView ? 1 : 0, 
-                    transition: 'opacity 1.5s ease 0.6s',
-                    width: '988px',
-                    minWidth: '988px',
-                    display: 'block',
-                    margin: '0 auto'
-                  }} 
-                />
-              </div>
             </div>
           </motion.div>
 
@@ -471,6 +493,49 @@ export default function CodingProfiles() {
           color: rgba(23, 23, 23, 0.6);
         }
 
+        .cp-streak-banner {
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+          background: rgba(23, 23, 23, 0.02);
+          border: 1px solid rgba(23, 23, 23, 0.06);
+          border-radius: 16px;
+          padding: 1.5rem 2rem;
+          margin: 1.75rem 0 1.5rem;
+          text-align: center;
+        }
+
+        .cp-streak-box {
+          display: flex;
+          flex-direction: column;
+          gap: 0.35rem;
+          flex: 1;
+        }
+
+        .cp-streak-num {
+          font-family: 'Playfair', serif;
+          font-size: 2.4rem;
+          font-weight: 700;
+          color: #171717;
+          line-height: 1;
+          letter-spacing: -0.02em;
+        }
+
+        .cp-streak-lbl {
+          font-family: 'Poppins', sans-serif;
+          font-size: 0.8rem;
+          font-weight: 600;
+          color: rgba(23, 23, 23, 0.55);
+          text-transform: uppercase;
+          letter-spacing: 0.06em;
+        }
+
+        .cp-streak-sep {
+          width: 1px;
+          height: 44px;
+          background: rgba(23, 23, 23, 0.08);
+        }
+
         .cp-badges-wrapper {
           margin-top: 2rem;
           padding-top: 1rem;
@@ -503,13 +568,20 @@ export default function CodingProfiles() {
         .cp-heatmap {
           display: flex;
           gap: 5px;
-          justify-content: center;
+          justify-content: flex-start;
           width: 100%;
           min-width: 0;
           overflow-x: auto;
-          padding-bottom: 0.5rem;
+          overflow-y: hidden;
+          padding-bottom: 0.6rem;
           scrollbar-width: thin;
-          scrollbar-color: rgba(23,23,23,0.1) transparent;
+          scrollbar-color: rgba(23,23,23,0.12) transparent;
+          -webkit-overflow-scrolling: touch;
+        }
+        @media (min-width: 1200px) {
+          .cp-heatmap {
+            justify-content: center;
+          }
         }
         .cp-heatmap::-webkit-scrollbar { height: 4px; }
         .cp-heatmap::-webkit-scrollbar-track { background: transparent; }
@@ -538,41 +610,98 @@ export default function CodingProfiles() {
           justify-content: flex-end;
         }
 
+        .cp-mobile-scroll-hint {
+          display: none;
+        }
+
         @media (max-width: 960px) {
+          .cp-mobile-scroll-hint {
+            display: inline-block;
+          }
           .cp-section {
-            padding: 5rem 1.5rem;
+            padding: 4.5rem 1.25rem;
           }
           .cp-card {
-            padding: 2rem 1.5rem;
+            padding: 1.75rem 1.25rem;
+            border-radius: 18px;
           }
           .cp-card-header {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 1rem;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
           }
           .cp-card-link {
-            word-break: break-all;
+            font-size: 0.82rem;
           }
           .cp-card-content-split {
             flex-direction: column;
             align-items: flex-start;
-            gap: 2.5rem;
+            gap: 2rem;
           }
           .cp-rings-wrapper {
             margin-left: 0;
             width: 100%;
-            justify-content: center;
+            justify-content: space-around;
             flex-wrap: wrap;
-            gap: 1.5rem;
+            gap: 1rem;
           }
           .cp-heatmap {
             justify-content: flex-start;
           }
           .cp-stats-row {
-            gap: 2rem;
+            gap: 1.5rem;
+            flex-wrap: wrap;
           }
           .cp-stat-val {
-            font-size: 2rem;
+            font-size: 2.2rem;
+          }
+          .cp-streak-banner {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 0.6rem;
+            margin: 1.25rem 0;
+          }
+          .cp-streak-sep {
+            display: block;
+            width: 1px;
+            height: 36px;
+            background: rgba(23, 23, 23, 0.08);
+          }
+          .cp-streak-num {
+            font-size: 1.45rem;
+          }
+          .cp-streak-lbl {
+            font-size: 0.65rem;
+            letter-spacing: 0.02em;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .cp-section {
+            padding: 3rem 0.75rem;
+          }
+          .cp-card {
+            padding: 1.25rem 0.75rem;
+            border-radius: 14px;
+          }
+          .cp-streak-banner {
+            padding: 0.85rem 0.35rem;
+            gap: 0.25rem;
+          }
+          .cp-streak-num {
+            font-size: 1.25rem;
+          }
+          .cp-streak-lbl {
+            font-size: 0.58rem;
+            letter-spacing: 0;
+          }
+          .cp-stat-val {
+            font-size: 1.85rem;
           }
         }
       `}</style>
