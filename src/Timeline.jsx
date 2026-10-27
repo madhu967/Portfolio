@@ -114,8 +114,9 @@ export default function Timeline() {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start end", "end start"]
+    offset: ["start start", "end end"]
   });
+  const runnerTop = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
     <section ref={containerRef} className="tl-section">
@@ -170,6 +171,25 @@ export default function Timeline() {
           background: rgba(23, 23, 23, 0.1);
           transform: translateX(-50%);
           z-index: 0;
+        }
+
+        .tl-runner {
+          position: absolute;
+          top: 0;
+          left: 50%;
+          width: 76px;
+          height: 76px;
+          transform: translate(-50%, -50%);
+          z-index: 2;
+          pointer-events: none;
+          filter: drop-shadow(0 5px 5px rgba(23, 23, 23, 0.18));
+        }
+
+        .tl-runner img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
         }
 
         .tl-item {
@@ -229,6 +249,8 @@ export default function Timeline() {
           align-items: center;
           gap: 6rem;
           padding-top: 20vh;
+          position: relative;
+          z-index: 3;
         }
 
         .tl-even .tl-content-wrapper {
@@ -327,6 +349,10 @@ export default function Timeline() {
             left: 20px;
             transform: none;
           }
+          .tl-runner {
+            left: 20px;
+            transform: translate(-50%, -50%);
+          }
           .tl-dot-outer {
             left: 20px;
             transform: translate(-50%, -50%);
@@ -376,6 +402,13 @@ export default function Timeline() {
 
       <div className="tl-container">
         <div className="tl-bg-line" />
+        <motion.div
+          className="tl-runner"
+          style={{ top: runnerTop }}
+          aria-hidden="true"
+        >
+          <img src="/energetic-runner.png" alt="" />
+        </motion.div>
         
         {timelineData.map((item, i) => (
           <TimelineItem key={i} item={item} index={i} />
