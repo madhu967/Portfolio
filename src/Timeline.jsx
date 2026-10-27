@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import timelineRunnerPic from './timelineRunnerPic';
 
 const imgYubhian = '/certificates/cert5.png';
 const imgIISDPR = '/certificates/cert6.png';
@@ -42,31 +43,20 @@ const TimelineItem = ({ item, index }) => {
   
   const { scrollYProgress } = useScroll({
     target: itemRef,
-    offset: ["start end", "center center"]
-  });
-
-  const { scrollYProgress: exitProgress } = useScroll({
-    target: itemRef,
-    offset: ["center center", "end start"]
+    offset: ["start 80%", "center center"]
   });
 
   const isEven = index % 2 === 0;
 
   // Animations for entering
-  const opacity = useTransform(scrollYProgress, [0, 0.6, 1], [0, 1, 1]);
-  const y = useTransform(scrollYProgress, [0, 1], [100, 0]);
-  
-  // Parallax for the image
-  const imgY = useTransform(scrollYProgress, [0, 1], [-50, 0]);
-  const imgScale = useTransform(scrollYProgress, [0, 1], [1.2, 1]);
-
-  // Dynamic line drawing
-  const lineHeight = useTransform(scrollYProgress, [0.3, 1], ["0%", "100%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0, 1, 1]);
+  const y = useTransform(scrollYProgress, [0, 1], [60, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [0.94, 1]);
 
   return (
     <div ref={itemRef} className={`tl-item ${isEven ? 'tl-even' : 'tl-odd'}`}>
       
-      {/* Center Line Container */}
+      {/* Center Line Node */}
       <div className="tl-center-axis">
         <div className="tl-dot-outer">
           <motion.div 
@@ -74,16 +64,12 @@ const TimelineItem = ({ item, index }) => {
             style={{ scale: scrollYProgress, opacity }}
           />
         </div>
-        <motion.div 
-          className="tl-line-fill"
-          style={{ height: lineHeight }}
-        />
       </div>
 
       <div className="tl-content-wrapper">
         <motion.div 
           className="tl-text-content"
-          style={{ opacity, y }}
+          style={{ opacity, y, scale }}
         >
           <div className="tl-year">{item.year}</div>
           <h3 className="tl-title">{item.title}</h3>
@@ -93,7 +79,7 @@ const TimelineItem = ({ item, index }) => {
 
         <motion.div 
           className="tl-image-wrapper"
-          style={{ opacity, y }}
+          style={{ opacity, y, scale }}
         >
           <div className="tl-image-overflow">
             <motion.img 
@@ -114,9 +100,19 @@ export default function Timeline() {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"]
+    offset: ["start 50%", "end 75%"]
   });
-  const runnerTop = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 90,
+    damping: 20,
+    restDelta: 0.001
+  });
+
+  // Runner moves down from 0% (top) to 100% (bottom)
+  const runnerTop = useTransform(smoothProgress, [0, 1], ["0%", "100%"]);
+  // Active timeline line extends directly behind the runner from top to runner's position
+  const activeLineHeight = useTransform(smoothProgress, [0, 1], ["0%", "100%"]);
 
   return (
     <section ref={containerRef} className="tl-section">
@@ -159,7 +155,7 @@ export default function Timeline() {
           max-width: 1200px;
           margin: 0 auto;
           position: relative;
-          isolation: isolate;
+          padding: 2rem 0 4rem;
         }
 
         /* Continuous Background Line */
@@ -168,36 +164,72 @@ export default function Timeline() {
           left: 50%;
           top: 0;
           bottom: 0;
-          width: 1px;
-          background: rgba(23, 23, 23, 0.1);
+          width: 3px;
+          background: rgba(23, 23, 23, 0.08);
           transform: translateX(-50%);
+          border-radius: 999px;
+          z-index: 1;
+        }
+
+        /* Active Timeline Rail Attached to the Back of the Running Image */
+        .tl-active-line {
+          position: absolute;
+          left: 50%;
+          top: 0;
+          width: 3.5px;
+          background: linear-gradient(180deg, #ea580c 0%, #f97316 75%, #ff8a50 100%);
+          transform: translateX(-50%);
+          border-radius: 999px;
+          z-index: 2;
+          box-shadow: 0 0 14px rgba(234, 88, 12, 0.5);
+        }
+
+        /* Running Character at the Tip of the Active Timeline */
+        .tl-runner {
+          position: absolute;
+          left: 50%;
+          top: 0;
+          transform: translate(-50%, -50%);
+          z-index: 15;
+          pointer-events: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .tl-runner-halo {
+          position: absolute;
+          width: 52px;
+          height: 52px;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(234, 88, 12, 0.3) 0%, rgba(234, 88, 12, 0) 70%);
+          pointer-events: none;
           z-index: -1;
         }
 
-        .tl-runner {
-          position: absolute;
-          top: 0;
-          left: 50%;
-          width: 76px;
-          height: 76px;
-          transform: translate(-50%, -50%);
-          z-index: 1;
-          pointer-events: none;
-          filter: drop-shadow(0 5px 5px rgba(23, 23, 23, 0.18));
+        .tl-runner-img {
+          width: 86px;
+          height: auto;
+          display: block;
+          mix-blend-mode: multiply;
+          filter: drop-shadow(0 6px 14px rgba(23, 23, 23, 0.2));
+          animation: runnerBobbing 0.55s ease-in-out infinite alternate;
         }
 
-        .tl-runner img {
-          display: block;
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
+        @keyframes runnerBobbing {
+          0% {
+            transform: translateY(0px) rotate(0deg);
+          }
+          100% {
+            transform: translateY(-6px) rotate(-2deg);
+          }
         }
 
         .tl-item {
           display: flex;
           justify-content: center;
           position: relative;
-          min-height: 60vh;
+          min-height: 55vh;
           margin-bottom: 4rem;
         }
 
@@ -208,16 +240,7 @@ export default function Timeline() {
           bottom: 0;
           width: 2px;
           transform: translateX(-50%);
-          z-index: 0;
-        }
-
-        .tl-line-fill {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          background: #ea580c;
-          transform-origin: top center;
+          z-index: 6;
         }
 
         .tl-dot-outer {
@@ -225,15 +248,16 @@ export default function Timeline() {
           top: 30%;
           left: 50%;
           transform: translate(-50%, -50%);
-          width: 20px;
-          height: 20px;
+          width: 22px;
+          height: 22px;
           border-radius: 50%;
           background: #f4f1ea;
-          border: 1px solid rgba(23, 23, 23, 0.15);
+          border: 2px solid rgba(234, 88, 12, 0.4);
           display: flex;
           align-items: center;
           justify-content: center;
-          z-index: 6;
+          z-index: 8;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
         }
 
         .tl-dot-inner {
@@ -241,6 +265,7 @@ export default function Timeline() {
           height: 10px;
           border-radius: 50%;
           background: #ea580c;
+          box-shadow: 0 0 8px rgba(234, 88, 12, 0.6);
         }
 
         .tl-content-wrapper {
@@ -249,7 +274,7 @@ export default function Timeline() {
           justify-content: space-between;
           align-items: center;
           gap: 6rem;
-          padding-top: 20vh;
+          padding-top: 15vh;
           position: relative;
           z-index: 10;
         }
@@ -350,13 +375,20 @@ export default function Timeline() {
         }
 
         @media (max-width: 860px) {
-          .tl-bg-line, .tl-center-axis {
+          .tl-bg-line, .tl-active-line {
             left: 20px;
-            transform: none;
+            transform: translateX(-50%);
           }
           .tl-runner {
             left: 20px;
             transform: translate(-50%, -50%);
+          }
+          .tl-runner-img {
+            width: 64px;
+          }
+          .tl-center-axis {
+            left: 20px;
+            transform: none;
           }
           .tl-dot-outer {
             left: 20px;
@@ -365,8 +397,8 @@ export default function Timeline() {
           .tl-content-wrapper {
             flex-direction: column !important;
             gap: 2rem;
-            padding-left: 50px;
-            padding-top: 10vh;
+            padding-left: 55px;
+            padding-top: 6vh;
             align-items: flex-start;
           }
           .tl-text-content, .tl-image-wrapper {
@@ -406,13 +438,27 @@ export default function Timeline() {
       </div>
 
       <div className="tl-container">
+        {/* Continuous Inactive Background Rail */}
         <div className="tl-bg-line" />
+
+        {/* Continuous Active Rail attached directly to the runner's back */}
+        <motion.div 
+          className="tl-active-line"
+          style={{ height: activeLineHeight }}
+        />
+
+        {/* Dynamic Running Character leading the timeline */}
         <motion.div
           className="tl-runner"
           style={{ top: runnerTop }}
           aria-hidden="true"
         >
-          <img src="/energetic-runner.png" alt="" />
+          <div className="tl-runner-halo" />
+          <img 
+            src={timelineRunnerPic} 
+            alt="Timeline Journey Runner" 
+            className="tl-runner-img"
+          />
         </motion.div>
         
         {timelineData.map((item, i) => (

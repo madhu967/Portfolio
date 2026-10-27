@@ -41,6 +41,26 @@ try {
   console.error('[vite.config.js] About image sync error:', err);
 }
 
+// Copy timeline runner character image
+try {
+  const runnerImgSource = 'C:/Users/ijjij/.gemini/antigravity/brain/9a141dc8-3d2a-4917-8831-3d0b397d09c7/.user_uploaded/media_1793069259148.png';
+  if (fs.existsSync(runnerImgSource)) {
+    fs.copyFileSync(runnerImgSource, path.resolve(__dirname, 'public/timeline-runner.png'));
+    const assetsDir = path.resolve(__dirname, 'src/assets');
+    if (!fs.existsSync(assetsDir)) fs.mkdirSync(assetsDir, { recursive: true });
+    fs.copyFileSync(runnerImgSource, path.resolve(assetsDir, 'timeline-runner.png'));
+
+    const buf = fs.readFileSync(runnerImgSource);
+    const base64Data = `data:image/png;base64,${buf.toString('base64')}`;
+    fs.writeFileSync(
+      path.resolve(__dirname, 'src/timelineRunnerPic.js'),
+      `// Auto-generated running character for Timeline\nexport const timelineRunnerPic = ${JSON.stringify(base64Data)};\nexport default timelineRunnerPic;\n`
+    );
+  }
+} catch (err) {
+  console.error('[vite.config.js] Runner image sync error:', err);
+}
+
 // Copy certificates to public/certificates
 try {
   const localCerts = [
